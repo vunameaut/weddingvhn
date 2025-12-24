@@ -67,16 +67,51 @@ const EventDetails = () => {
               Tham dự tiệc mừng lễ thành hôn
             </p>
             
-            {/* Couple Photo */}
-            <div className="relative w-48 h-48 md:w-56 md:h-56 mx-auto mb-6">
-              <div className="absolute inset-0 rounded-full border-4 border-wedding-gold/30" />
-              <img 
-                src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop&crop=faces"
-                alt="Cô dâu và Chú rể"
-                className="w-full h-full object-cover rounded-full"
-              />
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2">
-                <Heart className="w-8 h-8 text-wedding-pink fill-wedding-pink" />
+            {/* Couple Photos - 3 photo layout with decorative frame */}
+            <div className="relative max-w-xs mx-auto mb-6">
+              {/* Decorative frame */}
+              <div className="absolute -inset-4 border-2 border-wedding-gold/40 rounded-lg" />
+              <div className="absolute -inset-6 border border-wedding-gold/20 rounded-lg" />
+              
+              {/* Corner decorations */}
+              <div className="absolute -top-6 -left-6 w-4 h-4 border-t-2 border-l-2 border-wedding-gold" />
+              <div className="absolute -top-6 -right-6 w-4 h-4 border-t-2 border-r-2 border-wedding-gold" />
+              <div className="absolute -bottom-6 -left-6 w-4 h-4 border-b-2 border-l-2 border-wedding-gold" />
+              <div className="absolute -bottom-6 -right-6 w-4 h-4 border-b-2 border-r-2 border-wedding-gold" />
+              
+              {/* Photos grid */}
+              <div className="grid grid-cols-5 gap-2 p-2 bg-white rounded-lg shadow-lg">
+                {/* Large photo on left */}
+                <div className="col-span-3 aspect-[3/4] overflow-hidden rounded-md">
+                  <img 
+                    src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=500&fit=crop"
+                    alt="Cô dâu và Chú rể"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                
+                {/* Two smaller photos stacked on right */}
+                <div className="col-span-2 flex flex-col gap-2">
+                  <div className="flex-1 overflow-hidden rounded-md">
+                    <img 
+                      src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=200&h=200&fit=crop"
+                      alt="Ảnh cưới 2"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 overflow-hidden rounded-md">
+                    <img 
+                      src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=200&h=200&fit=crop"
+                      alt="Ảnh cưới 3"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              {/* Heart decoration */}
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-wedding-pink-light px-2">
+                <Heart className="w-6 h-6 text-wedding-pink fill-wedding-pink" />
               </div>
             </div>
 
