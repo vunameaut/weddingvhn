@@ -5,6 +5,8 @@ import StickyCountdown from './StickyCountdown';
 const EventDetails = () => {
   const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=Trung+tâm+Hội+nghị+Tiệc+cưới+White+Palace,+Ho+Chi+Minh+City";
   
+  const weddingDate = new Date(2025, 1, 15, 17, 30); // February 15, 2025, 17:30
+  
   // Generate calendar grid for February 2025
   const generateCalendar = () => {
     const year = 2025;
@@ -37,177 +39,66 @@ const EventDetails = () => {
     const location = encodeURIComponent('White Palace, Phạm Văn Đồng, TP.HCM');
     const details = encodeURIComponent('Trân trọng kính mời quý khách đến dự tiệc cưới của chúng tôi');
     
+    // Format: YYYYMMDDTHHmmss
     const startDate = '20250215T173000';
     const endDate = '20250215T210000';
     
+    // Try Google Calendar first (works on most devices)
     const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}`;
     
     window.open(googleCalendarUrl, '_blank');
   };
 
   return (
-    <section className="py-16 md:py-24 px-4 bg-wedding-pink-light relative overflow-hidden">
+    <section className="py-20 md:py-28 px-4 bg-wedding-pink-light relative overflow-hidden">
       <StickyCountdown />
       
       {/* Background pattern */}
       <div className="absolute inset-0 bg-pattern-floral opacity-30" />
       
       {/* Decorative corners */}
-      <div className="absolute top-0 left-0 w-20 h-20 border-t-2 border-l-2 border-wedding-gold opacity-40" />
-      <div className="absolute top-0 right-0 w-20 h-20 border-t-2 border-r-2 border-wedding-gold opacity-40" />
-      <div className="absolute bottom-0 left-0 w-20 h-20 border-b-2 border-l-2 border-wedding-gold opacity-40" />
-      <div className="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-wedding-gold opacity-40" />
+      <div className="absolute top-0 left-0 w-24 h-24 border-t-2 border-l-2 border-wedding-gold opacity-40" />
+      <div className="absolute top-0 right-0 w-24 h-24 border-t-2 border-r-2 border-wedding-gold opacity-40" />
+      <div className="absolute bottom-0 left-0 w-24 h-24 border-b-2 border-l-2 border-wedding-gold opacity-40" />
+      <div className="absolute bottom-0 right-0 w-24 h-24 border-b-2 border-r-2 border-wedding-gold opacity-40" />
 
-      <div className="max-w-3xl mx-auto relative z-10">
-        {/* Summary Card with Photo */}
-        <ScrollReveal direction="up" className="mb-10">
-          <div className="card-wedding text-center py-8">
-            <p className="text-wedding-gold font-script text-2xl md:text-3xl mb-2">Trân Trọng Kính Mời</p>
-            <p className="text-muted-foreground text-sm uppercase tracking-widest mb-6">
-              Tham dự tiệc mừng lễ thành hôn
-            </p>
-            
-            {/* Couple Photos - Staggered layout with flow-in animation */}
-            <div className="relative max-w-sm mx-auto mb-8 h-56 md:h-64">
-              {/* Decorative frame */}
-              <div className="absolute inset-x-4 inset-y-0 border-2 border-wedding-gold/30 rounded-xl" />
-              
-              {/* Corner decorations */}
-              <div className="absolute top-0 left-4 w-5 h-5 border-t-2 border-l-2 border-wedding-gold rounded-tl-lg" />
-              <div className="absolute top-0 right-4 w-5 h-5 border-t-2 border-r-2 border-wedding-gold rounded-tr-lg" />
-              <div className="absolute bottom-0 left-4 w-5 h-5 border-b-2 border-l-2 border-wedding-gold rounded-bl-lg" />
-              <div className="absolute bottom-0 right-4 w-5 h-5 border-b-2 border-r-2 border-wedding-gold rounded-br-lg" />
-              
-              {/* Staggered photos */}
-              {/* Photo 1 - Left, tilted */}
-              <div 
-                className="absolute left-6 top-4 w-28 md:w-32 aspect-[3/4] rounded-lg overflow-hidden shadow-xl 
-                           transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-500
-                           animate-[slide-in-left_0.8s_ease-out_0.2s_both]"
-                style={{ 
-                  animation: 'slideInLeft 0.8s ease-out 0.2s both',
-                }}
-              >
-                <img 
-                  src="https://images.unsplash.com/photo-1519741497674-611481863552?w=300&h=400&fit=crop"
-                  alt="Ảnh cưới 1"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
-              {/* Photo 2 - Center, front */}
-              <div 
-                className="absolute left-1/2 -translate-x-1/2 top-6 w-32 md:w-36 aspect-[3/4] rounded-lg overflow-hidden shadow-2xl z-10
-                           transform hover:scale-105 transition-all duration-500
-                           border-4 border-white"
-                style={{ 
-                  animation: 'slideInUp 0.8s ease-out 0.4s both',
-                }}
-              >
-                <img 
-                  src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=300&h=400&fit=crop"
-                  alt="Ảnh cưới 2"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
-              {/* Photo 3 - Right, tilted */}
-              <div 
-                className="absolute right-6 top-4 w-28 md:w-32 aspect-[3/4] rounded-lg overflow-hidden shadow-xl
-                           transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-500"
-                style={{ 
-                  animation: 'slideInRight 0.8s ease-out 0.6s both',
-                }}
-              >
-                <img 
-                  src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=300&h=400&fit=crop"
-                  alt="Ảnh cưới 3"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
-              {/* Heart decoration */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-wedding-pink-light px-3 py-1 rounded-full">
-                <Heart className="w-5 h-5 text-wedding-pink fill-wedding-pink animate-pulse" />
-              </div>
-            </div>
-            
-            {/* CSS Keyframes */}
-            <style>{`
-              @keyframes slideInLeft {
-                from {
-                  opacity: 0;
-                  transform: translateX(-50px) rotate(-15deg);
-                }
-                to {
-                  opacity: 1;
-                  transform: translateX(0) rotate(-6deg);
-                }
-              }
-              @keyframes slideInRight {
-                from {
-                  opacity: 0;
-                  transform: translateX(50px) rotate(15deg);
-                }
-                to {
-                  opacity: 1;
-                  transform: translateX(0) rotate(6deg);
-                }
-              }
-              @keyframes slideInUp {
-                from {
-                  opacity: 0;
-                  transform: translateX(-50%) translateY(30px) scale(0.9);
-                }
-                to {
-                  opacity: 1;
-                  transform: translateX(-50%) translateY(0) scale(1);
-                }
-              }
-            `}</style>
-
-            <h3 className="text-2xl md:text-3xl font-serif text-foreground font-semibold">
-              Văn Minh <span className="text-wedding-pink mx-2">&</span> Thu Hương
-            </h3>
-            
-            {/* Date Display */}
-            <div className="mt-6 flex items-center justify-center gap-3">
-              <div className="text-center">
-                <p className="text-xs text-muted-foreground uppercase">Chủ nhật</p>
-              </div>
-              <div className="w-16 h-16 rounded-lg bg-wedding-pink flex flex-col items-center justify-center text-white">
-                <span className="text-2xl font-bold leading-none">15</span>
-                <span className="text-xs">Tháng 2</span>
-              </div>
-              <div className="text-center">
-                <p className="text-xs text-muted-foreground uppercase">Năm 2025</p>
-              </div>
-            </div>
+      <div className="max-w-4xl mx-auto relative z-10">
+        {/* Header */}
+        <ScrollReveal direction="up" className="text-center mb-12">
+          <p className="text-wedding-gold font-script text-2xl md:text-3xl mb-2">Save the Date</p>
+          <h2 className="text-4xl md:text-5xl font-serif text-foreground font-semibold">Thông Tin Lễ Cưới</h2>
+          <div className="mt-4 flex items-center justify-center gap-4">
+            <div className="h-px w-16 md:w-24 bg-wedding-gold" />
+            <span className="text-wedding-gold text-2xl">❧</span>
+            <div className="h-px w-16 md:w-24 bg-wedding-gold" />
           </div>
         </ScrollReveal>
 
         {/* Event cards */}
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-6">
           {/* Location Card */}
           <ScrollReveal direction="left" delay={0.1}>
-            <div className="card-wedding text-center h-full flex flex-col p-5">
-              <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-wedding-pink flex items-center justify-center">
-                <MapPin className="w-6 h-6 text-white" />
+            <div className="card-wedding text-center h-full flex flex-col">
+              <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-wedding-pink flex items-center justify-center">
+                <MapPin className="w-7 h-7 text-white" />
               </div>
-              <h3 className="text-xl font-serif text-foreground font-semibold mb-3">Địa Điểm</h3>
+              <h3 className="text-2xl font-serif text-foreground font-semibold mb-4">Địa Điểm</h3>
               
-              <div className="flex-1 text-foreground">
-                <p className="font-semibold mb-1">White Palace</p>
-                <p className="text-muted-foreground text-sm">194 Hoàng Văn Thụ, Phú Nhuận</p>
+              <div className="flex-1 space-y-4 text-foreground">
+                <div className="p-4 bg-wedding-cream/50 rounded-xl">
+                  <p className="font-semibold text-lg mb-1">White Palace</p>
+                  <p className="text-muted-foreground text-sm">Trung tâm Hội nghị & Tiệc cưới</p>
+                  <p className="text-muted-foreground text-sm mt-2">194 Hoàng Văn Thụ, Phú Nhuận, TP.HCM</p>
+                </div>
               </div>
 
               <a
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-wedding inline-flex items-center justify-center gap-2 mt-4 w-full text-sm py-2"
+                className="btn-wedding inline-flex items-center justify-center gap-3 mt-6 w-full"
               >
-                <Navigation className="w-4 h-4" />
+                <Navigation className="w-5 h-5" />
                 <span>Xem Chỉ Đường</span>
               </a>
             </div>
@@ -215,41 +106,41 @@ const EventDetails = () => {
 
           {/* Date Card with Calendar */}
           <ScrollReveal direction="right" delay={0.1}>
-            <div className="card-wedding text-center h-full flex flex-col p-5">
-              <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-wedding-gold-light flex items-center justify-center">
-                <Calendar className="w-6 h-6 text-wedding-gold" />
+            <div className="card-wedding text-center h-full flex flex-col">
+              <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-wedding-gold-light flex items-center justify-center">
+                <Calendar className="w-7 h-7 text-wedding-gold" />
               </div>
-              <h3 className="text-xl font-serif text-foreground font-semibold mb-3">Thời Gian</h3>
+              <h3 className="text-2xl font-serif text-foreground font-semibold mb-4">Ngày Tổ Chức</h3>
               
               {/* Mini Calendar */}
               <div className="flex-1">
-                <div className="bg-wedding-cream/50 rounded-lg p-3">
-                  <p className="font-semibold text-sm mb-2 text-wedding-gold">Tháng 2, 2025</p>
+                <div className="bg-wedding-cream/50 rounded-xl p-4">
+                  <p className="font-semibold text-lg mb-3 text-wedding-gold">Tháng 2, 2025</p>
                   
                   {/* Week days header */}
-                  <div className="grid grid-cols-7 gap-0.5 mb-1">
+                  <div className="grid grid-cols-7 gap-1 mb-2">
                     {weekDays.map((day) => (
-                      <div key={day} className="text-[10px] font-medium text-muted-foreground py-0.5">
+                      <div key={day} className="text-xs font-medium text-muted-foreground py-1">
                         {day}
                       </div>
                     ))}
                   </div>
                   
                   {/* Calendar days */}
-                  <div className="grid grid-cols-7 gap-0.5">
+                  <div className="grid grid-cols-7 gap-1">
                     {days.map((day, index) => (
                       <div
                         key={index}
                         className={`
-                          aspect-square flex items-center justify-center text-xs relative
+                          aspect-square flex items-center justify-center text-sm relative
                           ${day === null ? '' : 'text-foreground'}
                           ${day === weddingDay ? 'font-bold' : ''}
                         `}
                       >
                         {day === weddingDay ? (
                           <div className="relative">
-                            <Heart className="w-6 h-6 text-wedding-pink fill-wedding-pink animate-pulse" />
-                            <span className="absolute inset-0 flex items-center justify-center text-white text-[10px] font-bold">
+                            <Heart className="w-8 h-8 text-wedding-pink fill-wedding-pink animate-pulse" />
+                            <span className="absolute inset-0 flex items-center justify-center text-white text-xs font-bold">
                               {day}
                             </span>
                           </div>
@@ -261,16 +152,16 @@ const EventDetails = () => {
                   </div>
                 </div>
 
-                <p className="text-muted-foreground mt-2 text-xs">
-                  17:30 - 21:00
+                <p className="text-muted-foreground mt-3 text-sm">
+                  Chủ nhật • 17:30 - 21:00
                 </p>
               </div>
 
               <button
                 onClick={handleAddToCalendar}
-                className="btn-wedding inline-flex items-center justify-center gap-2 mt-4 w-full text-sm py-2"
+                className="btn-wedding inline-flex items-center justify-center gap-3 mt-6 w-full"
               >
-                <CalendarPlus className="w-4 h-4" />
+                <CalendarPlus className="w-5 h-5" />
                 <span>Thêm Vào Lịch</span>
               </button>
             </div>
@@ -278,8 +169,8 @@ const EventDetails = () => {
         </div>
 
         {/* Note */}
-        <ScrollReveal direction="up" delay={0.3} className="mt-8 text-center">
-          <p className="text-foreground/80 text-base italic">
+        <ScrollReveal direction="up" delay={0.4} className="mt-10 text-center">
+          <p className="text-foreground/80 text-lg italic">
             Sự hiện diện của quý khách là niềm vinh hạnh cho gia đình chúng tôi
           </p>
         </ScrollReveal>
