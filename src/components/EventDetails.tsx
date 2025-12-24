@@ -67,53 +67,104 @@ const EventDetails = () => {
               Tham dự tiệc mừng lễ thành hôn
             </p>
             
-            {/* Couple Photos - 3 photo layout with decorative frame */}
-            <div className="relative max-w-xs mx-auto mb-6">
+            {/* Couple Photos - Staggered layout with flow-in animation */}
+            <div className="relative max-w-sm mx-auto mb-8 h-56 md:h-64">
               {/* Decorative frame */}
-              <div className="absolute -inset-4 border-2 border-wedding-gold/40 rounded-lg" />
-              <div className="absolute -inset-6 border border-wedding-gold/20 rounded-lg" />
+              <div className="absolute inset-x-4 inset-y-0 border-2 border-wedding-gold/30 rounded-xl" />
               
               {/* Corner decorations */}
-              <div className="absolute -top-6 -left-6 w-4 h-4 border-t-2 border-l-2 border-wedding-gold" />
-              <div className="absolute -top-6 -right-6 w-4 h-4 border-t-2 border-r-2 border-wedding-gold" />
-              <div className="absolute -bottom-6 -left-6 w-4 h-4 border-b-2 border-l-2 border-wedding-gold" />
-              <div className="absolute -bottom-6 -right-6 w-4 h-4 border-b-2 border-r-2 border-wedding-gold" />
+              <div className="absolute top-0 left-4 w-5 h-5 border-t-2 border-l-2 border-wedding-gold rounded-tl-lg" />
+              <div className="absolute top-0 right-4 w-5 h-5 border-t-2 border-r-2 border-wedding-gold rounded-tr-lg" />
+              <div className="absolute bottom-0 left-4 w-5 h-5 border-b-2 border-l-2 border-wedding-gold rounded-bl-lg" />
+              <div className="absolute bottom-0 right-4 w-5 h-5 border-b-2 border-r-2 border-wedding-gold rounded-br-lg" />
               
-              {/* Photos grid */}
-              <div className="grid grid-cols-5 gap-2 p-2 bg-white rounded-lg shadow-lg">
-                {/* Large photo on left */}
-                <div className="col-span-3 aspect-[3/4] overflow-hidden rounded-md">
-                  <img 
-                    src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=500&fit=crop"
-                    alt="Cô dâu và Chú rể"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                
-                {/* Two smaller photos stacked on right */}
-                <div className="col-span-2 flex flex-col gap-2">
-                  <div className="flex-1 overflow-hidden rounded-md">
-                    <img 
-                      src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=200&h=200&fit=crop"
-                      alt="Ảnh cưới 2"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="flex-1 overflow-hidden rounded-md">
-                    <img 
-                      src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=200&h=200&fit=crop"
-                      alt="Ảnh cưới 3"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
+              {/* Staggered photos */}
+              {/* Photo 1 - Left, tilted */}
+              <div 
+                className="absolute left-6 top-4 w-28 md:w-32 aspect-[3/4] rounded-lg overflow-hidden shadow-xl 
+                           transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-500
+                           animate-[slide-in-left_0.8s_ease-out_0.2s_both]"
+                style={{ 
+                  animation: 'slideInLeft 0.8s ease-out 0.2s both',
+                }}
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1519741497674-611481863552?w=300&h=400&fit=crop"
+                  alt="Ảnh cưới 1"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              
+              {/* Photo 2 - Center, front */}
+              <div 
+                className="absolute left-1/2 -translate-x-1/2 top-6 w-32 md:w-36 aspect-[3/4] rounded-lg overflow-hidden shadow-2xl z-10
+                           transform hover:scale-105 transition-all duration-500
+                           border-4 border-white"
+                style={{ 
+                  animation: 'slideInUp 0.8s ease-out 0.4s both',
+                }}
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=300&h=400&fit=crop"
+                  alt="Ảnh cưới 2"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              
+              {/* Photo 3 - Right, tilted */}
+              <div 
+                className="absolute right-6 top-4 w-28 md:w-32 aspect-[3/4] rounded-lg overflow-hidden shadow-xl
+                           transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-500"
+                style={{ 
+                  animation: 'slideInRight 0.8s ease-out 0.6s both',
+                }}
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=300&h=400&fit=crop"
+                  alt="Ảnh cưới 3"
+                  className="w-full h-full object-cover"
+                />
               </div>
               
               {/* Heart decoration */}
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-wedding-pink-light px-2">
-                <Heart className="w-6 h-6 text-wedding-pink fill-wedding-pink" />
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-wedding-pink-light px-3 py-1 rounded-full">
+                <Heart className="w-5 h-5 text-wedding-pink fill-wedding-pink animate-pulse" />
               </div>
             </div>
+            
+            {/* CSS Keyframes */}
+            <style>{`
+              @keyframes slideInLeft {
+                from {
+                  opacity: 0;
+                  transform: translateX(-50px) rotate(-15deg);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateX(0) rotate(-6deg);
+                }
+              }
+              @keyframes slideInRight {
+                from {
+                  opacity: 0;
+                  transform: translateX(50px) rotate(15deg);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateX(0) rotate(6deg);
+                }
+              }
+              @keyframes slideInUp {
+                from {
+                  opacity: 0;
+                  transform: translateX(-50%) translateY(30px) scale(0.9);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateX(-50%) translateY(0) scale(1);
+                }
+              }
+            `}</style>
 
             <h3 className="text-2xl md:text-3xl font-serif text-foreground font-semibold">
               Văn Minh <span className="text-wedding-pink mx-2">&</span> Thu Hương
