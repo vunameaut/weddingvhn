@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Dancing+Script:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,74 +6,78 @@
 
 @layer base {
   :root {
-    --background: 30 100% 97%;
-    --foreground: 0 50% 20%;
+    /* Pastel romantic color palette */
+    --background: 30 40% 98%;
+    --foreground: 30 20% 25%;
 
-    --card: 30 100% 99%;
-    --card-foreground: 0 50% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 30 20% 25%;
 
-    --popover: 30 100% 99%;
-    --popover-foreground: 0 50% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 20% 25%;
 
-    --primary: 0 72% 42%;
-    --primary-foreground: 30 100% 97%;
+    --primary: 350 60% 65%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 43 74% 52%;
-    --secondary-foreground: 0 50% 15%;
+    --secondary: 30 30% 96%;
+    --secondary-foreground: 30 20% 30%;
 
-    --muted: 30 30% 90%;
-    --muted-foreground: 0 20% 40%;
+    --muted: 30 20% 94%;
+    --muted-foreground: 30 15% 50%;
 
-    --accent: 43 74% 52%;
-    --accent-foreground: 0 50% 15%;
+    --accent: 43 50% 70%;
+    --accent-foreground: 30 20% 25%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 30 30% 85%;
-    --input: 30 30% 85%;
-    --ring: 0 72% 42%;
+    --border: 30 20% 88%;
+    --input: 30 20% 88%;
+    --ring: 350 60% 65%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    /* Wedding specific colors */
-    --wedding-red: 0 72% 42%;
-    --wedding-red-light: 0 72% 52%;
-    --wedding-red-dark: 0 72% 32%;
-    --wedding-gold: 43 74% 52%;
-    --wedding-gold-light: 43 74% 65%;
-    --wedding-cream: 30 100% 97%;
-    --wedding-cream-dark: 30 50% 92%;
+    /* Wedding pastel colors */
+    --wedding-pink: 350 60% 75%;
+    --wedding-pink-light: 350 70% 92%;
+    --wedding-pink-dark: 350 50% 55%;
+    --wedding-rose: 0 40% 70%;
+    --wedding-gold: 43 50% 65%;
+    --wedding-gold-light: 43 60% 80%;
+    --wedding-cream: 30 40% 97%;
+    --wedding-cream-dark: 30 25% 92%;
+    --wedding-sage: 150 20% 75%;
+    --wedding-lavender: 270 30% 80%;
 
     /* Gradients */
-    --gradient-gold: linear-gradient(135deg, hsl(43, 74%, 52%) 0%, hsl(43, 74%, 65%) 50%, hsl(43, 74%, 52%) 100%);
-    --gradient-red: linear-gradient(135deg, hsl(0, 72%, 42%) 0%, hsl(0, 72%, 52%) 100%);
-    --gradient-cream: linear-gradient(180deg, hsl(30, 100%, 97%) 0%, hsl(30, 50%, 92%) 100%);
+    --gradient-romantic: linear-gradient(135deg, hsl(350, 70%, 95%) 0%, hsl(30, 40%, 98%) 50%, hsl(350, 60%, 93%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(43, 50%, 65%) 0%, hsl(43, 60%, 75%) 50%, hsl(43, 50%, 65%) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(30, 40%, 97%) 100%);
 
     /* Shadows */
-    --shadow-elegant: 0 10px 40px -10px hsla(0, 72%, 42%, 0.3);
-    --shadow-card: 0 25px 50px -12px hsla(0, 0%, 0%, 0.25);
-    --shadow-gold: 0 4px 20px hsla(43, 74%, 52%, 0.4);
+    --shadow-soft: 0 4px 20px hsla(350, 60%, 65%, 0.15);
+    --shadow-card: 0 10px 40px hsla(30, 20%, 25%, 0.08);
+    --shadow-elevated: 0 20px 60px hsla(30, 20%, 25%, 0.12);
   }
 
   .dark {
-    --background: 0 50% 10%;
-    --foreground: 30 100% 97%;
-    --card: 0 50% 12%;
-    --card-foreground: 30 100% 97%;
-    --popover: 0 50% 12%;
-    --popover-foreground: 30 100% 97%;
-    --primary: 0 72% 52%;
-    --primary-foreground: 30 100% 97%;
-    --secondary: 43 74% 52%;
-    --secondary-foreground: 0 50% 10%;
-    --muted: 0 30% 20%;
-    --muted-foreground: 30 30% 70%;
-    --accent: 43 74% 52%;
-    --accent-foreground: 0 50% 10%;
-    --border: 0 30% 25%;
-    --input: 0 30% 25%;
-    --ring: 0 72% 52%;
+    --background: 30 15% 8%;
+    --foreground: 30 20% 95%;
+    --card: 30 15% 12%;
+    --card-foreground: 30 20% 95%;
+    --popover: 30 15% 12%;
+    --popover-foreground: 30 20% 95%;
+    --primary: 350 60% 70%;
+    --primary-foreground: 30 15% 8%;
+    --secondary: 30 15% 15%;
+    --secondary-foreground: 30 20% 90%;
+    --muted: 30 15% 18%;
+    --muted-foreground: 30 15% 60%;
+    --accent: 43 50% 60%;
+    --accent-foreground: 30 15% 8%;
+    --border: 30 15% 20%;
+    --input: 30 15% 20%;
+    --ring: 350 60% 70%;
   }
 }
 
@@ -82,85 +86,187 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
-    font-family: 'Lora', serif;
+    font-family: 'Quicksand', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cormorant Garamond', serif;
   }
 
   .font-script {
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Dancing Script', cursive;
+  }
+
+  .font-elegant {
+    font-family: 'Cormorant Garamond', serif;
   }
 }
 
 @layer components {
   .btn-wedding {
-    @apply inline-flex items-center justify-center px-8 py-4 text-lg font-medium rounded-full transition-all duration-300;
-    background: var(--gradient-gold);
-    color: hsl(var(--wedding-red-dark));
-    box-shadow: var(--shadow-gold);
+    @apply inline-flex items-center justify-center px-8 py-4 text-lg font-medium rounded-full transition-all duration-500;
+    background: linear-gradient(135deg, hsl(var(--wedding-pink)) 0%, hsl(var(--wedding-rose)) 100%);
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-soft);
   }
 
   .btn-wedding:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 6px 25px hsla(43, 74%, 52%, 0.5);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 30px hsla(350, 60%, 65%, 0.35);
   }
 
   .btn-wedding-outline {
-    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-full transition-all duration-300;
+    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-full transition-all duration-500;
     background: transparent;
-    border: 2px solid hsl(var(--wedding-gold));
-    color: hsl(var(--wedding-gold));
+    border: 2px solid hsl(var(--wedding-pink));
+    color: hsl(var(--wedding-pink-dark));
   }
 
   .btn-wedding-outline:hover {
-    background: hsl(var(--wedding-gold));
-    color: hsl(var(--wedding-red-dark));
+    background: hsl(var(--wedding-pink));
+    color: hsl(var(--primary-foreground));
   }
 
   .card-wedding {
-    @apply rounded-2xl p-8;
-    background: hsl(var(--card));
+    @apply rounded-3xl p-8 backdrop-blur-sm;
+    background: hsla(0, 0%, 100%, 0.9);
     box-shadow: var(--shadow-card);
+    border: 1px solid hsla(30, 20%, 88%, 0.5);
   }
 
-  .text-gradient-gold {
-    background: var(--gradient-gold);
+  .text-gradient-romantic {
+    background: linear-gradient(135deg, hsl(var(--wedding-pink-dark)) 0%, hsl(var(--wedding-rose)) 50%, hsl(var(--wedding-gold)) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .border-ornament {
-    border: 2px solid hsl(var(--wedding-gold));
-    position: relative;
+  .section-divider {
+    @apply flex items-center justify-center gap-4 my-8;
   }
 
-  .border-ornament::before,
-  .border-ornament::after {
-    content: '❧';
-    position: absolute;
-    color: hsl(var(--wedding-gold));
-    font-size: 1.5rem;
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    @apply h-px flex-1 max-w-24;
+    background: linear-gradient(90deg, transparent 0%, hsl(var(--wedding-gold)) 50%, transparent 100%);
   }
 
-  .border-ornament::before {
-    top: -0.75rem;
-    left: 50%;
-    transform: translateX(-50%);
+  .glass-card {
+    @apply rounded-2xl p-6;
+    background: hsla(0, 0%, 100%, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid hsla(0, 0%, 100%, 0.5);
+    box-shadow: var(--shadow-soft);
   }
 
-  .border-ornament::after {
-    bottom: -0.75rem;
-    left: 50%;
-    transform: translateX(-50%) rotate(180deg);
+  .glass-header {
+    background: hsla(0, 0%, 100%, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid hsla(30, 20%, 88%, 0.5);
+    box-shadow: 0 4px 30px hsla(30, 20%, 25%, 0.05);
   }
 }
 
+/* Scroll Animations - Optimized for mobile */
 @layer utilities {
+  /* Base animation state */
+  .scroll-animate {
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  .scroll-animate.is-visible {
+    opacity: 1;
+  }
+
+  /* Slide from left */
+  .slide-left {
+    transform: translateX(-60px);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-out;
+  }
+
+  .slide-left.is-visible {
+    transform: translateX(0);
+  }
+
+  /* Slide from right */
+  .slide-right {
+    transform: translateX(60px);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-out;
+  }
+
+  .slide-right.is-visible {
+    transform: translateX(0);
+  }
+
+  /* Slide from bottom */
+  .slide-up {
+    transform: translateY(50px);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-out;
+  }
+
+  .slide-up.is-visible {
+    transform: translateY(0);
+  }
+
+  /* Fade only */
+  .fade-in {
+    transition: opacity 0.8s ease-out;
+  }
+
+  .fade-in.is-visible {
+    opacity: 1;
+  }
+
+  /* Scale effect */
+  .scale-in {
+    transform: scale(0.9);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-out;
+  }
+
+  .scale-in.is-visible {
+    transform: scale(1);
+  }
+
+  /* Combined effects */
+  .slide-fade-left {
+    transform: translateX(-60px);
+    transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.9s ease-out;
+  }
+
+  .slide-fade-left.is-visible {
+    transform: translateX(0);
+  }
+
+  .slide-fade-right {
+    transform: translateX(60px);
+    transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.9s ease-out;
+  }
+
+  .slide-fade-right.is-visible {
+    transform: translateX(0);
+  }
+
+  /* Delay utilities */
+  .delay-100 { transition-delay: 100ms; }
+  .delay-200 { transition-delay: 200ms; }
+  .delay-300 { transition-delay: 300ms; }
+  .delay-400 { transition-delay: 400ms; }
+  .delay-500 { transition-delay: 500ms; }
+  .delay-600 { transition-delay: 600ms; }
+  .delay-700 { transition-delay: 700ms; }
+  .delay-800 { transition-delay: 800ms; }
+
+  /* Floating animations */
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
@@ -171,24 +277,25 @@
   }
 
   .animate-pulse-soft {
-    animation: pulse-soft 2s ease-in-out infinite;
-  }
-
-  .animate-shimmer {
-    animation: shimmer 2s linear infinite;
+    animation: pulse-soft 3s ease-in-out infinite;
   }
 
   .animate-heart-beat {
-    animation: heart-beat 1.2s ease-in-out infinite;
+    animation: heart-beat 1.5s ease-in-out infinite;
+  }
+
+  .animate-sparkle {
+    animation: sparkle 2s ease-in-out infinite;
   }
 }
 
+/* Keyframes */
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-20px);
+    transform: translateY(-15px);
   }
 }
 
@@ -197,16 +304,7 @@
     opacity: 1;
   }
   50% {
-    opacity: 0.7;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
+    opacity: 0.6;
   }
 }
 
@@ -215,33 +313,24 @@
     transform: scale(1);
   }
   25% {
-    transform: scale(1.1);
+    transform: scale(1.15);
   }
   50% {
     transform: scale(1);
   }
   75% {
-    transform: scale(1.05);
+    transform: scale(1.08);
   }
 }
 
-@keyframes envelope-open {
-  0% {
-    transform: rotateX(0deg);
-  }
-  100% {
-    transform: rotateX(-180deg);
-  }
-}
-
-@keyframes card-rise {
-  0% {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
+@keyframes sparkle {
+  0%, 100% {
     opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
   }
 }
 
@@ -256,17 +345,49 @@
   }
 }
 
-.envelope-flap {
-  transform-origin: top center;
-  transition: transform 0.8s ease-in-out;
+@keyframes envelope-open {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(-180deg);
+  }
 }
 
-.envelope-open .envelope-flap {
-  transform: rotateX(-180deg);
+@keyframes heart-float {
+  0% {
+    transform: translateY(100vh) rotate(0deg) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg) scale(0.8);
+    opacity: 0;
+  }
 }
 
+@keyframes petal-fall {
+  0% {
+    transform: translateY(-50px) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(100vh) translateX(100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Initial animation classes */
 .invitation-card {
-  animation: card-rise 1s ease-out 0.5s both;
+  animation: fade-in-up 1s ease-out 0.5s both;
 }
 
 .fade-in-up {
@@ -285,20 +406,58 @@
   animation: fade-in-up 0.8s ease-out 0.6s both;
 }
 
+/* Envelope animation */
+.envelope-flap {
+  transform-origin: top center;
+  transition: transform 0.8s ease-in-out;
+}
+
+.envelope-open .envelope-flap {
+  transform: rotateX(-180deg);
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--wedding-cream));
+  background: hsl(var(--background));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--wedding-gold));
-  border-radius: 4px;
+  background: hsl(var(--wedding-pink));
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--wedding-red));
+  background: hsl(var(--wedding-pink-dark));
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .slide-left,
+  .slide-right,
+  .slide-fade-left,
+  .slide-fade-right {
+    transform: translateX(0) translateY(30px);
+  }
+
+  .slide-left.is-visible,
+  .slide-right.is-visible,
+  .slide-fade-left.is-visible,
+  .slide-fade-right.is-visible {
+    transform: translateX(0) translateY(0);
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

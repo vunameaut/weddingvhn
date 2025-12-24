@@ -7,7 +7,7 @@ interface UseScrollAnimationOptions {
 }
 
 export const useScrollAnimation = (options: UseScrollAnimationOptions = {}) => {
-  const { threshold = 0.1, rootMargin = '0px 0px -50px 0px', triggerOnce = true } = options;
+  const { threshold = 0.15, rootMargin = '0px 0px -50px 0px', triggerOnce = true } = options;
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -37,42 +37,62 @@ export const useScrollAnimation = (options: UseScrollAnimationOptions = {}) => {
   return { ref, isVisible };
 };
 
+type AnimationDirection = 'left' | 'right' | 'up' | 'down' | 'fade' | 'scale';
+
 interface ScrollRevealProps {
   children: React.ReactNode;
-  className?: string;
+  direction?: AnimationDirection;
   delay?: number;
-  direction?: 'up' | 'down' | 'left' | 'right' | 'scale' | 'none';
   duration?: number;
+  className?: string;
+  threshold?: number;
 }
 
-export const ScrollReveal = ({ 
-  children, 
-  className = '', 
-  delay = 0,
+export const ScrollReveal = ({
+  children,
   direction = 'up',
-  duration = 0.8
+  delay = 0,
+  duration = 0.8,
+  className = '',
+  threshold = 0.15,
 }: ScrollRevealProps) => {
-  const { ref, isVisible } = useScrollAnimation({ threshold: 0.15 });
+  const { ref, isVisible } = useScrollAnimation({ threshold, triggerOnce: true });
 
-  const getInitialTransform = () => {
+  const getInitialStyles = useCallback(() => {
+    const baseOpacity = 0;
     switch (direction) {
-      case 'up': return 'translateY(60px)';
-      case 'down': return 'translateY(-60px)';
-      case 'left': return 'translateX(-60px)';
-      case 'right': return 'translateX(60px)';
-      case 'scale': return 'scale(0.8)';
-      case 'none': return 'none';
+      case 'left':
+        return { opacity: baseOpacity, transform: 'translateX(-60px)' };
+      case 'right':
+        return { opacity: baseOpacity, transform: 'translateX(60px)' };
+      case 'up':
+        return { opacity: baseOpacity, transform: 'translateY(50px)' };
+      case 'down':
+        return { opacity: baseOpacity, transform: 'translateY(-50px)' };
+      case 'scale':
+        return { opacity: baseOpacity, transform: 'scale(0.9)' };
+      case 'fade':
+      default:
+        return { opacity: baseOpacity, transform: 'none' };
     }
+  }, [direction]);
+
+  const visibleStyles = {
+    opacity: 1,
+    transform: 'translateX(0) translateY(0) scale(1)',
   };
+
+  const initialStyles = getInitialStyles();
 
   return (
     <div
       ref={ref}
       className={className}
       style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translate(0) scale(1)' : getInitialTransform(),
-        transition: `opacity ${duration}s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s, transform ${duration}s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s`,
+        opacity: isVisible ? visibleStyles.opacity : initialStyles.opacity,
+        transform: isVisible ? visibleStyles.transform : initialStyles.transform,
+        transition: `opacity ${duration}s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}s, transform ${duration}s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}s`,
+        willChange: 'opacity, transform',
       }}
     >
       {children}
@@ -80,7 +100,17 @@ export const ScrollReveal = ({
   );
 };
 
-// Hook for image card glow effect on scroll
+// Alternating animation for timeline items
+export const useAlternatingDirection = (index: number): AnimationDirection => {
+  return index % 2 === 0 ? 'left' : 'right';
+};
+
+// Staggered delay calculator
+export const getStaggerDelay = (index: number, baseDelay: number = 0.1) => {
+  return index * baseDelay;
+};
+
+// Hook for image card hover/scroll effects
 export const useImageCardAnimation = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
@@ -137,3 +167,5 @@ export const useStaggerAnimation = (itemCount: number, baseDelay: number = 0.1) 
   const getDelay = useCallback((index: number) => baseDelay * index, [baseDelay]);
   return { getDelay };
 };
+
+export default useScrollAnimation;
