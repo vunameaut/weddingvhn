@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX, Music } from 'lucide-react';
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -43,13 +43,13 @@ const MusicPlayer = () => {
       </audio>
       <button
         onClick={toggleMusic}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-wedding-red text-primary-foreground shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-xl"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-wedding-pink text-primary-foreground shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-xl"
         aria-label={isPlaying ? "Tắt nhạc" : "Bật nhạc"}
       >
         {isPlaying ? (
           <Volume2 className="w-6 h-6 animate-pulse-soft" />
         ) : (
-          <VolumeX className="w-6 h-6" />
+          <Music className="w-6 h-6" />
         )}
       </button>
     </>
