@@ -6,58 +6,58 @@
 
 @layer base {
   :root {
-    /* Pastel romantic color palette */
-    --background: 30 40% 98%;
-    --foreground: 30 20% 25%;
+    /* Clean pastel romantic color palette */
+    --background: 30 30% 98%;
+    --foreground: 20 15% 25%;
 
     --card: 0 0% 100%;
-    --card-foreground: 30 20% 25%;
+    --card-foreground: 20 15% 25%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 30 20% 25%;
+    --popover-foreground: 20 15% 25%;
 
-    --primary: 350 60% 65%;
+    --primary: 350 55% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 30 30% 96%;
-    --secondary-foreground: 30 20% 30%;
+    --secondary: 30 25% 96%;
+    --secondary-foreground: 20 15% 30%;
 
-    --muted: 30 20% 94%;
-    --muted-foreground: 30 15% 50%;
+    --muted: 30 15% 94%;
+    --muted-foreground: 20 10% 45%;
 
-    --accent: 43 50% 70%;
-    --accent-foreground: 30 20% 25%;
+    --accent: 43 45% 65%;
+    --accent-foreground: 20 15% 25%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 30 20% 88%;
-    --input: 30 20% 88%;
-    --ring: 350 60% 65%;
+    --border: 30 15% 88%;
+    --input: 30 15% 88%;
+    --ring: 350 55% 60%;
 
     --radius: 0.75rem;
 
-    /* Wedding pastel colors */
-    --wedding-pink: 350 60% 75%;
-    --wedding-pink-light: 350 70% 92%;
-    --wedding-pink-dark: 350 50% 55%;
-    --wedding-rose: 0 40% 70%;
-    --wedding-gold: 43 50% 65%;
-    --wedding-gold-light: 43 60% 80%;
-    --wedding-cream: 30 40% 97%;
-    --wedding-cream-dark: 30 25% 92%;
+    /* Wedding pastel colors - cleaner, more readable */
+    --wedding-pink: 350 50% 70%;
+    --wedding-pink-light: 350 60% 95%;
+    --wedding-pink-dark: 350 45% 45%;
+    --wedding-rose: 0 35% 65%;
+    --wedding-gold: 40 55% 55%;
+    --wedding-gold-light: 40 50% 75%;
+    --wedding-cream: 35 35% 97%;
+    --wedding-cream-dark: 35 20% 92%;
     --wedding-sage: 150 20% 75%;
     --wedding-lavender: 270 30% 80%;
 
     /* Gradients */
-    --gradient-romantic: linear-gradient(135deg, hsl(350, 70%, 95%) 0%, hsl(30, 40%, 98%) 50%, hsl(350, 60%, 93%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(43, 50%, 65%) 0%, hsl(43, 60%, 75%) 50%, hsl(43, 50%, 65%) 100%);
-    --gradient-soft: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(30, 40%, 97%) 100%);
+    --gradient-romantic: linear-gradient(180deg, hsl(350, 60%, 97%) 0%, hsl(35, 35%, 98%) 50%, hsl(350, 50%, 96%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(40, 55%, 55%) 0%, hsl(40, 50%, 70%) 50%, hsl(40, 55%, 55%) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(35, 30%, 97%) 100%);
 
     /* Shadows */
-    --shadow-soft: 0 4px 20px hsla(350, 60%, 65%, 0.15);
-    --shadow-card: 0 10px 40px hsla(30, 20%, 25%, 0.08);
-    --shadow-elevated: 0 20px 60px hsla(30, 20%, 25%, 0.12);
+    --shadow-soft: 0 4px 20px hsla(350, 50%, 60%, 0.12);
+    --shadow-card: 0 10px 40px hsla(20, 15%, 25%, 0.06);
+    --shadow-elevated: 0 20px 60px hsla(20, 15%, 25%, 0.1);
   }
 
   .dark {
