@@ -48,19 +48,22 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         wedding: {
-          red: "hsl(var(--wedding-red))",
-          "red-light": "hsl(var(--wedding-red-light))",
-          "red-dark": "hsl(var(--wedding-red-dark))",
+          pink: "hsl(var(--wedding-pink))",
+          "pink-light": "hsl(var(--wedding-pink-light))",
+          "pink-dark": "hsl(var(--wedding-pink-dark))",
+          rose: "hsl(var(--wedding-rose))",
           gold: "hsl(var(--wedding-gold))",
           "gold-light": "hsl(var(--wedding-gold-light))",
           cream: "hsl(var(--wedding-cream))",
           "cream-dark": "hsl(var(--wedding-cream-dark))",
+          sage: "hsl(var(--wedding-sage))",
+          lavender: "hsl(var(--wedding-lavender))",
         },
       },
       fontFamily: {
-        serif: ['Playfair Display', 'serif'],
-        body: ['Lora', 'serif'],
-        script: ['Great Vibes', 'cursive'],
+        serif: ['Cormorant Garamond', 'serif'],
+        body: ['Quicksand', 'sans-serif'],
+        script: ['Dancing Script', 'cursive'],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -78,35 +81,60 @@ export default {
         },
         "float": {
           "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-20px)" },
+          "50%": { transform: "translateY(-15px)" },
         },
         "heart-float": {
           "0%": { 
-            transform: "translateY(100vh) rotate(0deg)",
-            opacity: "1"
+            transform: "translateY(100vh) rotate(0deg) scale(1)",
+            opacity: "0"
+          },
+          "10%": { 
+            opacity: "0.8"
+          },
+          "90%": { 
+            opacity: "0.6"
           },
           "100%": { 
-            transform: "translateY(-100px) rotate(720deg)",
+            transform: "translateY(-100px) rotate(360deg) scale(0.8)",
+            opacity: "0"
+          },
+        },
+        "petal-fall": {
+          "0%": { 
+            transform: "translateY(-50px) translateX(0) rotate(0deg)",
+            opacity: "0"
+          },
+          "10%": { 
+            opacity: "0.7"
+          },
+          "100%": { 
+            transform: "translateY(100vh) translateX(100px) rotate(360deg)",
             opacity: "0"
           },
         },
         "sparkle": {
           "0%, 100%": { opacity: "1", transform: "scale(1)" },
-          "50%": { opacity: "0.5", transform: "scale(0.8)" },
+          "50%": { opacity: "0.4", transform: "scale(0.85)" },
+        },
+        "pulse-soft": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.6" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "float": "float 6s ease-in-out infinite",
-        "heart-float": "heart-float 8s linear infinite",
+        "heart-float": "heart-float 10s linear infinite",
+        "petal-fall": "petal-fall 12s linear infinite",
         "sparkle": "sparkle 2s ease-in-out infinite",
+        "pulse-soft": "pulse-soft 3s ease-in-out infinite",
       },
       backgroundImage: {
-        'gradient-gold': 'linear-gradient(135deg, hsl(43, 74%, 52%) 0%, hsl(43, 74%, 65%) 50%, hsl(43, 74%, 52%) 100%)',
-        'gradient-red': 'linear-gradient(135deg, hsl(0, 72%, 42%) 0%, hsl(0, 72%, 52%) 100%)',
-        'gradient-cream': 'linear-gradient(180deg, hsl(30, 100%, 97%) 0%, hsl(30, 50%, 92%) 100%)',
-        'pattern-traditional': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        'gradient-romantic': 'linear-gradient(135deg, hsl(350, 70%, 95%) 0%, hsl(30, 40%, 98%) 50%, hsl(350, 60%, 93%) 100%)',
+        'gradient-gold': 'linear-gradient(135deg, hsl(43, 50%, 65%) 0%, hsl(43, 60%, 75%) 50%, hsl(43, 50%, 65%) 100%)',
+        'gradient-soft': 'linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(30, 40%, 97%) 100%)',
+        'pattern-floral': "url(\"data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e8b4b8' fill-opacity='0.15'%3E%3Cpath d='M40 40c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm20 0c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
       },
     },
   },
