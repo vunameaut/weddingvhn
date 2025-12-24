@@ -54,19 +54,19 @@ const StickyCountdown = () => {
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           {/* Names */}
           <div className="hidden sm:flex items-center gap-2">
-            <span className="font-script text-xl md:text-2xl text-gradient-gold">Minh</span>
-            <Heart className="w-4 h-4 text-wedding-red fill-wedding-red animate-heart-beat" />
-            <span className="font-script text-xl md:text-2xl text-gradient-gold">Hương</span>
+            <span className="font-script text-xl md:text-2xl text-wedding-pink-dark">Minh</span>
+            <Heart className="w-4 h-4 text-wedding-pink fill-wedding-pink animate-heart-beat" />
+            <span className="font-script text-xl md:text-2xl text-wedding-pink-dark">Hương</span>
           </div>
 
           {/* Countdown */}
           <div className="flex items-center gap-2 md:gap-4 mx-auto sm:mx-0">
             <TimeUnit value={timeLeft.days} label="Ngày" />
-            <span className="text-secondary animate-pulse">:</span>
+            <span className="text-wedding-gold animate-pulse-soft">:</span>
             <TimeUnit value={timeLeft.hours} label="Giờ" />
-            <span className="text-secondary animate-pulse">:</span>
+            <span className="text-wedding-gold animate-pulse-soft">:</span>
             <TimeUnit value={timeLeft.minutes} label="Phút" />
-            <span className="text-secondary animate-pulse">:</span>
+            <span className="text-wedding-gold animate-pulse-soft">:</span>
             <TimeUnit value={timeLeft.seconds} label="Giây" />
           </div>
 

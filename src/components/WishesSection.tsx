@@ -26,7 +26,9 @@ const wishes = [
 
 const WishesSection = () => {
   return (
-    <section className="py-20 md:py-28 px-4 bg-wedding-pink-light/30 relative overflow-hidden">
+    <section className="py-20 md:py-28 px-4 bg-secondary relative overflow-hidden">
+      <div className="absolute inset-0 bg-pattern-floral opacity-20" />
+      
       <div className="max-w-5xl mx-auto relative z-10">
         {/* Header */}
         <ScrollReveal direction="up" className="text-center mb-12">
@@ -34,8 +36,10 @@ const WishesSection = () => {
           <h2 className="text-4xl md:text-5xl font-serif text-foreground font-semibold">
             Lời Chúc & Mừng Cưới
           </h2>
-          <div className="section-divider mt-6">
+          <div className="mt-6 flex items-center justify-center gap-4">
+            <div className="h-px w-16 md:w-24 bg-wedding-gold" />
             <MessageCircleHeart className="w-5 h-5 text-wedding-pink" />
+            <div className="h-px w-16 md:w-24 bg-wedding-gold" />
           </div>
         </ScrollReveal>
 
@@ -47,13 +51,13 @@ const WishesSection = () => {
               direction={index % 2 === 0 ? 'left' : 'right'}
               delay={getStaggerDelay(index, 0.12)}
             >
-              <div className="glass-card flex gap-4 items-start hover:shadow-lg transition-shadow duration-500">
+              <div className="card-wedding flex gap-4 items-start hover:shadow-lg transition-shadow duration-500">
                 <img
                   src={wish.avatar}
                   alt={wish.name}
                   className="w-12 h-12 rounded-full object-cover border-2 border-wedding-pink/30 flex-shrink-0"
                 />
-                <div>
+                <div className="flex-1">
                   <h4 className="font-semibold text-foreground mb-1">{wish.name}</h4>
                   <p className="text-muted-foreground text-sm leading-relaxed">{wish.message}</p>
                 </div>
@@ -74,17 +78,17 @@ const WishesSection = () => {
             </p>
             
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-wedding-pink-light/50">
+              <div className="p-4 rounded-xl bg-muted">
                 <p className="text-xs text-muted-foreground mb-1">Chú rể</p>
                 <p className="font-semibold text-foreground">Nguyễn Văn Minh</p>
                 <p className="text-sm text-muted-foreground">Vietcombank</p>
-                <p className="font-medium text-primary">1234567890</p>
+                <p className="font-medium text-wedding-pink-dark">1234567890</p>
               </div>
-              <div className="p-4 rounded-xl bg-wedding-pink-light/50">
+              <div className="p-4 rounded-xl bg-muted">
                 <p className="text-xs text-muted-foreground mb-1">Cô dâu</p>
                 <p className="font-semibold text-foreground">Lê Thu Hương</p>
                 <p className="text-sm text-muted-foreground">Techcombank</p>
-                <p className="font-medium text-primary">0987654321</p>
+                <p className="font-medium text-wedding-pink-dark">0987654321</p>
               </div>
             </div>
           </div>
