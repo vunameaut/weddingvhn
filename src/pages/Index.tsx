@@ -77,8 +77,8 @@ const Index = () => {
         {showContent && (
           <>
             <CoupleSection />
-            <LoveStory />
             <EventDetails />
+            <LoveStory />
             <PhotoAlbum />
             <VideoSection />
             <RSVPForm />
