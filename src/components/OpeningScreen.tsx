@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Heart } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 interface OpeningScreenProps {
   onOpen: () => void;
@@ -8,12 +7,24 @@ interface OpeningScreenProps {
 const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
   const [isOpening, setIsOpening] = useState(false);
 
-  const handleOpen = () => {
-    setIsOpening(true);
-    setTimeout(() => {
-      onOpen();
-    }, 1500);
-  };
+  // Tự động mở sau 2 giây
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsOpening(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Gọi onOpen sau khi animation hoàn thành
+  useEffect(() => {
+    if (isOpening) {
+      const timer = setTimeout(() => {
+        onOpen();
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpening, onOpen]);
 
   return (
     <div className="fixed inset-0 z-[100] overflow-hidden">
@@ -81,37 +92,25 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
         <div className="absolute bottom-8 right-8 text-[#D4AF37]/40 text-4xl">✿</div>
       </div>
 
-      {/* Center content - appears behind the doors */}
-      <div className="absolute inset-0 flex items-center justify-center bg-gradient-romantic -z-10">
-        <div className="text-center px-4">
-          <p className="text-wedding-pink font-script text-xl md:text-2xl mb-4 fade-in-up-delay-1">
-            We are Getting Married
-          </p>
-          <h1 className="text-5xl md:text-7xl font-serif text-foreground font-semibold mb-2 fade-in-up-delay-2">
-            Minh <span className="text-wedding-pink">&</span> Hương
-          </h1>
-          <p className="text-2xl md:text-3xl font-script text-wedding-gold mb-8 fade-in-up-delay-3">
-            15.02.2025
-          </p>
-        </div>
-      </div>
-
-      {/* Open button - centered on the door split */}
+      {/* Center - Chữ Hỷ hoàn chỉnh xuất hiện khi đang đóng */}
       <div 
-        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-500 ${
-          isOpening ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
+        className={`absolute inset-0 flex items-center justify-center z-10 transition-opacity duration-300 ${
+          isOpening ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
       >
-        <button
-          onClick={handleOpen}
-          className="px-8 py-4 bg-[#D4AF37] text-[#7C2D12] font-semibold rounded-full shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl flex items-center gap-2"
-        >
-          <Heart className="w-5 h-5" />
-          <span>Mở Thiệp</span>
-        </button>
-        
-        {/* Decorative ring around button */}
-        <div className="absolute -inset-4 border-2 border-[#D4AF37]/50 rounded-full animate-pulse" />
+        <div className="text-center">
+          <span 
+            className="text-[150px] md:text-[250px] font-bold text-[#D4AF37] select-none animate-pulse-soft"
+            style={{ 
+              textShadow: '0 0 30px rgba(212, 175, 55, 0.5), 2px 2px 10px rgba(0,0,0,0.3)',
+            }}
+          >
+            囍
+          </span>
+          <p className="text-[#D4AF37] font-script text-2xl md:text-3xl mt-4 animate-pulse-soft">
+            Đang mở thiệp...
+          </p>
+        </div>
       </div>
 
       {/* Floating lantern decorations */}
