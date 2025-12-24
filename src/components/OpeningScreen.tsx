@@ -84,13 +84,13 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
       {/* Center content - appears behind the doors */}
       <div className="absolute inset-0 flex items-center justify-center bg-gradient-romantic -z-10">
         <div className="text-center px-4">
-          <p className="text-wedding-pink font-script text-xl md:text-2xl mb-4 opacity-0 animate-[fade-in-up_0.8s_ease-out_0.3s_forwards]">
+          <p className="text-wedding-pink font-script text-xl md:text-2xl mb-4 fade-in-up-delay-1">
             We are Getting Married
           </p>
-          <h1 className="text-5xl md:text-7xl font-serif text-foreground font-semibold mb-2 opacity-0 animate-[fade-in-up_0.8s_ease-out_0.5s_forwards]">
+          <h1 className="text-5xl md:text-7xl font-serif text-foreground font-semibold mb-2 fade-in-up-delay-2">
             Minh <span className="text-wedding-pink">&</span> Hương
           </h1>
-          <p className="text-2xl md:text-3xl font-script text-wedding-gold mb-8 opacity-0 animate-[fade-in-up_0.8s_ease-out_0.7s_forwards]">
+          <p className="text-2xl md:text-3xl font-script text-wedding-gold mb-8 fade-in-up-delay-3">
             15.02.2025
           </p>
         </div>
