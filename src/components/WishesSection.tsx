@@ -1,5 +1,7 @@
 import { ScrollReveal, getStaggerDelay } from '@/hooks/useScrollAnimation';
-import { Heart, MessageCircleHeart } from 'lucide-react';
+import { Heart, MessageCircleHeart, Copy, X, CreditCard } from 'lucide-react';
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
 const wishes = [
   {
@@ -24,7 +26,50 @@ const wishes = [
   },
 ];
 
+// Bank account info
+const bankAccounts = {
+  groom: {
+    name: "Nguyễn Văn Minh",
+    bank: "Vietcombank",
+    bankCode: "VCB",
+    accountNumber: "1234567890",
+    label: "Chú rể"
+  },
+  bride: {
+    name: "Lê Thu Hương",
+    bank: "Techcombank",
+    bankCode: "TCB",
+    accountNumber: "0987654321",
+    label: "Cô dâu"
+  }
+};
+
 const WishesSection = () => {
+  const { toast } = useToast();
+  const [selectedAccount, setSelectedAccount] = useState<'groom' | 'bride' | null>(null);
+
+  const copyToClipboard = async (text: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({
+        title: "Đã sao chép!",
+        description: `Số tài khoản ${label} đã được sao chép`,
+      });
+    } catch (err) {
+      toast({
+        title: "Không thể sao chép",
+        description: "Vui lòng sao chép thủ công",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const getVietQRUrl = (account: typeof bankAccounts.groom) => {
+    const description = encodeURIComponent(`Mung cuoi ${account.name}`);
+    const accountName = encodeURIComponent(account.name);
+    return `https://img.vietqr.io/image/${account.bankCode}-${account.accountNumber}-compact2.png?addInfo=${description}&accountName=${accountName}`;
+  };
+
   return (
     <section className="py-12 md:py-28 px-3 md:px-4 bg-secondary relative overflow-hidden">
       <div className="absolute inset-0 bg-pattern-floral opacity-20" />
@@ -74,26 +119,104 @@ const WishesSection = () => {
               Mừng Cưới
             </h3>
             <p className="text-muted-foreground mb-4 md:mb-6 text-xs md:text-sm">
-              Thay cho những món quà, bạn có thể gửi lời chúc phúc qua:
+              Nhấn vào để xem mã QR chuyển khoản:
             </p>
             
             <div className="grid grid-cols-2 gap-2 md:gap-4">
-              <div className="p-2 md:p-4 rounded-lg md:rounded-xl bg-muted">
-                <p className="text-[10px] md:text-xs text-muted-foreground mb-0.5 md:mb-1">Chú rể</p>
-                <p className="font-semibold text-foreground text-xs md:text-base">Nguyễn Văn Minh</p>
-                <p className="text-[10px] md:text-sm text-muted-foreground">Vietcombank</p>
-                <p className="font-medium text-wedding-pink-dark text-xs md:text-base">1234567890</p>
-              </div>
-              <div className="p-2 md:p-4 rounded-lg md:rounded-xl bg-muted">
-                <p className="text-[10px] md:text-xs text-muted-foreground mb-0.5 md:mb-1">Cô dâu</p>
-                <p className="font-semibold text-foreground text-xs md:text-base">Lê Thu Hương</p>
-                <p className="text-[10px] md:text-sm text-muted-foreground">Techcombank</p>
-                <p className="font-medium text-wedding-pink-dark text-xs md:text-base">0987654321</p>
-              </div>
+              <button
+                onClick={() => setSelectedAccount('groom')}
+                className="p-2 md:p-4 rounded-lg md:rounded-xl bg-muted hover:bg-muted/80 transition-all hover:scale-[1.02] cursor-pointer text-left"
+              >
+                <div className="flex items-center gap-1 mb-1">
+                  <CreditCard className="w-3 h-3 md:w-4 md:h-4 text-wedding-gold" />
+                  <p className="text-[10px] md:text-xs text-muted-foreground">{bankAccounts.groom.label}</p>
+                </div>
+                <p className="font-semibold text-foreground text-xs md:text-base">{bankAccounts.groom.name}</p>
+                <p className="text-[10px] md:text-sm text-muted-foreground">{bankAccounts.groom.bank}</p>
+                <p className="font-medium text-wedding-pink-dark text-xs md:text-base">{bankAccounts.groom.accountNumber}</p>
+              </button>
+              <button
+                onClick={() => setSelectedAccount('bride')}
+                className="p-2 md:p-4 rounded-lg md:rounded-xl bg-muted hover:bg-muted/80 transition-all hover:scale-[1.02] cursor-pointer text-left"
+              >
+                <div className="flex items-center gap-1 mb-1">
+                  <CreditCard className="w-3 h-3 md:w-4 md:h-4 text-wedding-gold" />
+                  <p className="text-[10px] md:text-xs text-muted-foreground">{bankAccounts.bride.label}</p>
+                </div>
+                <p className="font-semibold text-foreground text-xs md:text-base">{bankAccounts.bride.name}</p>
+                <p className="text-[10px] md:text-sm text-muted-foreground">{bankAccounts.bride.bank}</p>
+                <p className="font-medium text-wedding-pink-dark text-xs md:text-base">{bankAccounts.bride.accountNumber}</p>
+              </button>
             </div>
           </div>
         </ScrollReveal>
       </div>
+
+      {/* QR Code Modal */}
+      {selectedAccount && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          onClick={() => setSelectedAccount(null)}
+        >
+          <div 
+            className="bg-background rounded-2xl p-4 md:p-6 max-w-sm w-full shadow-2xl animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h4 className="font-serif text-lg font-semibold text-foreground">
+                {bankAccounts[selectedAccount].label}
+              </h4>
+              <button
+                onClick={() => setSelectedAccount(null)}
+                className="w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            
+            {/* QR Code */}
+            <div className="bg-white p-3 rounded-xl mb-4">
+              <img
+                src={getVietQRUrl(bankAccounts[selectedAccount])}
+                alt="QR Code"
+                className="w-full aspect-square object-contain"
+              />
+            </div>
+            
+            {/* Account Info */}
+            <div className="space-y-2 mb-4">
+              <div className="flex justify-between items-center p-2 bg-muted rounded-lg">
+                <div>
+                  <p className="text-xs text-muted-foreground">Ngân hàng</p>
+                  <p className="font-medium text-foreground">{bankAccounts[selectedAccount].bank}</p>
+                </div>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-muted rounded-lg">
+                <div>
+                  <p className="text-xs text-muted-foreground">Chủ tài khoản</p>
+                  <p className="font-medium text-foreground">{bankAccounts[selectedAccount].name}</p>
+                </div>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-muted rounded-lg">
+                <div>
+                  <p className="text-xs text-muted-foreground">Số tài khoản</p>
+                  <p className="font-medium text-wedding-pink-dark">{bankAccounts[selectedAccount].accountNumber}</p>
+                </div>
+                <button
+                  onClick={() => copyToClipboard(bankAccounts[selectedAccount].accountNumber, bankAccounts[selectedAccount].label)}
+                  className="p-2 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors"
+                >
+                  <Copy className="w-4 h-4 text-wedding-pink" />
+                </button>
+              </div>
+            </div>
+            
+            <p className="text-center text-xs text-muted-foreground">
+              Quét mã QR bằng app ngân hàng để chuyển khoản
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
