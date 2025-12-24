@@ -6,8 +6,8 @@ const MusicPlayer = () => {
   const [hasInteracted, setHasInteracted] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // Wedding music URL (royalty-free wedding music)
-  const musicUrl = "https://cdn.pixabay.com/download/audio/2022/02/22/audio_d1718ab41b.mp3?filename=wedding-114554.mp3";
+  // Wedding music URL
+  const musicUrl = "https://res.cloudinary.com/dawsgzrgq/video/upload/v1766567554/SaveTik.io_7275228988103036161_pywbaz.mp3";
 
   useEffect(() => {
     const handleInteraction = () => {
