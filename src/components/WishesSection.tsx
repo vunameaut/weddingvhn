@@ -37,7 +37,7 @@ const bankAccount = {
 
 const WishesSection = () => {
   const { toast } = useToast();
-  const [showQR, setShowQR] = useState(false);
+  
 
   const copyToClipboard = async (text: string) => {
     try {
