@@ -80,17 +80,9 @@ const WishesSection = () => {
   const handleOpenBankApp = (account: BankAccount) => {
     const transferNote = encodeURIComponent('Mừng cưới Minh Đăng - Đỗ Dương');
     const accountName = encodeURIComponent(account.name);
-    const mobileDeepLink = `vietqr://pay?app=${account.bankCode}&ba=${account.accountNumber}@${account.bankCode}&bn=${accountName}&tn=${transferNote}`;
-    const webDeepLink = `https://dl.vietqr.io/pay?app=${account.bankCode}&ba=${account.accountNumber}@${account.bankCode}&bn=${accountName}&tn=${transferNote}`;
+    const webDeepLink = `https://dl.vietqr.io/pay?app=${account.bankCode}&ba=${account.accountNumber}&bn=${accountName}&tn=${transferNote}`;
 
-    window.location.href = mobileDeepLink;
-
-    // Fallback for cases where deep link is blocked by browser/app settings.
-    setTimeout(() => {
-      if (document.visibilityState === 'visible') {
-        window.location.href = webDeepLink;
-      }
-    }, 700);
+    window.location.href = webDeepLink;
   };
 
   return (
