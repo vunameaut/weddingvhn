@@ -37,14 +37,14 @@ const bankAccount = {
 
 const WishesSection = () => {
   const { toast } = useToast();
-  const [selectedAccount, setSelectedAccount] = useState<'groom' | 'bride' | null>(null);
+  const [showQR, setShowQR] = useState(false);
 
-  const copyToClipboard = async (text: string, label: string) => {
+  const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
       toast({
         title: "Đã sao chép!",
-        description: `Số tài khoản ${label} đã được sao chép`,
+        description: "Số tài khoản đã được sao chép",
       });
     } catch (err) {
       toast({
@@ -55,10 +55,10 @@ const WishesSection = () => {
     }
   };
 
-  const getVietQRUrl = (account: typeof bankAccounts.groom) => {
-    const description = encodeURIComponent(`Mung cuoi ${account.name}`);
-    const accountName = encodeURIComponent(account.name);
-    return `https://img.vietqr.io/image/${account.bankCode}-${account.accountNumber}-compact2.png?addInfo=${description}&accountName=${accountName}`;
+  const getVietQRUrl = () => {
+    const description = encodeURIComponent(`Mung cuoi ${bankAccount.name}`);
+    const accountName = encodeURIComponent(bankAccount.name);
+    return `https://img.vietqr.io/image/${bankAccount.bankCode}-${bankAccount.accountNumber}-compact2.png?addInfo=${description}&accountName=${accountName}`;
   };
 
   return (
@@ -79,20 +79,12 @@ const WishesSection = () => {
           </div>
         </ScrollReveal>
 
-        {/* Wishes Grid - 2 columns always */}
+        {/* Wishes Grid */}
         <div className="grid grid-cols-2 gap-2 md:gap-6">
           {wishes.map((wish, index) => (
-            <ScrollReveal
-              key={index}
-              direction="up"
-              delay={getStaggerDelay(index, 0.08)}
-            >
+            <ScrollReveal key={index} direction="up" delay={getStaggerDelay(index, 0.08)}>
               <div className="card-wedding p-2.5 md:p-6 flex flex-col md:flex-row gap-2 md:gap-4 items-start hover:shadow-lg transition-shadow duration-500">
-                <img
-                  src={wish.avatar}
-                  alt={wish.name}
-                  className="w-8 h-8 md:w-12 md:h-12 rounded-full object-cover border-2 border-wedding-pink/30 flex-shrink-0"
-                />
+                <img src={wish.avatar} alt={wish.name} className="w-8 h-8 md:w-12 md:h-12 rounded-full object-cover border-2 border-wedding-pink/30 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <h4 className="font-semibold text-foreground text-xs md:text-base mb-0.5 md:mb-1 truncate">{wish.name}</h4>
                   <p className="text-muted-foreground text-[10px] md:text-sm leading-tight line-clamp-2">{wish.message}</p>
@@ -103,7 +95,7 @@ const WishesSection = () => {
           ))}
         </div>
 
-        {/* Bank transfer info */}
+        {/* Bank transfer info - single account */}
         <ScrollReveal direction="up" delay={0.5} className="mt-6 md:mt-12">
           <div className="card-wedding text-center p-4 md:p-8 max-w-lg mx-auto">
             <h3 className="text-base md:text-xl font-serif text-foreground font-semibold mb-2 md:mb-4">
@@ -113,90 +105,56 @@ const WishesSection = () => {
               Nhấn vào để xem mã QR chuyển khoản:
             </p>
             
-            <div className="grid grid-cols-2 gap-2 md:gap-4">
-              <button
-                onClick={() => setSelectedAccount('groom')}
-                className="p-2 md:p-4 rounded-lg md:rounded-xl bg-muted hover:bg-muted/80 transition-all hover:scale-[1.02] cursor-pointer text-left"
-              >
-                <div className="flex items-center gap-1 mb-1">
-                  <CreditCard className="w-3 h-3 md:w-4 md:h-4 text-wedding-gold" />
-                  <p className="text-[10px] md:text-xs text-muted-foreground">{bankAccounts.groom.label}</p>
-                </div>
-                <p className="font-semibold text-foreground text-xs md:text-base">{bankAccounts.groom.name}</p>
-                <p className="text-[10px] md:text-sm text-muted-foreground">{bankAccounts.groom.bank}</p>
-                <p className="font-medium text-wedding-pink-dark text-xs md:text-base">{bankAccounts.groom.accountNumber}</p>
-              </button>
-              <button
-                onClick={() => setSelectedAccount('bride')}
-                className="p-2 md:p-4 rounded-lg md:rounded-xl bg-muted hover:bg-muted/80 transition-all hover:scale-[1.02] cursor-pointer text-left"
-              >
-                <div className="flex items-center gap-1 mb-1">
-                  <CreditCard className="w-3 h-3 md:w-4 md:h-4 text-wedding-gold" />
-                  <p className="text-[10px] md:text-xs text-muted-foreground">{bankAccounts.bride.label}</p>
-                </div>
-                <p className="font-semibold text-foreground text-xs md:text-base">{bankAccounts.bride.name}</p>
-                <p className="text-[10px] md:text-sm text-muted-foreground">{bankAccounts.bride.bank}</p>
-                <p className="font-medium text-wedding-pink-dark text-xs md:text-base">{bankAccounts.bride.accountNumber}</p>
-              </button>
-            </div>
+            <button
+              onClick={() => setShowQR(true)}
+              className="w-full p-3 md:p-5 rounded-lg md:rounded-xl bg-muted hover:bg-muted/80 transition-all hover:scale-[1.02] cursor-pointer text-center"
+            >
+              <div className="flex items-center justify-center gap-1.5 mb-2">
+                <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-wedding-gold" />
+                <p className="text-xs md:text-sm text-muted-foreground">{bankAccount.label}</p>
+              </div>
+              <p className="font-semibold text-foreground text-sm md:text-lg">{bankAccount.name}</p>
+              <p className="text-xs md:text-sm text-muted-foreground">{bankAccount.bank}</p>
+              <p className="font-medium text-wedding-pink-dark text-sm md:text-lg mt-1">{bankAccount.accountNumber}</p>
+            </button>
           </div>
         </ScrollReveal>
       </div>
 
       {/* QR Code Modal */}
-      {selectedAccount && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
-          onClick={() => setSelectedAccount(null)}
-        >
-          <div 
-            className="bg-background rounded-2xl p-4 md:p-6 max-w-sm w-full shadow-2xl animate-scale-in"
-            onClick={(e) => e.stopPropagation()}
-          >
+      {showQR && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onClick={() => setShowQR(false)}>
+          <div className="bg-background rounded-2xl p-4 md:p-6 max-w-sm w-full shadow-2xl animate-scale-in" onClick={(e) => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-4">
-              <h4 className="font-serif text-lg font-semibold text-foreground">
-                {bankAccounts[selectedAccount].label}
-              </h4>
-              <button
-                onClick={() => setSelectedAccount(null)}
-                className="w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors"
-              >
+              <h4 className="font-serif text-lg font-semibold text-foreground">{bankAccount.label}</h4>
+              <button onClick={() => setShowQR(false)} className="w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors">
                 <X className="w-4 h-4" />
               </button>
             </div>
             
-            {/* QR Code */}
             <div className="bg-white p-3 rounded-xl mb-4">
-              <img
-                src={getVietQRUrl(bankAccounts[selectedAccount])}
-                alt="QR Code"
-                className="w-full aspect-square object-contain"
-              />
+              <img src={getVietQRUrl()} alt="QR Code" className="w-full aspect-square object-contain" />
             </div>
             
-            {/* Account Info */}
             <div className="space-y-2 mb-4">
               <div className="flex justify-between items-center p-2 bg-muted rounded-lg">
                 <div>
                   <p className="text-xs text-muted-foreground">Ngân hàng</p>
-                  <p className="font-medium text-foreground">{bankAccounts[selectedAccount].bank}</p>
+                  <p className="font-medium text-foreground">{bankAccount.bank}</p>
                 </div>
               </div>
               <div className="flex justify-between items-center p-2 bg-muted rounded-lg">
                 <div>
                   <p className="text-xs text-muted-foreground">Chủ tài khoản</p>
-                  <p className="font-medium text-foreground">{bankAccounts[selectedAccount].name}</p>
+                  <p className="font-medium text-foreground">{bankAccount.name}</p>
                 </div>
               </div>
               <div className="flex justify-between items-center p-2 bg-muted rounded-lg">
                 <div>
                   <p className="text-xs text-muted-foreground">Số tài khoản</p>
-                  <p className="font-medium text-wedding-pink-dark">{bankAccounts[selectedAccount].accountNumber}</p>
+                  <p className="font-medium text-wedding-pink-dark">{bankAccount.accountNumber}</p>
                 </div>
-                <button
-                  onClick={() => copyToClipboard(bankAccounts[selectedAccount].accountNumber, bankAccounts[selectedAccount].label)}
-                  className="p-2 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors"
-                >
+                <button onClick={() => copyToClipboard(bankAccount.accountNumber)} className="p-2 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors">
                   <Copy className="w-4 h-4 text-wedding-pink" />
                 </button>
               </div>
