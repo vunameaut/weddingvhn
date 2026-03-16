@@ -27,21 +27,12 @@ const wishes = [
 ];
 
 // Bank account info
-const bankAccounts = {
-  groom: {
-    name: "Nguyễn Văn Minh",
-    bank: "Vietcombank",
-    bankCode: "VCB",
-    accountNumber: "1234567890",
-    label: "Chú rể"
-  },
-  bride: {
-    name: "Lê Thu Hương",
-    bank: "Techcombank",
-    bankCode: "TCB",
-    accountNumber: "0987654321",
-    label: "Cô dâu"
-  }
+const bankAccount = {
+  name: "DO THI DUONG",
+  bank: "MB Bank",
+  bankCode: "MB",
+  accountNumber: "0399159618",
+  label: "Cô dâu"
 };
 
 const WishesSection = () => {
