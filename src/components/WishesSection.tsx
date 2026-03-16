@@ -55,11 +55,6 @@ const WishesSection = () => {
     }
   };
 
-  const getVietQRUrl = () => {
-    const description = encodeURIComponent(`Mung cuoi ${bankAccount.name}`);
-    const accountName = encodeURIComponent(bankAccount.name);
-    return `https://img.vietqr.io/image/${bankAccount.bankCode}-${bankAccount.accountNumber}-compact2.png?addInfo=${description}&accountName=${accountName}`;
-  };
 
   return (
     <section className="py-12 md:py-28 px-3 md:px-4 bg-secondary relative overflow-hidden">
