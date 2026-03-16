@@ -54,9 +54,9 @@ const StickyCountdown = () => {
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           {/* Names */}
           <div className="hidden sm:flex items-center gap-2">
-            <span className="font-script text-xl md:text-2xl text-wedding-pink-dark">Minh</span>
+            <span className="font-script text-xl md:text-2xl text-wedding-pink-dark">Minh Đăng</span>
             <Heart className="w-4 h-4 text-wedding-pink fill-wedding-pink animate-heart-beat" />
-            <span className="font-script text-xl md:text-2xl text-wedding-pink-dark">Hương</span>
+            <span className="font-script text-xl md:text-2xl text-wedding-pink-dark">Đỗ Dương</span>
           </div>
 
           {/* Countdown */}
