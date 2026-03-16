@@ -55,6 +55,17 @@ const WishesSection = () => {
     }
   };
 
+  const handleOpenBankApp = () => {
+    const transferNote = encodeURIComponent('Mung cuoi Minh Dang - Do Duong');
+    const accountName = encodeURIComponent(bankAccount.name);
+    const deeplink = `https://dl.vietqr.io/pay?app=mb&ba=${bankAccount.accountNumber}@mb&bn=${accountName}&tn=${transferNote}`;
+
+    window.open(deeplink, '_self');
+
+    setTimeout(() => {
+      window.open('https://online.mbbank.com.vn', '_blank');
+    }, 1200);
+  };
 
   return (
     <section className="py-12 md:py-28 px-3 md:px-4 bg-secondary relative overflow-hidden">
