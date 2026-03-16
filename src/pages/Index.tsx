@@ -76,9 +76,7 @@ const Index = () => {
           <>
             <CoupleSection />
             <EventDetails />
-            <LoveStory />
             <PhotoAlbum />
-            <VideoSection />
             <RSVPForm />
             <WishesSection />
             <Footer />
