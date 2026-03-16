@@ -46,7 +46,7 @@ const bankAccounts: BankAccount[] = [
   {
     name: 'DO THI DUONG',
     bank: 'MB Bank',
-    bankCode: 'mb',
+    bankCode: '970422',
     accountNumber: '0399159618',
     label: 'Cô dâu',
   },
