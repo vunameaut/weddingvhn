@@ -66,7 +66,6 @@ const bankApps: BankApp[] = [
 const WishesSection = () => {
   const { toast } = useToast();
   const [selectedBankApp, setSelectedBankApp] = useState<string>('mb');
-  const [amount, setAmount] = useState<string>('');
   
 
   const copyToClipboard = async (text: string) => {
@@ -96,23 +95,21 @@ const WishesSection = () => {
     await copyToClipboard(transferInfo);
   };
 
-  const handleOpenBankApp = (account: BankAccount, appCode: string) => {
-    const transferNote = encodeURIComponent('Mừng cưới Minh Đăng - Đỗ Dương');
-    const accountName = encodeURIComponent(account.name);
-    const beneficiary = `${account.accountNumber}@${account.bankCode}`;
-    const amountValue = amount ? `&am=${amount}` : '';
-    const mobileDeepLink = `vietqr://pay?app=${appCode}&ba=${beneficiary}&bn=${accountName}&tn=${transferNote}${amountValue}`;
-    const webDeepLink = `https://dl.vietqr.io/pay?app=${appCode}&ba=${beneficiary}&bn=${accountName}&tn=${transferNote}${amountValue}`;
+    const handleOpenBankApp = (account: BankAccount, appCode: string) => {
 
-    window.location.href = mobileDeepLink;
+      const transferNote = encodeURIComponent('Mừng cưới Minh Đăng - Đỗ Dương');
 
-    // Fallback when browser cannot open app scheme directly.
-    setTimeout(() => {
-      if (document.visibilityState === 'visible') {
-        window.location.href = webDeepLink;
-      }
-    }, 700);
-  };
+      const accountName = encodeURIComponent(account.name);
+
+      const beneficiary = `${account.accountNumber}@${account.bankCode}`;
+
+      const webDeepLink = `https://dl.vietqr.io/pay?app=${appCode}&ba=${beneficiary}&bn=${accountName}&tn=${transferNote}`;
+
+  
+
+      window.location.href = webDeepLink;
+
+    };
 
   return (
     <section className="py-12 md:py-28 px-3 md:px-4 bg-secondary relative overflow-hidden">
@@ -159,16 +156,6 @@ const WishesSection = () => {
             </p>
 
             <div className="mb-3 md:mb-4 text-left">
-              <label htmlFor="bank-app" className="block text-xs md:text-sm text-muted-foreground mb-1.5">
-                Số tiền mừng
-              </label>
-              <input
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="Nhập số tiền"
-                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-wedding-pink/40 mb-3"
-              />
               <label htmlFor="bank-app" className="block text-xs md:text-sm text-muted-foreground mb-1.5">
                 App ngân hàng để mở
               </label>
