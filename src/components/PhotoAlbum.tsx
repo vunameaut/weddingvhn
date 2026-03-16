@@ -1,14 +1,26 @@
 import { ScrollReveal, getStaggerDelay } from '@/hooks/useScrollAnimation';
 import { Heart } from 'lucide-react';
 import { useState } from 'react';
+import album1 from '@/assets/album1.jpg';
+import album2 from '@/assets/album2.jpg';
+import album3 from '@/assets/album3.jpg';
+import album4 from '@/assets/album4.jpg';
+import album5 from '@/assets/album5.jpg';
+import album6 from '@/assets/album6.jpg';
+import album7 from '@/assets/album7.jpg';
+import album8 from '@/assets/album8.jpg';
+import album9 from '@/assets/album9.jpg';
 
 const photos = [
-  { src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=800&fit=crop", alt: "Ảnh cưới 1", tall: true },
-  { src: "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=600&h=400&fit=crop", alt: "Ảnh cưới 2", tall: false },
-  { src: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=600&h=400&fit=crop", alt: "Ảnh cưới 3", tall: false },
-  { src: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&h=800&fit=crop", alt: "Ảnh cưới 4", tall: true },
-  { src: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&h=400&fit=crop", alt: "Ảnh cưới 5", tall: false },
-  { src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&h=400&fit=crop", alt: "Ảnh cưới 6", tall: false },
+  { src: album1, alt: "Ảnh cưới 1" },
+  { src: album2, alt: "Ảnh cưới 2" },
+  { src: album3, alt: "Ảnh cưới 3" },
+  { src: album4, alt: "Ảnh cưới 4" },
+  { src: album5, alt: "Ảnh cưới 5" },
+  { src: album6, alt: "Ảnh cưới 6" },
+  { src: album7, alt: "Ảnh cưới 7" },
+  { src: album8, alt: "Ảnh cưới 8" },
+  { src: album9, alt: "Ảnh cưới 9" },
 ];
 
 const PhotoAlbum = () => {
