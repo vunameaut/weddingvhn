@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ScrollReveal, getStaggerDelay } from '@/hooks/useScrollAnimation';
-import { Heart, MessageCircleHeart, Copy, CreditCard } from 'lucide-react';
+import { Heart, MessageCircleHeart, Copy, CreditCard, Download } from 'lucide-react';
 
 import { useToast } from '@/hooks/use-toast';
 
@@ -93,6 +93,44 @@ const WishesSection = () => {
     ].join('\n');
 
     await copyToClipboard(transferInfo);
+  };
+
+  const getVietQrImageUrl = (account: BankAccount) => {
+    const transferNote = encodeURIComponent('Mung cuoi Minh Dang - Do Duong');
+    const accountName = encodeURIComponent(account.name);
+    return `https://img.vietqr.io/image/${account.bankCode}-${account.accountNumber}-compact2.png?addInfo=${transferNote}&accountName=${accountName}`;
+  };
+
+  const handleSaveQr = async (account: BankAccount) => {
+    const qrUrl = getVietQrImageUrl(account);
+
+    try {
+      const response = await fetch(qrUrl);
+      if (!response.ok) {
+        throw new Error('Khong the tai QR');
+      }
+
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = objectUrl;
+      link.download = `qr-mung-cuoi-${account.accountNumber}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(objectUrl);
+
+      toast({
+        title: 'Đã lưu QR!',
+        description: 'Mã QR chuyển khoản đã được tải xuống',
+      });
+    } catch {
+      window.open(qrUrl, '_blank', 'noopener,noreferrer');
+      toast({
+        title: 'Không thể tự động tải',
+        description: 'Đã mở ảnh QR, bạn có thể lưu thủ công',
+      });
+    }
   };
 
     const handleOpenBankApp = (account: BankAccount, appCode: string) => {
@@ -189,13 +227,20 @@ const WishesSection = () => {
                     <p className="font-medium text-wedding-pink-dark text-sm md:text-lg mt-1">{account.accountNumber}</p>
                   </button>
 
-                  <div className="mt-3 grid grid-cols-1 gap-2">
+                  <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2">
                     <button
                       onClick={() => copyTransferInfo(account)}
                       className="w-full p-2.5 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors inline-flex items-center justify-center gap-2 text-sm text-wedding-pink-dark"
                     >
                       <Copy className="w-4 h-4" />
                       Sao chép đầy đủ thông tin
+                    </button>
+                    <button
+                      onClick={() => handleSaveQr(account)}
+                      className="w-full p-2.5 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors inline-flex items-center justify-center gap-2 text-sm text-wedding-pink-dark"
+                    >
+                      <Download className="w-4 h-4" />
+                      Lưu QR
                     </button>
                   </div>
                 </div>

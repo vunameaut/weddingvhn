@@ -1,30 +1,36 @@
 import { useState } from 'react';
-import { ScrollReveal, getStaggerDelay } from '@/hooks/useScrollAnimation';
-import { Heart, MessageCircleHeart, Copy, QrCode, ExternalLink } from 'lucide-react';
+import { ScrollReveal } from '@/hooks/useScrollAnimation';
+import { Heart, MessageCircleHeart, Copy, QrCode, ExternalLink, Download, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import OpeningScreen from '@/components/OpeningScreen';
+import FloatingParticles from '@/components/FloatingParticles';
+import MusicPlayer from '@/components/MusicPlayer';
+import CoupleSection from '@/components/CoupleSection';
+import EventDetails from '@/components/EventDetails';
+import PhotoAlbum from '@/components/PhotoAlbum';
+import RSVPForm from '@/components/RSVPForm';
+import Footer from '@/components/Footer';
 
 const wishes = [
   {
     name: "Nguyễn Văn An",
-    message: "Chúc hai bạn trăm năm hạnh phúc!",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
+    message: "Chúc hai bạn trăm năm hạnh phúc!"
   },
   {
     name: "Trần Thị Bình",
-    message: "Hạnh phúc mãi bên nhau nhé!",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
+    message: "Hạnh phúc mãi bên nhau nhé!"
   },
   {
     name: "Lê Minh Châu",
-    message: "Chúc hai bạn luôn yêu thương nhau!",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
+    message: "Chúc hai bạn luôn yêu thương nhau!"
   },
   {
     name: "Phạm Thị Dung",
-    message: "Tình yêu bền vững như kim cương!",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face"
+    message: "Tình yêu bền vững như kim cương!"
   },
 ];
+
+const marqueeWishes = [...wishes, ...wishes];
 
 type BankAccount = {
   name: string;
@@ -101,6 +107,30 @@ const WishesSection = () => {
     window.open(url, '_blank');
   };
 
+  const handleSaveQr = async (account: BankAccount) => {
+    const qrUrl = getVietQRUrl(account);
+
+    try {
+      const response = await fetch(qrUrl);
+      if (!response.ok) throw new Error('download failed');
+
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = objectUrl;
+      link.download = `qr-mung-cuoi-${account.accountNumber}.jpg`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(objectUrl);
+
+      toast({ title: 'Đã lưu QR!', description: 'Mã QR chuyển khoản đã được tải xuống' });
+    } catch {
+      window.open(qrUrl, '_blank', 'noopener,noreferrer');
+      toast({ title: 'Không thể tự động tải', description: 'Đã mở ảnh QR để bạn lưu thủ công' });
+    }
+  };
+
   return (
     <section className="py-12 md:py-28 px-3 md:px-4 bg-secondary relative overflow-hidden">
       <div className="absolute inset-0 bg-pattern-floral opacity-20" />
@@ -119,25 +149,20 @@ const WishesSection = () => {
           </div>
         </ScrollReveal>
 
-        {/* Wishes Grid */}
-        <div className="grid grid-cols-2 gap-2 md:gap-6">
-          {wishes.map((wish, index) => (
-            <ScrollReveal key={index} direction="up" delay={getStaggerDelay(index, 0.08)}>
-              <div className="card-wedding p-2.5 md:p-6 flex flex-col md:flex-row gap-2 md:gap-4 items-start hover:shadow-lg transition-shadow duration-500">
-                <img
-                  src={wish.avatar}
-                  alt={wish.name}
-                  className="w-8 h-8 md:w-12 md:h-12 rounded-full object-cover border-2 border-wedding-pink/30 flex-shrink-0"
-                />
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-foreground text-xs md:text-base mb-0.5 md:mb-1 truncate">{wish.name}</h4>
-                  <p className="text-muted-foreground text-[10px] md:text-sm leading-tight line-clamp-2">{wish.message}</p>
-                </div>
-                <Heart className="hidden md:block w-4 h-4 text-wedding-pink fill-wedding-pink flex-shrink-0 mt-1" />
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
+        {/* Wishes Marquee */}
+        <ScrollReveal direction="up">
+          <div className="wish-marquee-shell">
+            <div className="wish-marquee-track">
+              {marqueeWishes.map((wish, index) => (
+                <article key={`${wish.name}-${index}`} className="wish-marquee-item">
+                  <h4 className="font-semibold text-foreground text-sm md:text-base">{wish.name}</h4>
+                  <p className="text-muted-foreground text-xs md:text-sm mt-1">{wish.message}</p>
+                  <Heart className="w-3.5 h-3.5 mt-2 text-wedding-pink fill-wedding-pink/50" />
+                </article>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
 
         {/* Bank Transfer */}
         <ScrollReveal direction="up" delay={0.5} className="mt-6 md:mt-12">
@@ -223,8 +248,16 @@ const WishesSection = () => {
                       </button>
 
                       <button
-                        onClick={() => openBankDeepLink(account, selectedBankApp)}
+                        onClick={() => handleSaveQr(account)}
                         className="p-2.5 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors inline-flex items-center justify-center gap-1.5 text-xs md:text-sm text-wedding-pink-dark"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                        Lưu QR
+                      </button>
+
+                      <button
+                        onClick={() => openBankDeepLink(account, selectedBankApp)}
+                        className="col-span-2 p-2.5 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors inline-flex items-center justify-center gap-1.5 text-xs md:text-sm text-wedding-pink-dark"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
                         Mở app
@@ -242,4 +275,51 @@ const WishesSection = () => {
   );
 };
 
-export default WishesSection;
+const Index = () => {
+  const [isInvitationOpen, setIsInvitationOpen] = useState(false);
+
+  if (!isInvitationOpen) {
+    return <OpeningScreen onOpen={() => setIsInvitationOpen(true)} />;
+  }
+
+  return (
+    <main className="relative min-h-screen bg-background">
+      <FloatingParticles />
+      <MusicPlayer />
+
+      <section className="min-h-screen flex items-center justify-center bg-gradient-romantic relative px-4">
+        <div className="text-center relative z-10">
+          <ScrollReveal direction="up">
+            <p className="text-wedding-pink font-script text-xl md:text-2xl mb-4">Trân trọng thông báo</p>
+          </ScrollReveal>
+          <ScrollReveal direction="left" delay={0.2}>
+            <h1 className="font-script text-6xl md:text-8xl leading-none text-wedding-pink-dark drop-shadow-sm">Minh Đăng</h1>
+          </ScrollReveal>
+          <ScrollReveal direction="up" delay={0.3}>
+            <p className="text-4xl md:text-5xl font-script text-wedding-gold my-3 md:my-4">&</p>
+          </ScrollReveal>
+          <ScrollReveal direction="right" delay={0.2}>
+            <h1 className="font-script text-6xl md:text-8xl leading-none text-wedding-pink-dark drop-shadow-sm">Đỗ Dương</h1>
+          </ScrollReveal>
+          <ScrollReveal direction="up" delay={0.5}>
+            <p className="text-xl text-muted-foreground mt-6 italic">"Yêu là khi ta muốn cùng nhau đi hết cuộc đời"</p>
+            <p className="text-2xl font-serif text-primary mt-4">29 . 03 . 2026</p>
+          </ScrollReveal>
+          <ScrollReveal direction="up" delay={0.7} className="mt-12 animate-bounce">
+            <ChevronDown className="w-8 h-8 text-wedding-pink mx-auto" />
+            <p className="text-sm text-muted-foreground">Cuộn xuống</p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      <CoupleSection />
+      <EventDetails />
+      <PhotoAlbum />
+      <WishesSection />
+      <RSVPForm />
+      <Footer />
+    </main>
+  );
+};
+
+export default Index;
