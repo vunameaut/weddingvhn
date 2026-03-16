@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ScrollReveal, getStaggerDelay } from '@/hooks/useScrollAnimation';
 import { Heart, MessageCircleHeart, Copy, CreditCard } from 'lucide-react';
 
@@ -35,6 +36,11 @@ type BankAccount = {
   label: string;
 };
 
+type BankApp = {
+  label: string;
+  appCode: string;
+};
+
 // Bank account info (co the them nhieu tai khoan neu can)
 const bankAccounts: BankAccount[] = [
   {
@@ -46,8 +52,20 @@ const bankAccounts: BankAccount[] = [
   },
 ];
 
+const bankApps: BankApp[] = [
+  { label: 'MB Bank', appCode: 'mb' },
+  { label: 'Vietcombank', appCode: 'vcb' },
+  { label: 'Techcombank', appCode: 'tcb' },
+  { label: 'BIDV', appCode: 'bidv' },
+  { label: 'VietinBank', appCode: 'icb' },
+  { label: 'VPBank', appCode: 'vpb' },
+  { label: 'ACB', appCode: 'acb' },
+  { label: 'TPBank', appCode: 'tpb' },
+];
+
 const WishesSection = () => {
   const { toast } = useToast();
+  const [selectedBankApp, setSelectedBankApp] = useState<string>('mb');
   
 
   const copyToClipboard = async (text: string) => {
@@ -77,10 +95,11 @@ const WishesSection = () => {
     await copyToClipboard(transferInfo);
   };
 
-  const handleOpenBankApp = (account: BankAccount) => {
+  const handleOpenBankApp = (account: BankAccount, appCode: string) => {
     const transferNote = encodeURIComponent('Mừng cưới Minh Đăng - Đỗ Dương');
     const accountName = encodeURIComponent(account.name);
-    const webDeepLink = `https://dl.vietqr.io/pay?app=${account.bankCode}&ba=${account.accountNumber}&bn=${accountName}&tn=${transferNote}`;
+    const beneficiary = `${account.accountNumber}@${account.bankCode}`;
+    const webDeepLink = `https://dl.vietqr.io/pay?app=${appCode}&ba=${beneficiary}&bn=${accountName}&tn=${transferNote}`;
 
     window.location.href = webDeepLink;
   };
@@ -126,14 +145,32 @@ const WishesSection = () => {
               Mừng Cưới
             </h3>
             <p className="text-muted-foreground mb-4 md:mb-6 text-xs md:text-sm">
-              Bấm vào tài khoản để mở màn hình chuyển khoản ngân hàng với sẵn thông tin:
+              Chọn app ngân hàng bạn dùng, rồi bấm vào tài khoản để mở chuyển khoản:
             </p>
+
+            <div className="mb-3 md:mb-4 text-left">
+              <label htmlFor="bank-app" className="block text-xs md:text-sm text-muted-foreground mb-1.5">
+                App ngân hàng để mở
+              </label>
+              <select
+                id="bank-app"
+                value={selectedBankApp}
+                onChange={(event) => setSelectedBankApp(event.target.value)}
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-wedding-pink/40"
+              >
+                {bankApps.map((app) => (
+                  <option key={app.appCode} value={app.appCode}>
+                    {app.label}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             <div className="space-y-3">
               {bankAccounts.map((account) => (
                 <div key={`${account.bank}-${account.accountNumber}`} className="rounded-lg md:rounded-xl bg-muted p-3 md:p-5 text-center">
                   <button
-                    onClick={() => handleOpenBankApp(account)}
+                    onClick={() => handleOpenBankApp(account, selectedBankApp)}
                     className="w-full hover:opacity-90 transition-opacity"
                   >
                     <div className="flex items-center justify-center gap-1.5 mb-2">
