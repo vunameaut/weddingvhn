@@ -71,18 +71,26 @@ const WishesSection = () => {
       `Ngân hàng: ${account.bank}`,
       `Chủ tài khoản: ${account.name}`,
       `Số tài khoản: ${account.accountNumber}`,
-      'Nội dung: Mừng cưới Minh Đăng - Do Duong',
+      'Nội dung: Mừng cưới Minh Đăng - Đỗ Dương',
     ].join('\n');
 
     await copyToClipboard(transferInfo);
   };
 
   const handleOpenBankApp = (account: BankAccount) => {
-    const transferNote = encodeURIComponent('Mung cuoi Minh Dang - Do Duong');
+    const transferNote = encodeURIComponent('Mừng cưới Minh Đăng - Đỗ Dương');
     const accountName = encodeURIComponent(account.name);
-    const qrUrl = `https://img.vietqr.io/image/${account.bankCode}-${account.accountNumber}-compact2.png?addInfo=${transferNote}&accountName=${accountName}`;
+    const mobileDeepLink = `vietqr://pay?app=${account.bankCode}&ba=${account.accountNumber}@${account.bankCode}&bn=${accountName}&tn=${transferNote}`;
+    const webDeepLink = `https://dl.vietqr.io/pay?app=${account.bankCode}&ba=${account.accountNumber}@${account.bankCode}&bn=${accountName}&tn=${transferNote}`;
 
-    window.open(qrUrl, '_blank', 'noopener,noreferrer');
+    window.location.href = mobileDeepLink;
+
+    // Fallback for cases where deep link is blocked by browser/app settings.
+    setTimeout(() => {
+      if (document.visibilityState === 'visible') {
+        window.location.href = webDeepLink;
+      }
+    }, 700);
   };
 
   return (
@@ -126,7 +134,7 @@ const WishesSection = () => {
               Mừng Cưới
             </h3>
             <p className="text-muted-foreground mb-4 md:mb-6 text-xs md:text-sm">
-              Bấm vào tài khoản để mở mã QR chuyển khoản (dùng được với mọi app ngân hàng):
+              Bấm vào tài khoản để mở màn hình chuyển khoản ngân hàng với sẵn thông tin:
             </p>
 
             <div className="space-y-3">
