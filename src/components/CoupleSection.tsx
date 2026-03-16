@@ -40,9 +40,7 @@ const CoupleSection = () => {
               <div className="hidden md:block absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-wedding-gold rounded-bl-lg opacity-60" />
               <div className="hidden md:block absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-wedding-gold rounded-br-lg opacity-60" />
             </div>
-            <h3 className="font-script text-xl sm:text-2xl md:text-5xl text-wedding-pink-dark mb-0.5 md:mb-2">Văn Minh</h3>
-            <p className="text-[10px] sm:text-xs md:text-base text-muted-foreground leading-tight">Con trai ông <span className="font-semibold text-foreground">Nguyễn Văn A</span></p>
-            <p className="text-[10px] sm:text-xs md:text-base text-muted-foreground leading-tight">và bà <span className="font-semibold text-foreground">Trần Thị B</span></p>
+            <h3 className="font-script text-xl sm:text-2xl md:text-5xl text-wedding-pink-dark mb-0.5 md:mb-2">Minh Đăng</h3>
           </ScrollReveal>
 
           {/* Heart connector */}
@@ -71,9 +69,7 @@ const CoupleSection = () => {
               <div className="hidden md:block absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-wedding-gold rounded-bl-lg opacity-60" />
               <div className="hidden md:block absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-wedding-gold rounded-br-lg opacity-60" />
             </div>
-            <h3 className="font-script text-xl sm:text-2xl md:text-5xl text-wedding-pink-dark mb-0.5 md:mb-2">Thu Hương</h3>
-            <p className="text-[10px] sm:text-xs md:text-base text-muted-foreground leading-tight">Con gái ông <span className="font-semibold text-foreground">Lê Văn C</span></p>
-            <p className="text-[10px] sm:text-xs md:text-base text-muted-foreground leading-tight">và bà <span className="font-semibold text-foreground">Phạm Thị D</span></p>
+            <h3 className="font-script text-xl sm:text-2xl md:text-5xl text-wedding-pink-dark mb-0.5 md:mb-2">Đỗ Dương</h3>
           </ScrollReveal>
         </div>
 

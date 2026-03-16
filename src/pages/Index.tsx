@@ -42,13 +42,13 @@ const Index = () => {
                   <p className="text-wedding-pink font-script text-xl md:text-2xl mb-4">Trân trọng thông báo</p>
                 </ScrollReveal>
                 <ScrollReveal direction="left" delay={0.2}>
-                  <h1 className="text-5xl md:text-7xl font-serif text-foreground font-semibold">Văn Minh</h1>
+                  <h1 className="text-5xl md:text-7xl font-serif text-foreground font-semibold">Minh Đăng</h1>
                 </ScrollReveal>
                 <ScrollReveal direction="up" delay={0.3}>
                   <p className="text-3xl font-script text-wedding-gold my-4">&</p>
                 </ScrollReveal>
                 <ScrollReveal direction="right" delay={0.2}>
-                  <h1 className="text-5xl md:text-7xl font-serif text-foreground font-semibold">Thu Hương</h1>
+                  <h1 className="text-5xl md:text-7xl font-serif text-foreground font-semibold">Đỗ Dương</h1>
                 </ScrollReveal>
                 <ScrollReveal direction="up" delay={0.5}>
                   <p className="text-xl text-muted-foreground mt-6 italic">"Yêu là khi ta muốn cùng nhau đi hết cuộc đời"</p>
@@ -64,7 +64,7 @@ const Index = () => {
               <div className="opacity-50">
                 <p className="text-wedding-pink font-script text-xl md:text-2xl mb-4">We are Getting Married</p>
                 <h1 className="text-5xl md:text-7xl font-serif text-foreground font-semibold mb-2">
-                  Minh <span className="text-wedding-pink">&</span> Hương
+                  Minh Đăng <span className="text-wedding-pink">&</span> Đỗ Dương
                 </h1>
                 <p className="text-2xl md:text-3xl font-script text-wedding-gold">15.02.2025</p>
               </div>
