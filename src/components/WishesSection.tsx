@@ -80,17 +80,9 @@ const WishesSection = () => {
   const handleOpenBankApp = (account: BankAccount) => {
     const transferNote = encodeURIComponent('Mung cuoi Minh Dang - Do Duong');
     const accountName = encodeURIComponent(account.name);
-    const bankAccountRef = `${account.accountNumber}@${account.bankCode}`;
-    const mobileDeepLink = `vietqr://pay?ba=${bankAccountRef}&bn=${accountName}&tn=${transferNote}`;
-    const webDeepLink = `https://dl.vietqr.io/pay?ba=${bankAccountRef}&bn=${accountName}&tn=${transferNote}`;
+    const qrUrl = `https://img.vietqr.io/image/${account.bankCode}-${account.accountNumber}-compact2.png?addInfo=${transferNote}&accountName=${accountName}`;
 
-    window.location.href = mobileDeepLink;
-
-    setTimeout(() => {
-      if (document.visibilityState === 'visible') {
-        window.location.href = webDeepLink;
-      }
-    }, 700);
+    window.open(qrUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -134,7 +126,7 @@ const WishesSection = () => {
               Mừng Cưới
             </h3>
             <p className="text-muted-foreground mb-4 md:mb-6 text-xs md:text-sm">
-              Bạn có thể chuyển từ mọi app ngân hàng, thông tin đầy đủ bên dưới:
+              Bấm vào tài khoản để mở mã QR chuyển khoản (dùng được với mọi app ngân hàng):
             </p>
 
             <div className="space-y-3">
@@ -153,14 +145,7 @@ const WishesSection = () => {
                     <p className="font-medium text-wedding-pink-dark text-sm md:text-lg mt-1">{account.accountNumber}</p>
                   </button>
 
-                  <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2">
-                    <button
-                      onClick={() => copyToClipboard(account.accountNumber)}
-                      className="w-full p-2.5 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors inline-flex items-center justify-center gap-2 text-sm text-wedding-pink-dark"
-                    >
-                      <Copy className="w-4 h-4" />
-                      Sao chép số tài khoản
-                    </button>
+                  <div className="mt-3 grid grid-cols-1 gap-2">
                     <button
                       onClick={() => copyTransferInfo(account)}
                       className="w-full p-2.5 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors inline-flex items-center justify-center gap-2 text-sm text-wedding-pink-dark"
