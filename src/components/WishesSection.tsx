@@ -126,51 +126,6 @@ const WishesSection = () => {
         </ScrollReveal>
       </div>
 
-      {/* QR Code Modal */}
-      {showQR && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onClick={() => setShowQR(false)}>
-          <div className="bg-background rounded-2xl p-4 md:p-6 max-w-sm w-full shadow-2xl animate-scale-in" onClick={(e) => e.stopPropagation()}>
-            <div className="flex justify-between items-center mb-4">
-              <h4 className="font-serif text-lg font-semibold text-foreground">{bankAccount.label}</h4>
-              <button onClick={() => setShowQR(false)} className="w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors">
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-            
-            <div className="bg-white p-3 rounded-xl mb-4">
-              <img src={bankQr} alt="QR MB Bank của cô dâu" className="w-full aspect-square object-contain" />
-            </div>
-            
-            <div className="space-y-2 mb-4">
-              <div className="flex justify-between items-center p-2 bg-muted rounded-lg">
-                <div>
-                  <p className="text-xs text-muted-foreground">Ngân hàng</p>
-                  <p className="font-medium text-foreground">{bankAccount.bank}</p>
-                </div>
-              </div>
-              <div className="flex justify-between items-center p-2 bg-muted rounded-lg">
-                <div>
-                  <p className="text-xs text-muted-foreground">Chủ tài khoản</p>
-                  <p className="font-medium text-foreground">{bankAccount.name}</p>
-                </div>
-              </div>
-              <div className="flex justify-between items-center p-2 bg-muted rounded-lg">
-                <div>
-                  <p className="text-xs text-muted-foreground">Số tài khoản</p>
-                  <p className="font-medium text-wedding-pink-dark">{bankAccount.accountNumber}</p>
-                </div>
-                <button onClick={() => copyToClipboard(bankAccount.accountNumber)} className="p-2 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors">
-                  <Copy className="w-4 h-4 text-wedding-pink" />
-                </button>
-              </div>
-            </div>
-            
-            <p className="text-center text-xs text-muted-foreground">
-              Quét mã QR bằng app ngân hàng để chuyển khoản
-            </p>
-          </div>
-        </div>
-      )}
     </section>
   );
 };
