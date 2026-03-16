@@ -12,7 +12,7 @@ const StickyCountdown = () => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isVisible, setIsVisible] = useState(false);
 
-  const weddingDate = new Date('2025-02-15T17:30:00');
+  const weddingDate = new Date('2026-03-29T16:00:00');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,9 +54,9 @@ const StickyCountdown = () => {
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           {/* Names */}
           <div className="hidden sm:flex items-center gap-2">
-            <span className="font-script text-xl md:text-2xl text-wedding-pink-dark">Minh</span>
+            <span className="font-script text-xl md:text-2xl text-wedding-pink-dark">Minh Đăng</span>
             <Heart className="w-4 h-4 text-wedding-pink fill-wedding-pink animate-heart-beat" />
-            <span className="font-script text-xl md:text-2xl text-wedding-pink-dark">Hương</span>
+            <span className="font-script text-xl md:text-2xl text-wedding-pink-dark">Đỗ Dương</span>
           </div>
 
           {/* Countdown */}
@@ -72,7 +72,7 @@ const StickyCountdown = () => {
 
           {/* Date */}
           <div className="hidden md:block text-sm text-muted-foreground font-body">
-            15.02.2025
+            29.03.2026
           </div>
         </div>
       </div>

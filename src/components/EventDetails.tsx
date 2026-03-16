@@ -3,17 +3,17 @@ import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import StickyCountdown from './StickyCountdown';
 
 const EventDetails = () => {
-  const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=Trung+tâm+Hội+nghị+Tiệc+cưới+White+Palace,+Ho+Chi+Minh+City";
+  const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=Khu+3+Yên+Hòa+Đại+Đình+Phú+Thọ";
   
-  const weddingDate = new Date(2025, 1, 15, 17, 30); // February 15, 2025, 17:30
+  const weddingDate = new Date(2026, 2, 29, 16, 0); // March 29, 2026, 16:00
   
   // Generate calendar grid for February 2025
   const generateCalendar = () => {
-    const year = 2025;
-    const month = 1; // February (0-indexed)
+    const year = 2026;
+    const month = 2; // March (0-indexed)
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const weddingDay = 15;
+    const weddingDay = 29;
     
     const days = [];
     
@@ -35,13 +35,13 @@ const EventDetails = () => {
 
   // Add to Calendar function - works for both iOS and Android
   const handleAddToCalendar = () => {
-    const title = encodeURIComponent('Tiệc Cưới - Văn Minh & Thu Hương');
-    const location = encodeURIComponent('White Palace, Phạm Văn Đồng, TP.HCM');
+    const title = encodeURIComponent('Tiệc Cưới - Minh Đăng & Đỗ Dương');
+    const location = encodeURIComponent('Khu 3, Yên Hòa, Đại Đình, Phú Thọ');
     const details = encodeURIComponent('Trân trọng kính mời quý khách đến dự tiệc cưới của chúng tôi');
     
     // Format: YYYYMMDDTHHmmss
-    const startDate = '20250215T173000';
-    const endDate = '20250215T210000';
+    const startDate = '20260329T160000';
+    const endDate = '20260329T200000';
     
     // Try Google Calendar first (works on most devices)
     const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}`;
@@ -86,9 +86,9 @@ const EventDetails = () => {
               
               <div className="flex-1 text-foreground">
                 <div className="p-2 md:p-4 bg-wedding-cream/50 rounded-lg md:rounded-xl">
-                  <p className="font-semibold text-sm md:text-lg mb-0.5 md:mb-1">White Palace</p>
-                  <p className="text-muted-foreground text-[10px] md:text-sm hidden sm:block">Trung tâm Hội nghị & Tiệc cưới</p>
-                  <p className="text-muted-foreground text-[10px] md:text-sm mt-1 md:mt-2 line-clamp-2">194 Hoàng Văn Thụ, Phú Nhuận</p>
+                  <p className="font-semibold text-sm md:text-lg mb-0.5 md:mb-1">Tư Gia</p>
+                  <p className="text-muted-foreground text-[10px] md:text-sm hidden sm:block">Khu 3, Yên Hòa</p>
+                  <p className="text-muted-foreground text-[10px] md:text-sm mt-1 md:mt-2 line-clamp-2">Đại Đình, Phú Thọ</p>
                 </div>
               </div>
 
@@ -116,7 +116,7 @@ const EventDetails = () => {
               {/* Mini Calendar */}
               <div className="flex-1">
                 <div className="bg-wedding-cream/50 rounded-lg md:rounded-xl p-2 md:p-4">
-                  <p className="font-semibold text-xs md:text-lg mb-1 md:mb-3 text-wedding-gold">Tháng 2, 2025</p>
+                  <p className="font-semibold text-xs md:text-lg mb-1 md:mb-3 text-wedding-gold">Tháng 3, 2026</p>
                   
                   {/* Week days header */}
                   <div className="grid grid-cols-7 gap-0.5 md:gap-1 mb-1 md:mb-2">
@@ -154,7 +154,10 @@ const EventDetails = () => {
                 </div>
 
                 <p className="text-muted-foreground mt-1 md:mt-3 text-[10px] md:text-sm">
-                  Chủ nhật • 17:30
+                  Chủ nhật • 16:00
+                </p>
+                <p className="text-muted-foreground text-[9px] md:text-xs italic">
+                  (Âm lịch: 11/02/2026)
                 </p>
               </div>
 

@@ -52,7 +52,7 @@ const Index = () => {
                 </ScrollReveal>
                 <ScrollReveal direction="up" delay={0.5}>
                   <p className="text-xl text-muted-foreground mt-6 italic">"Yêu là khi ta muốn cùng nhau đi hết cuộc đời"</p>
-                  <p className="text-2xl font-serif text-primary mt-4">15 . 02 . 2025</p>
+                  <p className="text-2xl font-serif text-primary mt-4">29 . 03 . 2026</p>
                 </ScrollReveal>
                 <ScrollReveal direction="up" delay={0.7} className="mt-12 animate-bounce">
                   <ChevronDown className="w-8 h-8 text-wedding-pink mx-auto" />
@@ -66,7 +66,7 @@ const Index = () => {
                 <h1 className="text-5xl md:text-7xl font-serif text-foreground font-semibold mb-2">
                   Minh Đăng <span className="text-wedding-pink">&</span> Đỗ Dương
                 </h1>
-                <p className="text-2xl md:text-3xl font-script text-wedding-gold">15.02.2025</p>
+                <p className="text-2xl md:text-3xl font-script text-wedding-gold">29.03.2026</p>
               </div>
             )}
           </div>
