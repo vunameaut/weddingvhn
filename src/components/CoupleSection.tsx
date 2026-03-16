@@ -1,5 +1,6 @@
 import { Heart } from 'lucide-react';
 import { ScrollReveal } from '@/hooks/useScrollAnimation';
+import groomImg from '@/assets/groom.png';
 
 const CoupleSection = () => {
   return (
