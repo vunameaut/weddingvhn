@@ -97,21 +97,31 @@ const WishesSection = () => {
               Mừng Cưới
             </h3>
             <p className="text-muted-foreground mb-4 md:mb-6 text-xs md:text-sm">
-              Nhấn vào để xem mã QR chuyển khoản:
+              Nhấn để mở app ngân hàng và chuyển khoản luôn:
             </p>
-            
-            <button
-              onClick={() => setShowQR(true)}
-              className="w-full p-3 md:p-5 rounded-lg md:rounded-xl bg-muted hover:bg-muted/80 transition-all hover:scale-[1.02] cursor-pointer text-center"
-            >
-              <div className="flex items-center justify-center gap-1.5 mb-2">
-                <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-wedding-gold" />
-                <p className="text-xs md:text-sm text-muted-foreground">{bankAccount.label}</p>
-              </div>
-              <p className="font-semibold text-foreground text-sm md:text-lg">{bankAccount.name}</p>
-              <p className="text-xs md:text-sm text-muted-foreground">{bankAccount.bank}</p>
-              <p className="font-medium text-wedding-pink-dark text-sm md:text-lg mt-1">{bankAccount.accountNumber}</p>
-            </button>
+
+            <div className="space-y-2">
+              <button
+                onClick={handleOpenBankApp}
+                className="w-full p-3 md:p-5 rounded-lg md:rounded-xl bg-muted hover:bg-muted/80 transition-all hover:scale-[1.02] cursor-pointer text-center"
+              >
+                <div className="flex items-center justify-center gap-1.5 mb-2">
+                  <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-wedding-gold" />
+                  <p className="text-xs md:text-sm text-muted-foreground">{bankAccount.label}</p>
+                </div>
+                <p className="font-semibold text-foreground text-sm md:text-lg">{bankAccount.name}</p>
+                <p className="text-xs md:text-sm text-muted-foreground">{bankAccount.bank}</p>
+                <p className="font-medium text-wedding-pink-dark text-sm md:text-lg mt-1">{bankAccount.accountNumber}</p>
+              </button>
+
+              <button
+                onClick={() => copyToClipboard(bankAccount.accountNumber)}
+                className="w-full p-2.5 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors inline-flex items-center justify-center gap-2 text-sm text-wedding-pink-dark"
+              >
+                <Copy className="w-4 h-4" />
+                Sao chép số tài khoản
+              </button>
+            </div>
           </div>
         </ScrollReveal>
       </div>
