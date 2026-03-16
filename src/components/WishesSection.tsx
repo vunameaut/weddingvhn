@@ -31,7 +31,6 @@ const wishes = [
 const bankAccount = {
   name: "DO THI DUONG",
   bank: "MB Bank",
-  bankCode: "MB",
   accountNumber: "0399159618",
   label: "Cô dâu"
 };
