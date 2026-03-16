@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Copy, Users, MessageCircleHeart, ListChecks } from 'lucide-react';
+import { Copy, Users, MessageCircleHeart, ListChecks, FileSpreadsheet } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { encodeRecipientName } from '@/lib/invite';
 import { isSupabaseConfigured, supabase } from '@/lib/supabase';
@@ -74,6 +74,40 @@ const Admin = () => {
     }
   };
 
+  const handleExportLinks = () => {
+    if (generatedLinks.length === 0) {
+      toast({
+        title: 'Chưa có dữ liệu',
+        description: 'Vui lòng nhập danh sách tên để tạo link trước khi xuất.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    const escapeCsv = (value: string) => `"${value.replace(/"/g, '""')}"`;
+    const header = ['Tên người nhận', 'Mã lời mời', 'Link mời'];
+    const lines = generatedLinks.map((item) => [item.name, item.code, item.url].map(escapeCsv).join(','));
+    const csv = ['\uFEFF' + header.join(','), ...lines].join('\n');
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    const date = new Date();
+    const stamp = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}`;
+
+    link.href = url;
+    link.download = `danh-sach-link-moi-${stamp}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    toast({
+      title: 'Đã xuất file',
+      description: 'File CSV mở được trực tiếp bằng Excel.',
+    });
+  };
+
   return (
     <main className="min-h-screen bg-background py-10 px-4">
       <div className="max-w-6xl mx-auto space-y-8">
@@ -139,6 +173,14 @@ const Admin = () => {
               placeholder={'Ví dụ:\nNam\nLinh\nHải'}
               className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-wedding-pink/40"
             />
+
+            <button
+              onClick={handleExportLinks}
+              className="inline-flex items-center gap-2 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 px-3 py-2 text-sm text-wedding-pink-dark transition-colors"
+            >
+              <FileSpreadsheet className="w-4 h-4" />
+              Xuất danh sách link (Excel)
+            </button>
 
             <div className="space-y-2 max-h-72 overflow-auto pr-1">
               {generatedLinks.map((item) => (
