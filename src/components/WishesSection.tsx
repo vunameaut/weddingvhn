@@ -128,7 +128,7 @@ const WishesSection = () => {
             </div>
             
             <div className="bg-white p-3 rounded-xl mb-4">
-              <img src={getVietQRUrl()} alt="QR Code" className="w-full aspect-square object-contain" />
+              <img src={bankQr} alt="QR MB Bank của cô dâu" className="w-full aspect-square object-contain" />
             </div>
             
             <div className="space-y-2 mb-4">
