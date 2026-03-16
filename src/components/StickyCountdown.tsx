@@ -12,7 +12,7 @@ const StickyCountdown = () => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isVisible, setIsVisible] = useState(false);
 
-  const weddingDate = new Date('2025-02-15T17:30:00');
+  const weddingDate = new Date('2026-03-29T16:00:00');
 
   useEffect(() => {
     const handleScroll = () => {
