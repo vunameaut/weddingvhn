@@ -3,9 +3,9 @@ import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import StickyCountdown from './StickyCountdown';
 
 const EventDetails = () => {
-  const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=Trung+tâm+Hội+nghị+Tiệc+cưới+White+Palace,+Ho+Chi+Minh+City";
+  const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=Khu+3+Yên+Hòa+Đại+Đình+Phú+Thọ";
   
-  const weddingDate = new Date(2025, 1, 15, 17, 30); // February 15, 2025, 17:30
+  const weddingDate = new Date(2026, 2, 29, 16, 0); // March 29, 2026, 16:00
   
   // Generate calendar grid for February 2025
   const generateCalendar = () => {
