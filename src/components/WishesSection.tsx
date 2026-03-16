@@ -1,5 +1,5 @@
 import { ScrollReveal, getStaggerDelay } from '@/hooks/useScrollAnimation';
-import { Heart, MessageCircleHeart, Copy, X, CreditCard } from 'lucide-react';
+import { Heart, MessageCircleHeart, Copy, CreditCard } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import bankQr from '@/assets/bank-qr.png';
