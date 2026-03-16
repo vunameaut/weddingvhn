@@ -116,7 +116,7 @@ const EventDetails = () => {
               {/* Mini Calendar */}
               <div className="flex-1">
                 <div className="bg-wedding-cream/50 rounded-lg md:rounded-xl p-2 md:p-4">
-                  <p className="font-semibold text-xs md:text-lg mb-1 md:mb-3 text-wedding-gold">Tháng 2, 2025</p>
+                  <p className="font-semibold text-xs md:text-lg mb-1 md:mb-3 text-wedding-gold">Tháng 3, 2026</p>
                   
                   {/* Week days header */}
                   <div className="grid grid-cols-7 gap-0.5 md:gap-1 mb-1 md:mb-2">
