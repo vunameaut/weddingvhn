@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import { Heart, MessageCircleHeart, Copy, QrCode, ExternalLink, Download, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -10,8 +10,9 @@ import EventDetails from '@/components/EventDetails';
 import PhotoAlbum from '@/components/PhotoAlbum';
 import RSVPForm from '@/components/RSVPForm';
 import Footer from '@/components/Footer';
+import { isSupabaseConfigured, supabase, type WishItem } from '@/lib/supabase';
 
-const wishes = [
+const initialWishes: WishItem[] = [
   {
     name: "Nguyễn Văn An",
     message: "Chúc hai bạn trăm năm hạnh phúc!"
@@ -29,8 +30,6 @@ const wishes = [
     message: "Tình yêu bền vững như kim cương!"
   },
 ];
-
-const marqueeWishes = [...wishes, ...wishes];
 
 type BankAccount = {
   name: string;
@@ -74,10 +73,15 @@ const getVietQRUrl = (account: BankAccount) => {
   return `https://img.vietqr.io/image/${account.bankCode}-${account.accountNumber}-compact2.jpg?addInfo=${note}&accountName=${name}`;
 };
 
-const WishesSection = () => {
+interface WishesSectionProps {
+  wishes: WishItem[];
+}
+
+const WishesSection = ({ wishes }: WishesSectionProps) => {
   const { toast } = useToast();
   const [selectedBankApp, setSelectedBankApp] = useState<string>('mb');
   const [showQR, setShowQR] = useState<Record<string, boolean>>({});
+  const marqueeWishes = [...wishes, ...wishes];
 
   const toggleQR = (key: string) => {
     setShowQR(prev => ({ ...prev, [key]: !prev[key] }));
@@ -277,6 +281,43 @@ const WishesSection = () => {
 
 const Index = () => {
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
+  const [wishes, setWishes] = useState<WishItem[]>(initialWishes);
+
+  useEffect(() => {
+    const loadWishes = async () => {
+      if (!isSupabaseConfigured || !supabase) {
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('rsvp_submissions')
+        .select('name, wishes')
+        .not('wishes', 'is', null)
+        .order('created_at', { ascending: false })
+        .limit(30);
+
+      if (error || !data) {
+        return;
+      }
+
+      const dbWishes: WishItem[] = data
+        .filter((row) => row.wishes && String(row.wishes).trim())
+        .map((row) => ({
+          name: row.name,
+          message: String(row.wishes),
+        }));
+
+      if (dbWishes.length > 0) {
+        setWishes(dbWishes);
+      }
+    };
+
+    void loadWishes();
+  }, []);
+
+  const handleNewWish = (wish: WishItem) => {
+    setWishes((prev) => [wish, ...prev].slice(0, 30));
+  };
 
   if (!isInvitationOpen) {
     return <OpeningScreen onOpen={() => setIsInvitationOpen(true)} />;
@@ -315,8 +356,8 @@ const Index = () => {
       <CoupleSection />
       <EventDetails />
       <PhotoAlbum />
-      <WishesSection />
-      <RSVPForm />
+      <WishesSection wishes={wishes} />
+      <RSVPForm onSubmitSuccess={handleNewWish} />
       <Footer />
     </main>
   );

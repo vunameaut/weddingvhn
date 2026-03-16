@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { Send, CheckCircle, Heart } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { isSupabaseConfigured, supabase, type WishItem } from '@/lib/supabase';
 
-const RSVPForm = () => {
+interface RSVPFormProps {
+  onSubmitSuccess?: (wish: WishItem) => void;
+}
+
+const RSVPForm = ({ onSubmitSuccess }: RSVPFormProps) => {
   const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,18 +34,51 @@ const RSVPForm = () => {
       return;
     }
 
+    if (!isSupabaseConfigured || !supabase) {
+      toast({
+        title: 'Chưa cấu hình Supabase',
+        description: 'Vui lòng thêm VITE_SUPABASE_URL và VITE_SUPABASE_ANON_KEY vào file .env',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
-    toast({
-      title: "Cảm ơn bạn đã gửi lời chúc! 💕",
-      description: "Chúng tôi rất vui khi nhận được phản hồi từ bạn.",
-    });
+
+    try {
+      const { error } = await supabase.from('rsvp_submissions').insert({
+        name: formData.name.trim(),
+        guest_of: formData.guestOf || null,
+        number_of_guests: Number(formData.numberOfGuests),
+        wishes: formData.wishes.trim() || null,
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (formData.wishes.trim()) {
+        onSubmitSuccess?.({
+          name: formData.name.trim(),
+          message: formData.wishes.trim(),
+        });
+      }
+
+      setIsSubmitted(true);
+
+      toast({
+        title: 'Cảm ơn bạn đã gửi lời chúc! 💕',
+        description: 'Chúng tôi rất vui khi nhận được phản hồi từ bạn.',
+      });
+    } catch {
+      toast({
+        title: 'Không thể gửi RSVP',
+        description: 'Vui lòng kiểm tra cấu hình bảng Supabase và thử lại.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {

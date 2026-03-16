@@ -22,16 +22,6 @@ const Footer = () => {
           <Heart className="w-4 h-4 md:w-5 md:h-5 text-wedding-pink fill-wedding-pink" />
           <div className="h-px w-10 md:w-24 bg-wedding-gold" />
         </div>
-
-        {/* Thank you message */}
-        <p className="text-foreground/80 text-sm md:text-lg italic mb-4 md:mb-8">
-          Cảm ơn bạn đã ghé thăm thiệp cưới của chúng tôi
-        </p>
-
-        {/* Copyright */}
-        <p className="text-muted-foreground text-xs md:text-sm">
-          Made with <Heart className="w-3 h-3 md:w-4 md:h-4 inline-block text-wedding-pink fill-wedding-pink" /> for our special day
-        </p>
       </ScrollReveal>
     </footer>
   );
