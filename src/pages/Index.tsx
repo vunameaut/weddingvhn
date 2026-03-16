@@ -2,10 +2,8 @@ import { useState } from 'react';
 import OpeningScreen from '@/components/OpeningScreen';
 import FloatingParticles from '@/components/FloatingParticles';
 import CoupleSection from '@/components/CoupleSection';
-import LoveStory from '@/components/LoveStory';
 import EventDetails from '@/components/EventDetails';
 import PhotoAlbum from '@/components/PhotoAlbum';
-import VideoSection from '@/components/VideoSection';
 import RSVPForm from '@/components/RSVPForm';
 import WishesSection from '@/components/WishesSection';
 import Footer from '@/components/Footer';
@@ -78,9 +76,7 @@ const Index = () => {
           <>
             <CoupleSection />
             <EventDetails />
-            <LoveStory />
             <PhotoAlbum />
-            <VideoSection />
             <RSVPForm />
             <WishesSection />
             <Footer />
