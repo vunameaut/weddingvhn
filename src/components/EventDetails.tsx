@@ -86,9 +86,9 @@ const EventDetails = () => {
               
               <div className="flex-1 text-foreground">
                 <div className="p-2 md:p-4 bg-wedding-cream/50 rounded-lg md:rounded-xl">
-                  <p className="font-semibold text-sm md:text-lg mb-0.5 md:mb-1">White Palace</p>
-                  <p className="text-muted-foreground text-[10px] md:text-sm hidden sm:block">Trung tâm Hội nghị & Tiệc cưới</p>
-                  <p className="text-muted-foreground text-[10px] md:text-sm mt-1 md:mt-2 line-clamp-2">194 Hoàng Văn Thụ, Phú Nhuận</p>
+                  <p className="font-semibold text-sm md:text-lg mb-0.5 md:mb-1">Tư Gia</p>
+                  <p className="text-muted-foreground text-[10px] md:text-sm hidden sm:block">Khu 3, Yên Hòa</p>
+                  <p className="text-muted-foreground text-[10px] md:text-sm mt-1 md:mt-2 line-clamp-2">Đại Đình, Phú Thọ</p>
                 </div>
               </div>
 
