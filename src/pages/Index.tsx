@@ -64,7 +64,7 @@ const Index = () => {
               <div className="opacity-50">
                 <p className="text-wedding-pink font-script text-xl md:text-2xl mb-4">We are Getting Married</p>
                 <h1 className="text-5xl md:text-7xl font-serif text-foreground font-semibold mb-2">
-                  Minh <span className="text-wedding-pink">&</span> Hương
+                  Minh Đăng <span className="text-wedding-pink">&</span> Đỗ Dương
                 </h1>
                 <p className="text-2xl md:text-3xl font-script text-wedding-gold">15.02.2025</p>
               </div>
