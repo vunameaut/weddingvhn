@@ -35,13 +35,13 @@ const EventDetails = () => {
 
   // Add to Calendar function - works for both iOS and Android
   const handleAddToCalendar = () => {
-    const title = encodeURIComponent('Tiệc Cưới - Văn Minh & Thu Hương');
-    const location = encodeURIComponent('White Palace, Phạm Văn Đồng, TP.HCM');
+    const title = encodeURIComponent('Tiệc Cưới - Minh Đăng & Đỗ Dương');
+    const location = encodeURIComponent('Khu 3, Yên Hòa, Đại Đình, Phú Thọ');
     const details = encodeURIComponent('Trân trọng kính mời quý khách đến dự tiệc cưới của chúng tôi');
     
     // Format: YYYYMMDDTHHmmss
-    const startDate = '20250215T173000';
-    const endDate = '20250215T210000';
+    const startDate = '20260329T160000';
+    const endDate = '20260329T200000';
     
     // Try Google Calendar first (works on most devices)
     const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}`;
