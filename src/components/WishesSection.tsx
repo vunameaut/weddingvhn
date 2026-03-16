@@ -2,6 +2,7 @@ import { ScrollReveal, getStaggerDelay } from '@/hooks/useScrollAnimation';
 import { Heart, MessageCircleHeart, Copy, X, CreditCard } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import bankQr from '@/assets/bank-qr.png';
 
 const wishes = [
   {
@@ -30,7 +31,6 @@ const wishes = [
 const bankAccount = {
   name: "DO THI DUONG",
   bank: "MB Bank",
-  bankCode: "MB",
   accountNumber: "0399159618",
   label: "Cô dâu"
 };
@@ -55,11 +55,6 @@ const WishesSection = () => {
     }
   };
 
-  const getVietQRUrl = () => {
-    const description = encodeURIComponent(`Mung cuoi ${bankAccount.name}`);
-    const accountName = encodeURIComponent(bankAccount.name);
-    return `https://img.vietqr.io/image/${bankAccount.bankCode}-${bankAccount.accountNumber}-compact2.png?addInfo=${description}&accountName=${accountName}`;
-  };
 
   return (
     <section className="py-12 md:py-28 px-3 md:px-4 bg-secondary relative overflow-hidden">
@@ -133,7 +128,7 @@ const WishesSection = () => {
             </div>
             
             <div className="bg-white p-3 rounded-xl mb-4">
-              <img src={getVietQRUrl()} alt="QR Code" className="w-full aspect-square object-contain" />
+              <img src={bankQr} alt="QR MB Bank của cô dâu" className="w-full aspect-square object-contain" />
             </div>
             
             <div className="space-y-2 mb-4">
