@@ -99,9 +99,17 @@ const WishesSection = () => {
     const transferNote = encodeURIComponent('Mừng cưới Minh Đăng - Đỗ Dương');
     const accountName = encodeURIComponent(account.name);
     const beneficiary = `${account.accountNumber}@${account.bankCode}`;
+    const mobileDeepLink = `vietqr://pay?app=${appCode}&ba=${beneficiary}&bn=${accountName}&tn=${transferNote}`;
     const webDeepLink = `https://dl.vietqr.io/pay?app=${appCode}&ba=${beneficiary}&bn=${accountName}&tn=${transferNote}`;
 
-    window.location.href = webDeepLink;
+    window.location.href = mobileDeepLink;
+
+    // Fallback when browser cannot open app scheme directly.
+    setTimeout(() => {
+      if (document.visibilityState === 'visible') {
+        window.location.href = webDeepLink;
+      }
+    }, 700);
   };
 
   return (
