@@ -297,6 +297,7 @@ const Index = () => {
         .limit(30);
 
       if (error || !data) {
+        console.error('Load wishes failed:', error);
         return;
       }
 

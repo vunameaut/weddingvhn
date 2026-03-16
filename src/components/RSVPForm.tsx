@@ -70,10 +70,12 @@ const RSVPForm = ({ onSubmitSuccess }: RSVPFormProps) => {
         title: 'Cảm ơn bạn đã gửi lời chúc! 💕',
         description: 'Chúng tôi rất vui khi nhận được phản hồi từ bạn.',
       });
-    } catch {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      console.error('RSVP submit failed:', error);
       toast({
         title: 'Không thể gửi RSVP',
-        description: 'Vui lòng kiểm tra cấu hình bảng Supabase và thử lại.',
+        description: `Vui lòng kiểm tra cấu hình Supabase (${message}).`,
         variant: 'destructive',
       });
     } finally {
