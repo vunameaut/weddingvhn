@@ -27,13 +27,24 @@ const wishes = [
   },
 ];
 
-// Bank account info
-const bankAccount = {
-  name: "DO THI DUONG",
-  bank: "MB Bank",
-  accountNumber: "0399159618",
-  label: "Cô dâu"
+type BankAccount = {
+  name: string;
+  bank: string;
+  bankCode: string;
+  accountNumber: string;
+  label: string;
 };
+
+// Bank account info (co the them nhieu tai khoan neu can)
+const bankAccounts: BankAccount[] = [
+  {
+    name: 'DO THI DUONG',
+    bank: 'MB Bank',
+    bankCode: 'mb',
+    accountNumber: '0399159618',
+    label: 'Cô dâu',
+  },
+];
 
 const WishesSection = () => {
   const { toast } = useToast();
@@ -55,11 +66,23 @@ const WishesSection = () => {
     }
   };
 
-  const handleOpenBankApp = () => {
+  const copyTransferInfo = async (account: BankAccount) => {
+    const transferInfo = [
+      `Ngân hàng: ${account.bank}`,
+      `Chủ tài khoản: ${account.name}`,
+      `Số tài khoản: ${account.accountNumber}`,
+      'Nội dung: Mừng cưới Minh Đăng - Do Duong',
+    ].join('\n');
+
+    await copyToClipboard(transferInfo);
+  };
+
+  const handleOpenBankApp = (account: BankAccount) => {
     const transferNote = encodeURIComponent('Mung cuoi Minh Dang - Do Duong');
-    const accountName = encodeURIComponent(bankAccount.name);
-    const mobileDeepLink = `vietqr://pay?app=mb&ba=${bankAccount.accountNumber}@mb&bn=${accountName}&tn=${transferNote}`;
-    const webDeepLink = `https://dl.vietqr.io/pay?app=mb&ba=${bankAccount.accountNumber}@mb&bn=${accountName}&tn=${transferNote}`;
+    const accountName = encodeURIComponent(account.name);
+    const bankAccountRef = `${account.accountNumber}@${account.bankCode}`;
+    const mobileDeepLink = `vietqr://pay?ba=${bankAccountRef}&bn=${accountName}&tn=${transferNote}`;
+    const webDeepLink = `https://dl.vietqr.io/pay?ba=${bankAccountRef}&bn=${accountName}&tn=${transferNote}`;
 
     window.location.href = mobileDeepLink;
 
@@ -111,30 +134,43 @@ const WishesSection = () => {
               Mừng Cưới
             </h3>
             <p className="text-muted-foreground mb-4 md:mb-6 text-xs md:text-sm">
-              Nhấn để mở app ngân hàng và chuyển khoản luôn:
+              Bạn có thể chuyển từ mọi app ngân hàng, thông tin đầy đủ bên dưới:
             </p>
 
-            <div className="space-y-2">
-              <button
-                onClick={handleOpenBankApp}
-                className="w-full p-3 md:p-5 rounded-lg md:rounded-xl bg-muted hover:bg-muted/80 transition-all hover:scale-[1.02] cursor-pointer text-center"
-              >
-                <div className="flex items-center justify-center gap-1.5 mb-2">
-                  <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-wedding-gold" />
-                  <p className="text-xs md:text-sm text-muted-foreground">{bankAccount.label}</p>
-                </div>
-                <p className="font-semibold text-foreground text-sm md:text-lg">{bankAccount.name}</p>
-                <p className="text-xs md:text-sm text-muted-foreground">{bankAccount.bank}</p>
-                <p className="font-medium text-wedding-pink-dark text-sm md:text-lg mt-1">{bankAccount.accountNumber}</p>
-              </button>
+            <div className="space-y-3">
+              {bankAccounts.map((account) => (
+                <div key={`${account.bank}-${account.accountNumber}`} className="rounded-lg md:rounded-xl bg-muted p-3 md:p-5 text-center">
+                  <button
+                    onClick={() => handleOpenBankApp(account)}
+                    className="w-full hover:opacity-90 transition-opacity"
+                  >
+                    <div className="flex items-center justify-center gap-1.5 mb-2">
+                      <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-wedding-gold" />
+                      <p className="text-xs md:text-sm text-muted-foreground">{account.label}</p>
+                    </div>
+                    <p className="font-semibold text-foreground text-sm md:text-lg">{account.name}</p>
+                    <p className="text-xs md:text-sm text-muted-foreground">{account.bank}</p>
+                    <p className="font-medium text-wedding-pink-dark text-sm md:text-lg mt-1">{account.accountNumber}</p>
+                  </button>
 
-              <button
-                onClick={() => copyToClipboard(bankAccount.accountNumber)}
-                className="w-full p-2.5 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors inline-flex items-center justify-center gap-2 text-sm text-wedding-pink-dark"
-              >
-                <Copy className="w-4 h-4" />
-                Sao chép số tài khoản
-              </button>
+                  <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <button
+                      onClick={() => copyToClipboard(account.accountNumber)}
+                      className="w-full p-2.5 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors inline-flex items-center justify-center gap-2 text-sm text-wedding-pink-dark"
+                    >
+                      <Copy className="w-4 h-4" />
+                      Sao chép số tài khoản
+                    </button>
+                    <button
+                      onClick={() => copyTransferInfo(account)}
+                      className="w-full p-2.5 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors inline-flex items-center justify-center gap-2 text-sm text-wedding-pink-dark"
+                    >
+                      <Copy className="w-4 h-4" />
+                      Sao chép đầy đủ thông tin
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </ScrollReveal>
