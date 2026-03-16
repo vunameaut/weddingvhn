@@ -12,7 +12,7 @@ const CoupleSection = () => {
       <div className="max-w-5xl mx-auto relative z-10">
         {/* Header */}
         <ScrollReveal direction="up" className="text-center mb-8 md:mb-16">
-          <p className="text-wedding-pink font-script text-xl md:text-3xl mb-2">Trân trọng kính mời</p>
+          <p className="text-wedding-pink font-script text-xl md:text-3xl mb-2">Hân hoan giới thiệu</p>
           <h2 className="text-2xl md:text-5xl font-serif text-foreground font-semibold">Cô Dâu & Chú Rể</h2>
           <div className="mt-3 md:mt-4 flex items-center justify-center gap-3 md:gap-4">
             <div className="h-px w-12 md:w-24 bg-wedding-gold" />

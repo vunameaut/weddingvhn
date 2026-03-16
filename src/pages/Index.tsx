@@ -338,7 +338,7 @@ const Index = () => {
         <div className="text-center relative z-10">
           <ScrollReveal direction="up">
             <p className="text-wedding-pink font-script text-xl md:text-2xl mb-4">Trân trọng thông báo</p>
-            <p className="text-muted-foreground text-sm md:text-lg">{invitationLine}</p>
+            <p className="font-elegant text-wedding-gold text-xl md:text-4xl leading-tight tracking-wide">{invitationLine}</p>
           </ScrollReveal>
           <ScrollReveal direction="left" delay={0.2}>
             <h1 className="font-script text-6xl md:text-8xl leading-none text-wedding-pink-dark drop-shadow-sm">Minh Đăng</h1>
