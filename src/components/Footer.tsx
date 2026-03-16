@@ -11,9 +11,9 @@ const Footer = () => {
         {/* Names */}
         <div className="mb-4 md:mb-6">
           <p className="font-script text-3xl md:text-5xl text-wedding-pink-dark mb-1 md:mb-2">
-            Minh & Hương
+            Minh Đăng & Đỗ Dương
           </p>
-          <p className="text-muted-foreground text-sm md:text-base">15.02.2025</p>
+          <p className="text-muted-foreground text-sm md:text-base">29.03.2026</p>
         </div>
 
         {/* Divider */}

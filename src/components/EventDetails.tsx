@@ -154,7 +154,10 @@ const EventDetails = () => {
                 </div>
 
                 <p className="text-muted-foreground mt-1 md:mt-3 text-[10px] md:text-sm">
-                  Chủ nhật • 17:30
+                  Chủ nhật • 16:00
+                </p>
+                <p className="text-muted-foreground text-[9px] md:text-xs italic">
+                  (Âm lịch: 11/02/2026)
                 </p>
               </div>
 

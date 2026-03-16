@@ -72,7 +72,7 @@ const StickyCountdown = () => {
 
           {/* Date */}
           <div className="hidden md:block text-sm text-muted-foreground font-body">
-            15.02.2025
+            29.03.2026
           </div>
         </div>
       </div>
