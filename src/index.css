@@ -6,78 +6,78 @@
 
 @layer base {
   :root {
-    /* Clean pastel romantic color palette */
-    --background: 30 30% 98%;
-    --foreground: 20 15% 25%;
+    /* Blue & White wedding palette */
+    --background: 210 40% 98%;
+    --foreground: 210 20% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 20 15% 25%;
+    --card-foreground: 210 20% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 20 15% 25%;
+    --popover-foreground: 210 20% 20%;
 
-    --primary: 350 55% 60%;
+    --primary: 210 70% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 30 25% 96%;
-    --secondary-foreground: 20 15% 30%;
+    --secondary: 210 30% 96%;
+    --secondary-foreground: 210 20% 25%;
 
-    --muted: 30 15% 94%;
-    --muted-foreground: 20 10% 45%;
+    --muted: 210 20% 94%;
+    --muted-foreground: 210 15% 45%;
 
-    --accent: 43 45% 65%;
-    --accent-foreground: 20 15% 25%;
+    --accent: 210 50% 65%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 30 15% 88%;
-    --input: 30 15% 88%;
-    --ring: 350 55% 60%;
+    --border: 210 20% 88%;
+    --input: 210 20% 88%;
+    --ring: 210 70% 50%;
 
     --radius: 0.75rem;
 
-    /* Wedding pastel colors - cleaner, more readable */
-    --wedding-pink: 350 50% 70%;
-    --wedding-pink-light: 350 60% 95%;
-    --wedding-pink-dark: 350 45% 45%;
-    --wedding-rose: 0 35% 65%;
-    --wedding-gold: 40 55% 55%;
-    --wedding-gold-light: 40 50% 75%;
-    --wedding-cream: 35 35% 97%;
-    --wedding-cream-dark: 35 20% 92%;
-    --wedding-sage: 150 20% 75%;
-    --wedding-lavender: 270 30% 80%;
+    /* Wedding blue colors */
+    --wedding-pink: 210 65% 55%;
+    --wedding-pink-light: 210 60% 95%;
+    --wedding-pink-dark: 210 60% 35%;
+    --wedding-rose: 210 50% 60%;
+    --wedding-gold: 210 40% 45%;
+    --wedding-gold-light: 210 45% 70%;
+    --wedding-cream: 210 25% 97%;
+    --wedding-cream-dark: 210 15% 92%;
+    --wedding-sage: 200 30% 75%;
+    --wedding-lavender: 220 35% 80%;
 
     /* Gradients */
-    --gradient-romantic: linear-gradient(180deg, hsl(350, 60%, 97%) 0%, hsl(35, 35%, 98%) 50%, hsl(350, 50%, 96%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(40, 55%, 55%) 0%, hsl(40, 50%, 70%) 50%, hsl(40, 55%, 55%) 100%);
-    --gradient-soft: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(35, 30%, 97%) 100%);
+    --gradient-romantic: linear-gradient(180deg, hsl(210, 50%, 97%) 0%, hsl(210, 30%, 98%) 50%, hsl(210, 45%, 96%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(210, 60%, 50%) 0%, hsl(210, 50%, 65%) 50%, hsl(210, 60%, 50%) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(210, 25%, 97%) 100%);
 
     /* Shadows */
-    --shadow-soft: 0 4px 20px hsla(350, 50%, 60%, 0.12);
-    --shadow-card: 0 10px 40px hsla(20, 15%, 25%, 0.06);
-    --shadow-elevated: 0 20px 60px hsla(20, 15%, 25%, 0.1);
+    --shadow-soft: 0 4px 20px hsla(210, 50%, 50%, 0.12);
+    --shadow-card: 0 10px 40px hsla(210, 20%, 25%, 0.06);
+    --shadow-elevated: 0 20px 60px hsla(210, 20%, 25%, 0.1);
   }
 
   .dark {
-    --background: 30 15% 8%;
-    --foreground: 30 20% 95%;
-    --card: 30 15% 12%;
-    --card-foreground: 30 20% 95%;
-    --popover: 30 15% 12%;
-    --popover-foreground: 30 20% 95%;
-    --primary: 350 60% 70%;
-    --primary-foreground: 30 15% 8%;
-    --secondary: 30 15% 15%;
-    --secondary-foreground: 30 20% 90%;
-    --muted: 30 15% 18%;
-    --muted-foreground: 30 15% 60%;
-    --accent: 43 50% 60%;
-    --accent-foreground: 30 15% 8%;
-    --border: 30 15% 20%;
-    --input: 30 15% 20%;
-    --ring: 350 60% 70%;
+    --background: 210 20% 8%;
+    --foreground: 210 20% 95%;
+    --card: 210 20% 12%;
+    --card-foreground: 210 20% 95%;
+    --popover: 210 20% 12%;
+    --popover-foreground: 210 20% 95%;
+    --primary: 210 70% 60%;
+    --primary-foreground: 210 20% 8%;
+    --secondary: 210 20% 15%;
+    --secondary-foreground: 210 20% 90%;
+    --muted: 210 20% 18%;
+    --muted-foreground: 210 15% 60%;
+    --accent: 210 50% 55%;
+    --accent-foreground: 210 20% 8%;
+    --border: 210 20% 20%;
+    --input: 210 20% 20%;
+    --ring: 210 70% 60%;
   }
 }
 
@@ -120,7 +120,7 @@
 
   .btn-wedding:hover {
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 8px 30px hsla(350, 60%, 65%, 0.35);
+    box-shadow: 0 8px 30px hsla(210, 60%, 50%, 0.35);
   }
 
   .btn-wedding-outline {
