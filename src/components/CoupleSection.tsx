@@ -1,5 +1,6 @@
 import { Heart } from 'lucide-react';
 import { ScrollReveal } from '@/hooks/useScrollAnimation';
+import groomImg from '@/assets/groom.png';
 
 const CoupleSection = () => {
   return (
@@ -27,7 +28,7 @@ const CoupleSection = () => {
               {/* Rectangular frame with gold border */}
               <div className="w-28 h-36 sm:w-36 sm:h-44 md:w-60 md:h-80 mx-auto rounded-lg md:rounded-2xl overflow-hidden border-2 border-wedding-gold shadow-elevated transition-all duration-500 group-hover:shadow-2xl group-hover:border-wedding-gold-light group-hover:scale-[1.02]">
                 <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face"
+                  src={groomImg}
                   alt="Chú rể"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
