@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import { Heart, MessageCircleHeart, Copy, QrCode, ExternalLink, Download, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useParams } from 'react-router-dom';
 import OpeningScreen from '@/components/OpeningScreen';
 import FloatingParticles from '@/components/FloatingParticles';
 import MusicPlayer from '@/components/MusicPlayer';
@@ -11,6 +12,7 @@ import PhotoAlbum from '@/components/PhotoAlbum';
 import RSVPForm from '@/components/RSVPForm';
 import Footer from '@/components/Footer';
 import { isSupabaseConfigured, supabase, type WishItem } from '@/lib/supabase';
+import { decodeRecipientName } from '@/lib/invite';
 
 const initialWishes: WishItem[] = [
   {
@@ -280,8 +282,11 @@ const WishesSection = ({ wishes }: WishesSectionProps) => {
 };
 
 const Index = () => {
+  const { recipientCode } = useParams();
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const [wishes, setWishes] = useState<WishItem[]>(initialWishes);
+  const recipientName = decodeRecipientName(recipientCode ?? '');
+  const invitationLine = recipientName ? `Kính mời bạn ${recipientName}` : 'Trân trọng kính mời';
 
   useEffect(() => {
     const loadWishes = async () => {
@@ -333,6 +338,7 @@ const Index = () => {
         <div className="text-center relative z-10">
           <ScrollReveal direction="up">
             <p className="text-wedding-pink font-script text-xl md:text-2xl mb-4">Trân trọng thông báo</p>
+            <p className="text-muted-foreground text-sm md:text-lg">{invitationLine}</p>
           </ScrollReveal>
           <ScrollReveal direction="left" delay={0.2}>
             <h1 className="font-script text-6xl md:text-8xl leading-none text-wedding-pink-dark drop-shadow-sm">Minh Đăng</h1>
