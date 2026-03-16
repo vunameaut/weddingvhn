@@ -9,11 +9,11 @@ const EventDetails = () => {
   
   // Generate calendar grid for February 2025
   const generateCalendar = () => {
-    const year = 2025;
-    const month = 1; // February (0-indexed)
+    const year = 2026;
+    const month = 2; // March (0-indexed)
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const weddingDay = 15;
+    const weddingDay = 29;
     
     const days = [];
     
