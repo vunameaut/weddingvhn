@@ -35,6 +35,11 @@ type BankAccount = {
   transferNote: string;
 };
 
+type BankApp = {
+  label: string;
+  appCode: string;
+};
+
 const bankAccounts: BankAccount[] = [
   {
     name: 'DO THI DUONG',
@@ -46,25 +51,26 @@ const bankAccounts: BankAccount[] = [
   },
 ];
 
-// Tạo URL QR VietQR — không cần thư viện, chỉ cần <img src>
+const bankApps: BankApp[] = [
+  { label: 'MB Bank', appCode: 'mb' },
+  { label: 'Vietcombank', appCode: 'vcb' },
+  { label: 'Techcombank', appCode: 'tcb' },
+  { label: 'BIDV', appCode: 'bidv' },
+  { label: 'VietinBank', appCode: 'icb' },
+  { label: 'VPBank', appCode: 'vpb' },
+  { label: 'ACB', appCode: 'acb' },
+  { label: 'TPBank', appCode: 'tpb' },
+];
+
 const getVietQRUrl = (account: BankAccount) => {
   const note = encodeURIComponent(account.transferNote);
   const name = encodeURIComponent(account.name);
-  // Template "compact2" hiển thị logo ngân hàng + thông tin gọn
   return `https://img.vietqr.io/image/${account.bankCode}-${account.accountNumber}-compact2.jpg?addInfo=${note}&accountName=${name}`;
-};
-
-// Deep link fallback — dùng window.open để tránh mất context khi redirect
-const openBankDeepLink = (account: BankAccount) => {
-  const note = encodeURIComponent(account.transferNote);
-  const name = encodeURIComponent(account.name);
-  const beneficiary = `${account.accountNumber}@${account.bankCode}`;
-  const url = `https://dl.vietqr.io/pay?ba=${beneficiary}&bn=${name}&tn=${note}`;
-  window.open(url, '_blank');
 };
 
 const WishesSection = () => {
   const { toast } = useToast();
+  const [selectedBankApp, setSelectedBankApp] = useState<string>('mb');
   const [showQR, setShowQR] = useState<Record<string, boolean>>({});
 
   const toggleQR = (key: string) => {
@@ -85,6 +91,14 @@ const WishesSection = () => {
     } catch {
       toast({ title: "Không thể sao chép", description: "Vui lòng sao chép thủ công", variant: "destructive" });
     }
+  };
+
+  const openBankDeepLink = (account: BankAccount, appCode: string) => {
+    const note = encodeURIComponent(account.transferNote);
+    const name = encodeURIComponent(account.name);
+    const beneficiary = `${account.accountNumber}@${account.bankCode}`;
+    const url = `https://dl.vietqr.io/pay?app=${appCode}&ba=${beneficiary}&bn=${name}&tn=${note}`;
+    window.open(url, '_blank');
   };
 
   return (
@@ -110,7 +124,11 @@ const WishesSection = () => {
           {wishes.map((wish, index) => (
             <ScrollReveal key={index} direction="up" delay={getStaggerDelay(index, 0.08)}>
               <div className="card-wedding p-2.5 md:p-6 flex flex-col md:flex-row gap-2 md:gap-4 items-start hover:shadow-lg transition-shadow duration-500">
-                <img src={wish.avatar} alt={wish.name} className="w-8 h-8 md:w-12 md:h-12 rounded-full object-cover border-2 border-wedding-pink/30 flex-shrink-0" />
+                <img
+                  src={wish.avatar}
+                  alt={wish.name}
+                  className="w-8 h-8 md:w-12 md:h-12 rounded-full object-cover border-2 border-wedding-pink/30 flex-shrink-0"
+                />
                 <div className="flex-1 min-w-0">
                   <h4 className="font-semibold text-foreground text-xs md:text-base mb-0.5 md:mb-1 truncate">{wish.name}</h4>
                   <p className="text-muted-foreground text-[10px] md:text-sm leading-tight line-clamp-2">{wish.message}</p>
@@ -128,13 +146,33 @@ const WishesSection = () => {
               Mừng Cưới
             </h3>
             <p className="text-muted-foreground mb-4 md:mb-6 text-xs md:text-sm">
-              Mở app ngân hàng → Chuyển khoản → Quét QR để điền sẵn thông tin
+              Chọn app ngân hàng bạn dùng, bấm <strong>Mở app</strong> để chuyển khoản,
+              hoặc <strong>Quét QR</strong> trong mục chuyển khoản của app.
             </p>
+
+            {/* Dropdown chọn app — dùng chung cho tất cả tài khoản */}
+            <div className="mb-4 text-left">
+              <label className="block text-xs md:text-sm text-muted-foreground mb-1.5">
+                App ngân hàng của bạn
+              </label>
+              <select
+                value={selectedBankApp}
+                onChange={(e) => setSelectedBankApp(e.target.value)}
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-wedding-pink/40"
+              >
+                {bankApps.map((app) => (
+                  <option key={app.appCode} value={app.appCode}>
+                    {app.label}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             <div className="space-y-3">
               {bankAccounts.map((account) => {
                 const key = `${account.bank}-${account.accountNumber}`;
                 const isQRVisible = showQR[key];
+
                 return (
                   <div key={key} className="rounded-xl bg-muted p-4 md:p-5 space-y-3">
 
@@ -159,7 +197,7 @@ const WishesSection = () => {
                       {isQRVisible ? 'Ẩn mã QR' : 'Hiện mã QR để quét'}
                     </button>
 
-                    {/* QR Image — load lazy, chỉ render khi cần */}
+                    {/* QR Image */}
                     {isQRVisible && (
                       <div className="flex flex-col items-center gap-2 pt-1">
                         <img
@@ -169,7 +207,7 @@ const WishesSection = () => {
                           loading="lazy"
                         />
                         <p className="text-[10px] text-muted-foreground">
-                          Mở app → Quét QR này trong mục chuyển khoản
+                          Mở app → Chuyển khoản → Quét QR này
                         </p>
                       </div>
                     )}
@@ -185,7 +223,7 @@ const WishesSection = () => {
                       </button>
 
                       <button
-                        onClick={() => openBankDeepLink(account)}
+                        onClick={() => openBankDeepLink(account, selectedBankApp)}
                         className="p-2.5 rounded-lg bg-wedding-pink/10 hover:bg-wedding-pink/20 transition-colors inline-flex items-center justify-center gap-1.5 text-xs md:text-sm text-wedding-pink-dark"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
