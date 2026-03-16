@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { ScrollReveal, getStaggerDelay } from '@/hooks/useScrollAnimation';
-import { Heart, MessageCircleHeart, Copy, CreditCard, ArrowUpRight } from 'lucide-react';
+import { Heart, MessageCircleHeart, Copy, CreditCard } from 'lucide-react';
 
 import { useToast } from '@/hooks/use-toast';
+
 
 const wishes = [
   {
@@ -27,40 +27,17 @@ const wishes = [
   },
 ];
 
+// Bank account info
 const bankAccount = {
   name: "DO THI DUONG",
   bank: "MB Bank",
-  bankCode: "mb",
   accountNumber: "0399159618",
   label: "Cô dâu"
 };
 
-const supportedAutofillApps = [
-  { id: 'bidv', name: 'BIDV SmartBanking' },
-  { id: 'acb', name: 'ACB ONE' },
-  { id: 'icb', name: 'VietinBank iPay' },
-  { id: 'ocb', name: 'OCB OMNI' },
-] as const;
-
 const WishesSection = () => {
   const { toast } = useToast();
-  const [showBankOptions, setShowBankOptions] = useState(false);
-
-  const buildTransferLink = (appId?: string) => {
-    const params = new URLSearchParams({
-      ba: `${bankAccount.accountNumber}@${bankAccount.bankCode}`,
-      bn: bankAccount.name,
-      tn: 'Mung cuoi Minh Dang - Do Duong',
-      url: window.location.href,
-    });
-
-    if (appId) {
-      params.set('app', appId);
-      return `https://dl.vietqr.io/pay?${params.toString()}`;
-    }
-
-    return `vietqr://pay?${params.toString()}`;
-  };
+  
 
   const copyToClipboard = async (text: string) => {
     try {
@@ -78,23 +55,19 @@ const WishesSection = () => {
     }
   };
 
-  const handleOpenGenericTransfer = () => {
-    setShowBankOptions(false);
-    window.location.href = buildTransferLink();
+  const handleOpenBankApp = () => {
+    const transferNote = encodeURIComponent('Mung cuoi Minh Dang - Do Duong');
+    const accountName = encodeURIComponent(bankAccount.name);
+    const mobileDeepLink = `vietqr://pay?app=mb&ba=${bankAccount.accountNumber}@mb&bn=${accountName}&tn=${transferNote}`;
+    const webDeepLink = `https://dl.vietqr.io/pay?app=mb&ba=${bankAccount.accountNumber}@mb&bn=${accountName}&tn=${transferNote}`;
 
-    window.setTimeout(() => {
+    window.location.href = mobileDeepLink;
+
+    setTimeout(() => {
       if (document.visibilityState === 'visible') {
-        setShowBankOptions(true);
-        toast({
-          title: 'Chọn app ngân hàng',
-          description: 'Nếu máy không hiện app phù hợp, hãy chọn một app bên dưới để mở thẳng form chuyển khoản.',
-        });
+        window.location.href = webDeepLink;
       }
     }, 700);
-  };
-
-  const handleOpenSpecificBankApp = (appId: string) => {
-    window.location.href = buildTransferLink(appId);
   };
 
   return (
@@ -102,6 +75,7 @@ const WishesSection = () => {
       <div className="absolute inset-0 bg-pattern-floral opacity-20" />
       
       <div className="max-w-5xl mx-auto relative z-10">
+        {/* Header */}
         <ScrollReveal direction="up" className="text-center mb-6 md:mb-12">
           <p className="text-wedding-pink font-script text-lg md:text-3xl mb-1 md:mb-3">Best Wishes</p>
           <h2 className="text-2xl md:text-5xl font-serif text-foreground font-semibold">
@@ -114,6 +88,7 @@ const WishesSection = () => {
           </div>
         </ScrollReveal>
 
+        {/* Wishes Grid */}
         <div className="grid grid-cols-2 gap-2 md:gap-6">
           {wishes.map((wish, index) => (
             <ScrollReveal key={index} direction="up" delay={getStaggerDelay(index, 0.08)}>
@@ -129,18 +104,19 @@ const WishesSection = () => {
           ))}
         </div>
 
+        {/* Bank transfer info - single account */}
         <ScrollReveal direction="up" delay={0.5} className="mt-6 md:mt-12">
           <div className="card-wedding text-center p-4 md:p-8 max-w-lg mx-auto">
             <h3 className="text-base md:text-xl font-serif text-foreground font-semibold mb-2 md:mb-4">
               Mừng Cưới
             </h3>
             <p className="text-muted-foreground mb-4 md:mb-6 text-xs md:text-sm">
-              Bấm vào tài khoản để thử mở thẳng app chuyển khoản; nếu máy không tự hiện chọn ngân hàng, chọn app bên dưới.
+              Nhấn để mở app ngân hàng và chuyển khoản luôn:
             </p>
 
             <div className="space-y-2">
               <button
-                onClick={handleOpenGenericTransfer}
+                onClick={handleOpenBankApp}
                 className="w-full p-3 md:p-5 rounded-lg md:rounded-xl bg-muted hover:bg-muted/80 transition-all hover:scale-[1.02] cursor-pointer text-center"
               >
                 <div className="flex items-center justify-center gap-1.5 mb-2">
@@ -151,32 +127,6 @@ const WishesSection = () => {
                 <p className="text-xs md:text-sm text-muted-foreground">{bankAccount.bank}</p>
                 <p className="font-medium text-wedding-pink-dark text-sm md:text-lg mt-1">{bankAccount.accountNumber}</p>
               </button>
-
-              {showBankOptions && (
-                <div className="rounded-lg md:rounded-xl bg-muted/50 p-3 md:p-4 text-left space-y-3">
-                  <p className="text-xs md:text-sm text-muted-foreground">
-                    Chọn app ngân hàng của bạn để mở deeplink có hỗ trợ điền sẵn thông tin chuyển khoản:
-                  </p>
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    {supportedAutofillApps.map((app) => (
-                      <button
-                        key={app.id}
-                        onClick={() => handleOpenSpecificBankApp(app.id)}
-                        className="flex items-center justify-between rounded-lg bg-background px-3 py-3 text-left transition-colors hover:bg-accent hover:text-accent-foreground"
-                      >
-                        <div>
-                          <p className="text-sm font-medium text-foreground">{app.name}</p>
-                          <p className="text-[11px] md:text-xs text-muted-foreground">Mở thẳng form chuyển khoản</p>
-                        </div>
-                        <ArrowUpRight className="h-4 w-4 text-wedding-pink-dark" />
-                      </button>
-                    ))}
-                  </div>
-                  <p className="text-[11px] md:text-xs text-muted-foreground">
-                    Một số app ngân hàng khác hiện vẫn chỉ mở app chứ chưa vào thẳng màn hình chuyển khoản từ web.
-                  </p>
-                </div>
-              )}
 
               <button
                 onClick={() => copyToClipboard(bankAccount.accountNumber)}
