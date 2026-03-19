@@ -286,7 +286,7 @@ const Index = () => {
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const [wishes, setWishes] = useState<WishItem[]>(initialWishes);
   const recipientName = decodeRecipientName(recipientCode ?? '');
-  const invitationLine = recipientName ? `Kính mời bạn ${recipientName}` : 'Trân trọng kính mời';
+  const invitationLine = recipientName ? `Kính mời ${recipientName}` : 'Trân trọng kính mời';
 
   useEffect(() => {
     const loadWishes = async () => {
