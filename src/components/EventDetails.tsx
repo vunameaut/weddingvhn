@@ -3,7 +3,7 @@ import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import StickyCountdown from './StickyCountdown';
 
 const EventDetails = () => {
-  const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=Khu+3+Yên+Hòa+Đại+Đình+Phú+Thọ";
+  const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=21.4776803,105.524119";
   
   const weddingDate = new Date(2026, 2, 29, 16, 0); // March 29, 2026, 16:00
   
