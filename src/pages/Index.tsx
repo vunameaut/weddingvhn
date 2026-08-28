@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import { Heart, MessageCircleHeart, Copy, QrCode, ExternalLink, Download, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -18,6 +18,8 @@ import DressCode from '@/components/DressCode';
 import Footer from '@/components/Footer';
 import { isSupabaseConfigured, supabase, type WishItem } from '@/lib/supabase';
 import { decodeRecipientName } from '@/lib/invite';
+
+import heroBg from '@/assets/album1.jpg'; // Dùng album1 làm nền trang đầu
 
 const initialWishes: WishItem[] = [
   {
@@ -147,7 +149,6 @@ const WishesSection = ({ wishes }: WishesSectionProps) => {
       <div className="absolute inset-0 bg-pattern-floral opacity-20" />
 
       <div className="max-w-5xl mx-auto relative z-10">
-        {/* Header */}
         <ScrollReveal direction="up" className="text-center mb-6 md:mb-12">
           <p className="text-wedding-pink font-script text-lg md:text-3xl mb-1 md:mb-3">Best Wishes</p>
           <h2 className="text-2xl md:text-5xl font-serif text-foreground font-semibold">
@@ -160,7 +161,6 @@ const WishesSection = ({ wishes }: WishesSectionProps) => {
           </div>
         </ScrollReveal>
 
-        {/* Wishes Marquee */}
         <ScrollReveal direction="up">
           <div className="wish-marquee-shell">
             <div className="wish-marquee-track">
@@ -175,7 +175,6 @@ const WishesSection = ({ wishes }: WishesSectionProps) => {
           </div>
         </ScrollReveal>
 
-        {/* Bank Transfer */}
         <ScrollReveal direction="up" delay={0.5} className="mt-6 md:mt-12">
           <div className="card-wedding text-center p-4 md:p-8 max-w-lg mx-auto">
             <h3 className="text-base md:text-xl font-serif text-foreground font-semibold mb-2 md:mb-3">
@@ -186,7 +185,6 @@ const WishesSection = ({ wishes }: WishesSectionProps) => {
               hoặc <strong>Quét QR</strong> trong mục chuyển khoản của app.
             </p>
 
-            {/* Dropdown chọn app — dùng chung cho tất cả tài khoản */}
             <div className="mb-4 text-left">
               <label className="block text-xs md:text-sm text-muted-foreground mb-1.5">
                 App ngân hàng của bạn
@@ -212,7 +210,6 @@ const WishesSection = ({ wishes }: WishesSectionProps) => {
                 return (
                   <div key={key} className="rounded-xl bg-muted p-4 md:p-5 space-y-3">
 
-                    {/* Account info */}
                     <div className="text-center">
                       <p className="font-semibold text-foreground text-sm md:text-lg">{account.name}</p>
                       <p className="text-xs md:text-sm text-muted-foreground">{account.bank} · {account.label}</p>
@@ -224,7 +221,6 @@ const WishesSection = ({ wishes }: WishesSectionProps) => {
                       </p>
                     </div>
 
-                    {/* QR toggle */}
                     <button
                       onClick={() => toggleQR(key)}
                       className="w-full p-2.5 rounded-lg bg-wedding-gold/15 hover:bg-wedding-gold/25 transition-colors inline-flex items-center justify-center gap-2 text-sm font-medium text-wedding-gold-dark"
@@ -233,7 +229,6 @@ const WishesSection = ({ wishes }: WishesSectionProps) => {
                       {isQRVisible ? 'Ẩn mã QR' : 'Hiện mã QR để quét'}
                     </button>
 
-                    {/* QR Image */}
                     {isQRVisible && (
                       <div className="flex flex-col items-center gap-2 pt-1">
                         <img
@@ -248,7 +243,6 @@ const WishesSection = ({ wishes }: WishesSectionProps) => {
                       </div>
                     )}
 
-                    {/* Action buttons */}
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         onClick={() => copyTransferInfo(account)}
@@ -330,59 +324,65 @@ const Index = () => {
     setWishes((prev) => [wish, ...prev].slice(0, 30));
   };
 
-  if (!isInvitationOpen) {
-    return <OpeningScreen onOpen={() => setIsInvitationOpen(true)} />;
-  }
-
   return (
-    <main className="relative min-h-screen bg-background">
-      <FloatingParticles />
-      <MusicPlayer />
+    <>
+      <main className="relative min-h-screen bg-background">
+        <FloatingParticles />
+        <MusicPlayer />
 
-      <section className="min-h-screen flex items-center justify-center relative px-4">
-        <div className="absolute inset-0">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&h=1080&fit=crop&crop=faces" alt="Couple" className="w-full h-full object-cover" />
-        </div>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.5) 100%)' }} />
-        <div className="text-center relative z-10">
-          <ScrollReveal direction="up">
-            <p className="text-wedding-pink font-script text-xl md:text-2xl mb-4">Trân trọng thông báo</p>
-            <p className="font-elegant text-wedding-gold text-xl md:text-4xl leading-tight tracking-wide">{invitationLine}</p>
-          </ScrollReveal>
-          <ScrollReveal direction="left" delay={0.2}>
-            <h1 className="font-script text-6xl md:text-8xl leading-none text-wedding-pink-dark drop-shadow-sm">Minh Đăng</h1>
-          </ScrollReveal>
-          <ScrollReveal direction="up" delay={0.3}>
-            <p className="text-4xl md:text-5xl font-script text-wedding-gold my-3 md:my-4">&</p>
-          </ScrollReveal>
-          <ScrollReveal direction="right" delay={0.2}>
-            <h1 className="font-script text-6xl md:text-8xl leading-none text-wedding-pink-dark drop-shadow-sm">Đỗ Dương</h1>
-          </ScrollReveal>
-          <ScrollReveal direction="up" delay={0.5}>
-            <p className="text-xl text-muted-foreground mt-6 italic">"Yêu là khi ta muốn cùng nhau đi hết cuộc đời"</p>
-            <p className="text-2xl font-serif text-primary mt-4">29 . 03 . 2026</p>
-          </ScrollReveal>
-          <ScrollReveal direction="up" delay={0.7} className="mt-12 animate-bounce">
-            <ChevronDown className="w-8 h-8 text-wedding-pink mx-auto" />
-            <p className="text-sm text-muted-foreground">Cuộn xuống</p>
-          </ScrollReveal>
-        </div>
-      </section>
+        <section className="min-h-screen flex items-center justify-center relative px-4">
+          <div className="absolute inset-0">
+            <img src={heroBg} alt="Couple" className="w-full h-full object-cover" />
+          </div>
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.6) 100%)' }} />
+          
+          <div className="text-center relative z-10 pt-20">
+            {isInvitationOpen && (
+              <>
+                <ScrollReveal direction="up">
+                  <p className="text-wedding-pink font-script text-xl md:text-2xl mb-4 drop-shadow-md">Trân trọng thông báo</p>
+                  <p className="font-elegant text-white text-xl md:text-4xl leading-tight tracking-wide drop-shadow-md">{invitationLine}</p>
+                </ScrollReveal>
+                <ScrollReveal direction="left" delay={0.2}>
+                  <h1 className="font-script text-6xl md:text-8xl leading-none text-white drop-shadow-lg mt-8">Minh Đăng</h1>
+                </ScrollReveal>
+                <ScrollReveal direction="up" delay={0.3}>
+                  <p className="text-4xl md:text-5xl font-script text-wedding-gold my-3 md:my-4 drop-shadow-md">&</p>
+                </ScrollReveal>
+                <ScrollReveal direction="right" delay={0.2}>
+                  <h1 className="font-script text-6xl md:text-8xl leading-none text-white drop-shadow-lg">Đỗ Dương</h1>
+                </ScrollReveal>
+                <ScrollReveal direction="up" delay={0.5}>
+                  <p className="text-xl text-gray-200 mt-8 italic drop-shadow-md">"Yêu là khi ta muốn cùng nhau đi hết cuộc đời"</p>
+                  <p className="text-2xl font-serif text-white mt-4 drop-shadow-md">29 . 03 . 2026</p>
+                </ScrollReveal>
+                <ScrollReveal direction="up" delay={0.7} className="mt-12 animate-bounce">
+                  <ChevronDown className="w-8 h-8 text-white mx-auto drop-shadow-md" />
+                  <p className="text-sm text-white drop-shadow-md">Cuộn xuống</p>
+                </ScrollReveal>
+              </>
+            )}
+          </div>
+        </section>
 
-      <CoupleSection />
-      <EventDetails />
-      <PhotoAlbum />
-      <LoveStory />
-      <VideoSection />
-      <DressCode />
-      <WishesSection wishes={wishes} />
-      <RSVPForm onSubmitSuccess={handleNewWish} />
-      <Footer />
-      
-          <ThemeSwitcher />
-    </main>
+        <CoupleSection />
+        <EventDetails />
+        <PhotoAlbum />
+        <LoveStory />
+        <VideoSection />
+        <DressCode />
+        <WishesSection wishes={wishes} />
+        <RSVPForm onSubmitSuccess={handleNewWish} />
+        <Footer />
+        
+        <ThemeSwitcher />
+      </main>
+
+      {!isInvitationOpen && (
+        <OpeningScreen onOpen={() => setIsInvitationOpen(true)} />
+      )}
+    </>
   );
 };
 
 export default Index;
-
