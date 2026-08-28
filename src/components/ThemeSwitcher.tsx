@@ -1,111 +1,88 @@
-import { useState } from 'react';
-import { Palette, X, Check } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Palette, X, Check, Sliders, SwatchBook } from 'lucide-react';
 
-type ThemeColors = {
-  pink: string;
-  'pink-light': string;
-  'pink-dark': string;
-  rose: string;
-  gold: string;
-  'gold-light': string;
-  cream: string;
-  'cream-dark': string;
-};
+const parseHSL = (s) => { const p = s.trim().split(/\s+/); return [parseFloat(p[0])||0, parseFloat(p[1])||0, parseFloat(p[2])||0]; };
+const hslToHex = (h,s,l) => { s/=100; l/=100; const a=s*Math.min(l,1-l); const f=n=>{const k=(n+h/30)%12;const c=l-a*Math.max(Math.min(k-3,9-k,1),-1);return Math.round(255*c).toString(16).padStart(2,'0');};return '#'+f(0)+f(8)+f(4); };
+const hexToHSL = (hex) => { const r=parseInt(hex.slice(1,3),16)/255,g=parseInt(hex.slice(3,5),16)/255,b=parseInt(hex.slice(5,7),16)/255; const max=Math.max(r,g,b),min=Math.min(r,g,b); let h=0,s=0,l=(max+min)/2; if(max!==min){const d=max-min;s=l>0.5?d/(2-max-min):d/(max+min);if(max===r)h=((g-b)/d+(g<b?6:0))*60;else if(max===g)h=((b-r)/d+2)*60;else h=((r-g)/d+4)*60;}return [Math.round(h),Math.round(s*100),Math.round(l*100)]; };
 
-type Theme = {
-  id: string;
-  name: string;
-  colors: ThemeColors;
-  gradientStart: string;
-  gradientEnd: string;
-};
-
-const themes: Theme[] = [
-  { id: 'pink-gold', name: 'H\u1ED3ng V\u00e0ng', gradientStart: '350,70%,95%', gradientEnd: '30,40%,98%',
-    colors: { pink: '210 65% 55%', 'pink-light': '210 60% 95%', 'pink-dark': '210 60% 35%', rose: '210 50% 60%', gold: '210 40% 45%', 'gold-light': '210 45% 70%', cream: '210 25% 97%', 'cream-dark': '210 15% 92%' } },
-  { id: 'mint-copper', name: 'Xanh Mint', gradientStart: '160,40%,95%', gradientEnd: '38,35%,97%',
-    colors: { pink: '160 50% 45%', 'pink-light': '160 40% 94%', 'pink-dark': '160 45% 30%', rose: '170 40% 50%', gold: '38 55% 50%', 'gold-light': '38 50% 72%', cream: '160 15% 97%', 'cream-dark': '160 10% 93%' } },
-  { id: 'burgundy-royal', name: 'Burgundy', gradientStart: '345,40%,95%', gradientEnd: '43,40%,96%',
-    colors: { pink: '345 55% 42%', 'pink-light': '345 40% 94%', 'pink-dark': '345 50% 28%', rose: '350 45% 48%', gold: '43 70% 50%', 'gold-light': '43 60% 72%', cream: '30 20% 97%', 'cream-dark': '30 15% 93%' } },
-  { id: 'lavender-silver', name: 'Lavender', gradientStart: '270,30%,96%', gradientEnd: '0,0%,98%',
-    colors: { pink: '270 40% 60%', 'pink-light': '270 30% 95%', 'pink-dark': '270 35% 42%', rose: '280 30% 65%', gold: '0 0% 65%', 'gold-light': '0 0% 80%', cream: '270 10% 97%', 'cream-dark': '270 8% 93%' } },
-  { id: 'terracotta-cream', name: 'H\u1ED3 Tr\u00e0', gradientStart: '15,45%,95%', gradientEnd: '25,30%,97%',
-    colors: { pink: '15 60% 55%', 'pink-light': '15 50% 94%', 'pink-dark': '15 55% 38%', rose: '20 50% 58%', gold: '30 50% 50%', 'gold-light': '30 45% 70%', cream: '25 25% 96%', 'cream-dark': '25 18% 92%' } },
-  { id: 'navy-gold', name: 'Navy', gradientStart: '215,40%,95%', gradientEnd: '45,35%,97%',
-    colors: { pink: '215 60% 45%', 'pink-light': '215 40% 94%', 'pink-dark': '215 55% 30%', rose: '220 50% 50%', gold: '45 65% 55%', 'gold-light': '45 55% 75%', cream: '215 15% 97%', 'cream-dark': '215 10% 93%' } },
+const presets = [
+  {id:'pink-gold',name:'Hong Vang',colors:{pink:'210 65% 55%','pink-light':'210 60% 95%','pink-dark':'210 60% 35%',rose:'210 50% 60%',gold:'210 40% 45%','gold-light':'210 45% 70%','cream':'210 25% 97%','cream-dark':'210 15% 92%'}},
+  {id:'mint',name:'Xanh Mint',colors:{pink:'160 50% 45%','pink-light':'160 40% 94%','pink-dark':'160 45% 30%',rose:'170 40% 50%',gold:'38 55% 50%','gold-light':'38 50% 72%','cream':'160 15% 97%','cream-dark':'160 10% 93%'}},
+  {id:'burgundy',name:'Burgundy',colors:{pink:'345 55% 42%','pink-light':'345 40% 94%','pink-dark':'345 50% 28%',rose:'350 45% 48%',gold:'43 70% 50%','gold-light':'43 60% 72%','cream':'30 20% 97%','cream-dark':'30 15% 93%'}},
+  {id:'lavender',name:'Lavender',colors:{pink:'270 40% 60%','pink-light':'270 30% 95%','pink-dark':'270 35% 42%',rose:'280 30% 65%',gold:'0 0% 65%','gold-light':'0 0% 80%','cream':'270 10% 97%','cream-dark':'270 8% 93%'}},
+  {id:'terra',name:'Ho Tra',colors:{pink:'15 60% 55%','pink-light':'15 50% 94%','pink-dark':'15 55% 38%',rose:'20 50% 58%',gold:'30 50% 50%','gold-light':'30 45% 70%','cream':'25 25% 96%','cream-dark':'25 18% 92%'}},
+  {id:'navy',name:'Navy',colors:{pink:'215 60% 45%','pink-light':'215 40% 94%','pink-dark':'215 55% 30%',rose:'220 50% 50%',gold:'45 65% 55%','gold-light':'45 55% 75%','cream':'215 15% 97%','cream-dark':'215 10% 93%'}},
 ];
 
-const applyTheme = (theme: Theme) => {
-  const root = document.documentElement;
-  (Object.entries(theme.colors) as [string, string][]).forEach(([key, val]) => {
-    root.style.setProperty(`--wedding-${key}`, val);
-  });
-  root.style.background = `linear-gradient(135deg, hsl(${theme.gradientStart}) 0%, hsl(${theme.gradientEnd}) 50%, hsl(${theme.gradientStart}) 100%)`;
-};
+const entries = [
+  {key:'pink',label:'Mau chinh'},{key:'pink-light',label:'Mau chinh nhat'},{key:'pink-dark',label:'Mau chinh dam'},
+  {key:'rose',label:'Mau hong'},{key:'gold',label:'Mau diem nhan'},{key:'gold-light',label:'Diem nhan nhat'},
+  {key:'cream',label:'Nen thep'},{key:'cream-dark',label:'Nen phu'},
+];
+
+const getCSS = (k) => getComputedStyle(document.documentElement).getPropertyValue('--wedding-'+k).trim();
+const setCSS = (k,v) => document.documentElement.style.setProperty('--wedding-'+k,v);
 
 const ThemeSwitcher = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeTheme, setActiveTheme] = useState('pink-gold');
+  const [open,setOpen] = useState(false);
+  const [tab,setTab] = useState('presets');
+  const [cols,setCols] = useState({});
+  const [active,setActive] = useState('pink-gold');
+  const [showExp,setShowExp] = useState(false);
 
-  const handleSelect = (theme: Theme) => {
-    setActiveTheme(theme.id);
-    applyTheme(theme);
-  };
+  useEffect(() => { if(!open)return; const m={}; entries.forEach(e=>{m[e.key]=getCSS(e.key)}); setCols(m); },[open]);
+
+  const pick = (p) => { setActive(p.id); Object.entries(p.colors).forEach(([k,v])=>setCSS(k,v)); const m={}; entries.forEach(e=>{m[e.key]=p.colors[e.key]}); setCols(m); };
+  const pickColor = (k,hex) => { const[h,s,l]=hexToHSL(hex); const v=h+' '+s+'% '+l+'%'; setCSS(k,v); setCols(prev=>({...prev,[k]:v})); setActive(''); };
+  const reset = () => pick(presets[0]);
+  const NL = String.fromCharCode(10);
+  const cssOut = Object.entries(cols).map(([k,v])=>'  --wedding-'+k+': '+v+';').join(NL);
+
+  const cls = (base,cond,extra) => base + (cond ? ' ' + extra : '');
 
   return (
     <>
-      {/* Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-[9999] w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110"
-        style={{ background: 'hsl(var(--wedding-pink))', color: '#fff', border: '3px solid hsl(var(--wedding-gold))' }}
-        title="Ch\u1ECDn ph\u00f4ng m\u00e0u"
-      >
-        {isOpen ? <X className="w-6 h-6" /> : <Palette className="w-6 h-6" />}
+      <button onClick={()=>setOpen(!open)} className="fixed bottom-6 right-6 z-[9999] w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110" style={{background:'hsl(var(--wedding-pink))',color:'#fff',border:'3px solid hsl(var(--wedding-gold))'}} title="Chon mau">
+        {open ? <X className="w-6 h-6" /> : <Palette className="w-6 h-6" />}
       </button>
-
-      {/* Panel */}
-      <div
-        className={`fixed bottom-24 right-6 z-[9999] transition-all duration-300 ${isOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'}`}
-      >
-        <div className="rounded-2xl shadow-2xl p-4 min-w-[220px] max-w-[280px]"
-          style={{ background: 'hsl(var(--wedding-cream))', border: '2px solid hsl(var(--wedding-gold))' }}
-        >
-          <p className="text-sm font-semibold mb-3 text-center" style={{ color: 'hsl(var(--wedding-pink-dark))' }}>
-            \uD83C\uDFA8 Ch\u1ECDn ph\u00f4ng m\u00e0u
-          </p>
-          <div className="flex flex-col gap-2">
-            {themes.map((theme) => (
-              <button
-                key={theme.id}
-                onClick={() => handleSelect(theme)}
-                className="flex items-center gap-3 p-2.5 rounded-xl transition-all duration-200 text-left"
-                style={{
-                  background: activeTheme === theme.id ? 'hsl(var(--wedding-pink-light))' : 'transparent',
-                  border: activeTheme === theme.id ? '2px solid hsl(var(--wedding-gold))' : '2px solid transparent',
-                }}
-              >
-                {/* Swatches */}
-                <div className="flex gap-1 flex-shrink-0">
-                  <div className="w-5 h-5 rounded-full" style={{ background: `hsl(${theme.colors.pink})` }} />
-                  <div className="w-5 h-5 rounded-full" style={{ background: `hsl(${theme.colors.gold})` }} />
-                  <div className="w-5 h-5 rounded-full" style={{ background: `hsl(${theme.colors.cream})`, border: '1px solid hsl(var(--wedding-gold-light))' }} />
-                </div>
-
-                <span className="text-xs font-medium flex-1" style={{ color: 'hsl(var(--wedding-pink-dark))' }}>
-                  {theme.name}
-                </span>
-
-                {activeTheme === theme.id && (
-                  <Check className="w-4 h-4 flex-shrink-0" style={{ color: 'hsl(var(--wedding-gold))' }} />
-                )}
-              </button>
-            ))}
+      <div className={cls('fixed bottom-24 right-6 z-[9999] transition-all duration-300', open, 'opacity-100 translate-y-0 pointer-events-auto') + (!open ? ' opacity-0 translate-y-4 pointer-events-none' : '')}>
+        <div className="rounded-2xl shadow-2xl overflow-hidden" style={{width:'320px',maxHeight:'80vh',background:'hsl(var(--wedding-cream))',border:'2px solid hsl(var(--wedding-gold))'}}>
+          <div className="p-3 text-center" style={{borderBottom:'1px solid hsl(var(--wedding-gold-light))'}}><p className="text-sm font-semibold" style={{color:'hsl(var(--wedding-pink-dark))'}}>🎨 Chon giao dien</p></div>
+          <div className="flex" style={{borderBottom:'1px solid hsl(var(--wedding-gold-light))'}}>
+            <button onClick={()=>setTab('presets')} className="flex-1 py-2 text-xs font-medium flex items-center justify-center gap-1" style={{color:tab==='presets'?'hsl(var(--wedding-pink))':'hsl(var(--wedding-pink-dark)/0.5)',borderBottom:tab==='presets'?'2px solid hsl(var(--wedding-pink))':'2px solid transparent'}}><SwatchBook className="w-3.5 h-3.5" /> Mau co san</button>
+            <button onClick={()=>setTab('custom')} className="flex-1 py-2 text-xs font-medium flex items-center justify-center gap-1" style={{color:tab==='custom'?'hsl(var(--wedding-pink))':'hsl(var(--wedding-pink-dark)/0.5)',borderBottom:tab==='custom'?'2px solid hsl(var(--wedding-pink))':'2px solid transparent'}}><Sliders className="w-3.5 h-3.5" /> Tuy chinh</button>
           </div>
+          <div className="overflow-y-auto" style={{maxHeight:'calc(80vh - 100px)'}}>
+            {tab==='presets' ? (
+              <div className="p-3 flex flex-col gap-2">
+                {presets.map(p=>(
+                  <button key={p.id} onClick={()=>pick(p)} className="flex items-center gap-3 p-2 rounded-xl transition-all text-left" style={{background:active===p.id?'hsl(var(--wedding-pink-light))':'transparent',border:active===p.id?'2px solid hsl(var(--wedding-gold))':'2px solid transparent'}}>
+                    <div className="flex gap-1"><div className="w-5 h-5 rounded-full" style={{background:'hsl('+p.colors.pink+')'}} /><div className="w-5 h-5 rounded-full" style={{background:'hsl('+p.colors.gold+')'}} /><div className="w-5 h-5 rounded-full" style={{background:'hsl('+p.colors.cream+')',border:'1px solid hsl(var(--wedding-gold-light))'}} /></div>
+                    <span className="text-xs font-medium" style={{color:'hsl(var(--wedding-pink-dark))'}}>{p.name}</span>
+                    {active===p.id && <Check className="w-4 h-4 ml-auto" style={{color:'hsl(var(--wedding-gold))'}} />}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="p-3 flex flex-col gap-3">
+                {entries.map(e=>{const[h,s,l]=parseHSL(cols[e.key]||'0 0% 50%');const hex=hslToHex(h,s,l);return(<div key={e.key} className="flex items-center gap-3"><input type="color" value={hex} onChange={ev=>pickColor(e.key,ev.target.value)} className="w-8 h-8 rounded-lg cursor-pointer border-0 p-0" /><div className="flex-1"><p className="text-[11px] font-medium" style={{color:'hsl(var(--wedding-pink-dark))'}}>{e.label}</p><p className="text-[10px]" style={{color:'hsl(var(--wedding-pink-dark)/0.5)'}}>HSL: {h} {s}% {l}%</p></div></div>);})}
+                <div className="flex gap-2 mt-1">
+                  <button onClick={reset} className="flex-1 py-2 rounded-lg text-xs font-medium" style={{border:'1.5px solid hsl(var(--wedding-gold))',color:'hsl(var(--wedding-pink-dark))'}}>Reset mac dinh</button>
+                  <button onClick={()=>setShowExp(true)} className="flex-1 py-2 rounded-lg text-xs font-medium text-white" style={{background:'hsl(var(--wedding-pink))'}}>Copy CSS</button>
+                </div>
+              </div>
+            )}
+          </div>
+          {showExp && (
+            <div className="p-3" style={{borderTop:'1px solid hsl(var(--wedding-gold-light))'}}>
+              <div className="flex items-center justify-between mb-2"><p className="text-xs font-semibold" style={{color:'hsl(var(--wedding-pink-dark))'}}>CSS Variables</p><button onClick={()=>setShowExp(false)} className="text-xs" style={{color:'hsl(var(--wedding-pink))'}}>Dong</button></div>
+              <pre className="text-[10px] p-2 rounded-lg overflow-x-auto" style={{background:'hsl(var(--wedding-pink-dark)/0.05)',color:'hsl(var(--wedding-pink-dark))'}}>{':root {'+NL+cssOut+NL+'}'}</pre>
+              <button onClick={()=>navigator.clipboard.writeText(':root {'+NL+cssOut+NL+'}')} className="w-full mt-2 py-1.5 rounded-lg text-xs font-medium text-white" style={{background:'hsl(var(--wedding-gold))'}}>📋 Sao chep</button>
+            </div>
+          )}
         </div>
       </div>
     </>
   );
 };
-
 export default ThemeSwitcher;

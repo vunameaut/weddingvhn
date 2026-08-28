@@ -12,8 +12,9 @@ import PhotoAlbum from '@/components/PhotoAlbum';
 import RSVPForm from '@/components/RSVPForm';
 import LoveStory from '@/components/LoveStory';
 import VideoSection from '@/components/VideoSection';
-import DressCode from '@/components/DressCode';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
+import DressCode from '@/components/DressCode';
+
 import Footer from '@/components/Footer';
 import { isSupabaseConfigured, supabase, type WishItem } from '@/lib/supabase';
 import { decodeRecipientName } from '@/lib/invite';
@@ -338,7 +339,11 @@ const Index = () => {
       <FloatingParticles />
       <MusicPlayer />
 
-      <section className="min-h-screen flex items-center justify-center bg-gradient-romantic relative px-4">
+      <section className="min-h-screen flex items-center justify-center relative px-4">
+        <div className="absolute inset-0">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&h=1080&fit=crop&crop=faces" alt="Couple" className="w-full h-full object-cover" />
+        </div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.5) 100%)' }} />
         <div className="text-center relative z-10">
           <ScrollReveal direction="up">
             <p className="text-wedding-pink font-script text-xl md:text-2xl mb-4">Trân trọng thông báo</p>
@@ -373,7 +378,8 @@ const Index = () => {
       <WishesSection wishes={wishes} />
       <RSVPForm onSubmitSuccess={handleNewWish} />
       <Footer />
-      <ThemeSwitcher />
+      
+          <ThemeSwitcher />
     </main>
   );
 };

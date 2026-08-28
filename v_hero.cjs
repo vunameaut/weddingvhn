@@ -1,0 +1,1 @@
+const fs=require('fs');const c=fs.readFileSync('D:\\hoc tap\\web\\weddingvhn\\src\\pages\\Index.tsx','utf8');c.split('\n').slice(340,352).forEach((l,i)=>console.log(341+i+':',l.substring(0,100)))
