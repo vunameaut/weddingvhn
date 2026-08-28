@@ -21,21 +21,20 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
     
     setStep('opening');
     
-    // Đợi nắp phong bì mở
+    // Đợi nắp phong bì mở (400ms)
     setTimeout(() => {
       setStep('flying');
-    }, 600);
+    }, 400);
 
-    // Đợi ảnh bay lên -> chuyển sang hiding (phóng to)
+    // Thời gian bay ra ngắn lại (700ms)
     setTimeout(() => {
       setStep('hiding');
-    }, 1800);
+    }, 1100);
 
-    // Chuyển sang màn hình chính
-    // Vì kích thước sẽ khớp 100% pixel-for-pixel, việc unmount OpeningScreen sẽ không gây giật.
+    // Thời gian phóng to (1000ms) -> Mở trang
     setTimeout(() => {
       onOpen();
-    }, 3000);
+    }, 2100);
   };
 
   const getPhotoStyles = () => {
@@ -75,19 +74,19 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
       
       {/* Background patterns */}
       <div 
-        className="absolute inset-0 pointer-events-none transition-opacity duration-700 ease-in-out" 
+        className="absolute inset-0 pointer-events-none transition-opacity duration-500 ease-in-out" 
         style={{ opacity: step === 'hiding' ? 0 : 1 }}
       >
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#a3876a 1.5px, transparent 1.5px)', backgroundSize: '24px 24px' }}></div>
         
-        <div className={`absolute inset-0 transition-opacity duration-500 ${step !== 'idle' ? 'opacity-0' : 'opacity-100'}`}>
+        <div className={`absolute inset-0 transition-opacity duration-300 ${step !== 'idle' ? 'opacity-0' : 'opacity-100'}`}>
           <div className="absolute top-[10%] left-[15%] text-2xl text-[#cba889] opacity-50 animate-[float_4s_ease-in-out_infinite]">✨</div>
           <div className="absolute top-[20%] right-[20%] text-3xl text-[#cba889] opacity-40 animate-[float_5s_ease-in-out_infinite_reverse]">❀</div>
           <div className="absolute bottom-[25%] left-[25%] text-xl text-[#cba889] opacity-60 animate-[float_3s_ease-in-out_infinite]">♡</div>
           <div className="absolute bottom-[15%] right-[15%] text-2xl text-[#cba889] opacity-50 animate-[float_4.5s_ease-in-out_infinite]">✧</div>
         </div>
 
-        <div className={`absolute top-[12%] left-0 right-0 text-center transition-all duration-700 ease-in-out ${step !== 'idle' ? 'opacity-0 -translate-y-8' : 'opacity-100 translate-y-0'}`}>
+        <div className={`absolute top-[12%] left-0 right-0 text-center transition-all duration-500 ease-in-out ${step !== 'idle' ? 'opacity-0 -translate-y-8' : 'opacity-100 translate-y-0'}`}>
           <p className="font-sans tracking-[0.2em] text-[#a3876a] text-sm uppercase mb-3">Save The Date</p>
           <h1 className="font-script text-4xl md:text-5xl text-[#8b6f52] drop-shadow-sm">Minh Đăng & Đỗ Dương</h1>
         </div>
@@ -95,16 +94,18 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
 
       {/* ENVELOPE BACK */}
       <div 
-        className="absolute w-[320px] h-[220px] md:w-[420px] md:h-[280px] bg-[#ebd9c8] rounded-md shadow-xl border border-[#d5bda5] transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)]"
+        className="absolute w-[320px] h-[220px] md:w-[420px] md:h-[280px] bg-[#ebd9c8] rounded-md shadow-xl border border-[#d5bda5] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
         style={{ 
           opacity: step === 'hiding' ? 0 : 1, 
           transform: step === 'hiding' ? 'scale(1.2) translateY(50px)' : 'scale(1) translateY(0)' 
         }}
       ></div>
 
-      {/* THE PHOTO GROUP (Cố định fixed, thay đổi kích thước thành 100vw/100vh để khớp đúng với trang bìa) */}
+      {/* THE PHOTO GROUP */}
       <div 
-        className="fixed top-1/2 left-1/2 z-[60] transition-all duration-[1200ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+        className={`fixed top-1/2 left-1/2 z-[60] transition-all ease-[cubic-bezier(0.4,0,0.2,1)] ${
+          step === 'hiding' ? 'duration-[1000ms]' : 'duration-[700ms]'
+        }`}
         style={{
           ...getPhotoStyles(),
           opacity: step === 'idle' ? 0 : 1,
@@ -114,7 +115,7 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
 
         {/* Lớp khung viền Polaroid */}
         <div 
-          className="absolute inset-0 border-[8px] md:border-[10px] border-white bg-transparent transition-opacity duration-700"
+          className="absolute inset-0 border-[8px] md:border-[10px] border-white bg-transparent transition-opacity duration-500"
           style={{ opacity: step === 'hiding' ? 0 : 1 }}
         >
           <div className="absolute left-[-8px] right-[-8px] bottom-[-40px] md:bottom-[-48px] h-[40px] md:h-[48px] bg-white flex items-center justify-center">
@@ -122,9 +123,11 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
           </div>
         </div>
         
-        {/* Lớp filter đen giống với màn hình Hero của Index.tsx để khỏi bị giật màu */}
+        {/* Lớp filter đen */}
         <div 
-          className="absolute inset-0 pointer-events-none transition-opacity duration-[1200ms]"
+          className={`absolute inset-0 pointer-events-none transition-opacity ${
+            step === 'hiding' ? 'duration-[1000ms]' : 'duration-[700ms]'
+          }`}
           style={{ 
             opacity: step === 'hiding' ? 1 : 0,
             background: 'linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.6) 100%)'
@@ -134,7 +137,7 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
 
       {/* ENVELOPE FRONT FLAPS */}
       <div 
-        className="absolute w-[320px] h-[220px] md:w-[420px] md:h-[280px] pointer-events-none z-[10] transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)]"
+        className="absolute w-[320px] h-[220px] md:w-[420px] md:h-[280px] pointer-events-none z-[10] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
         style={{ 
           opacity: step === 'hiding' ? 0 : 1, 
           transform: step === 'hiding' ? 'scale(1.2) translateY(50px)' : 'scale(1) translateY(0)' 
@@ -145,7 +148,7 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
         <div className="absolute bottom-0 left-0 right-0 h-[65%] bg-[#dfc5af]" style={{ clipPath: 'polygon(0 100%, 50% 0, 100% 100%)' }}></div>
         
         <div 
-          className="absolute top-0 left-0 right-0 h-[60%] bg-[#d5bda5] origin-top transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] z-[20] shadow-sm" 
+          className="absolute top-0 left-0 right-0 h-[60%] bg-[#d5bda5] origin-top transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] z-[20] shadow-sm" 
           style={{ 
             clipPath: 'polygon(0 0, 50% 100%, 100% 0)',
             transform: step !== 'idle' ? 'rotateX(180deg)' : 'rotateX(0deg)',
@@ -153,7 +156,7 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
           }}
         ></div>
         <div 
-          className="absolute top-0 left-0 right-0 h-[60%] bg-[#cba889] origin-top transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] z-[15]" 
+          className="absolute top-0 left-0 right-0 h-[60%] bg-[#cba889] origin-top transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] z-[15]" 
           style={{ 
             clipPath: 'polygon(0 0, 50% 100%, 100% 0)',
             transform: step !== 'idle' ? 'rotateX(0deg)' : 'rotateX(-180deg)',
@@ -163,7 +166,7 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
       </div>
 
       {/* BUTTON */}
-      <div className={`absolute bottom-[15%] transition-all duration-700 ease-in-out ${step !== 'idle' ? 'opacity-0 translate-y-8 pointer-events-none' : 'opacity-100 translate-y-0'}`}>
+      <div className={`absolute bottom-[15%] transition-all duration-500 ease-in-out ${step !== 'idle' ? 'opacity-0 translate-y-8 pointer-events-none' : 'opacity-100 translate-y-0'}`}>
         <button 
           onClick={handleOpenClick}
           className="group relative px-10 py-3.5 bg-[#a3876a] hover:bg-[#8b6f52] text-white rounded-full font-serif text-lg tracking-widest transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 overflow-hidden"
