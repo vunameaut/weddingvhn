@@ -13,6 +13,7 @@ import RSVPForm from '@/components/RSVPForm';
 import LoveStory from '@/components/LoveStory';
 import VideoSection from '@/components/VideoSection';
 import DressCode from '@/components/DressCode';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
 import Footer from '@/components/Footer';
 import { isSupabaseConfigured, supabase, type WishItem } from '@/lib/supabase';
 import { decodeRecipientName } from '@/lib/invite';
@@ -372,6 +373,7 @@ const Index = () => {
       <WishesSection wishes={wishes} />
       <RSVPForm onSubmitSuccess={handleNewWish} />
       <Footer />
+      <ThemeSwitcher />
     </main>
   );
 };
