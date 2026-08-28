@@ -1,0 +1,20 @@
+[package]
+
+name = "vuhoainam_dev/weddingvhn" 
+version = "0.1.0"
+description = "My wedding website"
+
+[dependencies]
+"wasmer/static-web-server" = "^1"
+
+[fs]
+# Ánh xạ toàn bộ thư mục hiện tại thành thư mục public trên server
+"/public" = "." 
+
+[[command]]
+name = "server"
+module = "wasmer/static-web-server:webserver"
+runner = "https://webc.org/runner/wasi"
+
+[command.annotations.wasi]
+env = ["SERVER_ROOT=/public"]

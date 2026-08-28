@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import { Heart, MessageCircleHeart, Copy, QrCode, ExternalLink, Download, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -10,6 +10,9 @@ import CoupleSection from '@/components/CoupleSection';
 import EventDetails from '@/components/EventDetails';
 import PhotoAlbum from '@/components/PhotoAlbum';
 import RSVPForm from '@/components/RSVPForm';
+import LoveStory from '@/components/LoveStory';
+import VideoSection from '@/components/VideoSection';
+import DressCode from '@/components/DressCode';
 import Footer from '@/components/Footer';
 import { isSupabaseConfigured, supabase, type WishItem } from '@/lib/supabase';
 import { decodeRecipientName } from '@/lib/invite';
@@ -363,6 +366,9 @@ const Index = () => {
       <CoupleSection />
       <EventDetails />
       <PhotoAlbum />
+      <LoveStory />
+      <VideoSection />
+      <DressCode />
       <WishesSection wishes={wishes} />
       <RSVPForm onSubmitSuccess={handleNewWish} />
       <Footer />
@@ -371,3 +377,4 @@ const Index = () => {
 };
 
 export default Index;
+
