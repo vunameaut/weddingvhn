@@ -288,6 +288,29 @@ const Index = () => {
   const invitationLine = recipientName ? `Kính mời ${recipientName}` : 'Trân trọng kính mời';
 
   useEffect(() => {
+    // Ngăn trình duyệt tự động khôi phục vị trí cuộn cũ khi reload
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    // Luôn đưa thanh cuộn về trên cùng
+    window.scrollTo(0, 0);
+
+    // Ngăn cuộn trang khi đang ở màn hình mở thiệp
+    if (!isInvitationOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+      // Đảm bảo lần nữa về trên cùng ngay lúc mở thiệp xong
+      setTimeout(() => window.scrollTo(0, 0), 10);
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isInvitationOpen]);
+
+  useEffect(() => {
     const loadWishes = async () => {
       if (!isSupabaseConfigured || !supabase) {
         return;
