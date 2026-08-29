@@ -12,7 +12,7 @@ const StickyCountdown = () => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isVisible, setIsVisible] = useState(false);
 
-  const weddingDate = new Date('2026-11-08T16:00:00');
+  const weddingDate = new Date('2026-03-29T16:00:00');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,7 +72,7 @@ const StickyCountdown = () => {
 
           {/* Date */}
           <div className="hidden md:block text-sm text-muted-foreground font-body">
-            08.11.2026
+            29.03.2026
           </div>
         </div>
       </div>
