@@ -177,7 +177,7 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
             <div className="absolute inset-1 border border-[#D4AF37] pointer-events-none opacity-60"></div>
             
             <div className="absolute left-[-10px] right-[-10px] bottom-[-60px] md:bottom-[-70px] h-[60px] md:h-[70px] bg-[#FCFBF8] flex flex-col items-center justify-center rounded-b-[2px] shadow-[0_15px_30px_rgba(0,0,0,0.2)]">
-              <span className="font-script text-[#4A3B32] text-2xl md:text-3xl tracking-wide">Minh Đăng & Đỗ Dương</span>
+              <span className="font-script text-[#4A3B32] text-2xl md:text-3xl tracking-wide">Đỗ Quân & Mai Linh</span>
               <span className="font-serif text-[#D4AF37] text-[9px] md:text-[10px] tracking-[0.4em] uppercase mt-1 font-medium">Our Wedding Day</span>
             </div>
           </div>
@@ -255,7 +255,7 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
                  style={{ background: 'linear-gradient(135deg, #FBF5B7 0%, #D4AF37 40%, #AA771C 100%)' }}>
               <div className="absolute inset-[3px] rounded-full border-2 border-[#8C6216] opacity-40"></div>
               <div className="absolute inset-[6px] rounded-full border border-[#FFF] opacity-30"></div>
-              <span className="font-script text-[#4A1117] text-2xl md:text-3xl mt-1 font-bold opacity-90 drop-shadow-[0_1px_1px_rgba(255,255,255,0.5)]">M&D</span>
+              <span className="font-script text-[#4A1117] text-2xl md:text-3xl mt-1 font-bold opacity-90 drop-shadow-[0_1px_1px_rgba(255,255,255,0.5)]">Q&L</span>
             </div>
           </div>
         </div>
@@ -287,3 +287,4 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
 };
 
 export default OpeningScreen;
+

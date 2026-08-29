@@ -169,3 +169,4 @@ export const useStaggerAnimation = (itemCount: number, baseDelay: number = 0.1) 
 };
 
 export default useScrollAnimation;
+

@@ -1,4 +1,4 @@
-﻿import { ScrollReveal } from '@/hooks/useScrollAnimation';
+import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import { Shirt, Palette, Heart } from 'lucide-react';
 
 const dressColors = [
@@ -99,3 +99,4 @@ const DressCode = () => {
 };
 
 export default DressCode;
+

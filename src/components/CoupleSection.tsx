@@ -42,7 +42,7 @@ const CoupleSection = () => {
               <div className="hidden md:block absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-wedding-gold rounded-bl-lg opacity-60" />
               <div className="hidden md:block absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-wedding-gold rounded-br-lg opacity-60" />
             </div>
-            <h3 className="font-script text-xl sm:text-2xl md:text-5xl text-wedding-pink-dark mb-0.5 md:mb-2">Minh Đăng</h3>
+            <h3 className="font-script text-xl sm:text-2xl md:text-5xl text-wedding-pink-dark mb-0.5 md:mb-2">Đỗ Quân</h3>
           </ScrollReveal>
 
           {/* Heart connector */}
@@ -71,7 +71,7 @@ const CoupleSection = () => {
               <div className="hidden md:block absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-wedding-gold rounded-bl-lg opacity-60" />
               <div className="hidden md:block absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-wedding-gold rounded-br-lg opacity-60" />
             </div>
-            <h3 className="font-script text-xl sm:text-2xl md:text-5xl text-wedding-pink-dark mb-0.5 md:mb-2">Đỗ Dương</h3>
+            <h3 className="font-script text-xl sm:text-2xl md:text-5xl text-wedding-pink-dark mb-0.5 md:mb-2">Mai Linh</h3>
           </ScrollReveal>
         </div>
 
@@ -89,3 +89,4 @@ const CoupleSection = () => {
 };
 
 export default CoupleSection;
+

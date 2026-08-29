@@ -25,6 +25,45 @@ const MusicPlayer = () => {
     return () => window.removeEventListener('click', handleInteraction);
   }, [hasInteracted]);
 
+  const wasPlayingRef = useRef(false);
+
+  useEffect(() => {
+    const handlePauseMusic = () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    };
+    window.addEventListener('pause-music', handlePauseMusic);
+    return () => window.removeEventListener('pause-music', handlePauseMusic);
+  }, []);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Tab is hidden (switched to another tab or minimized)
+        if (audioRef.current && !audioRef.current.paused) {
+          wasPlayingRef.current = true;
+          audioRef.current.pause();
+          setIsPlaying(false);
+        } else {
+          wasPlayingRef.current = false;
+        }
+      } else {
+        // Tab is active again
+        if (wasPlayingRef.current && audioRef.current) {
+          audioRef.current.play().then(() => {
+            setIsPlaying(true);
+          }).catch(console.error);
+          wasPlayingRef.current = false;
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
   const toggleMusic = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -57,3 +96,4 @@ const MusicPlayer = () => {
 };
 
 export default MusicPlayer;
+

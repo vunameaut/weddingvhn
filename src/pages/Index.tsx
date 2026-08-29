@@ -61,7 +61,7 @@ const bankAccounts: BankAccount[] = [
     bankCode: '970422',
     accountNumber: '0399159618',
     label: 'Cô dâu',
-    transferNote: 'Mừng cưới Minh Đăng - Đỗ Dương',
+    transferNote: 'Mừng cưới Đỗ Quân - Mai Linh',
   },
 ];
 
@@ -105,9 +105,55 @@ const WishesSection = ({ wishes }: WishesSectionProps) => {
     ].join('\n');
 
     try {
-      await navigator.clipboard.writeText(text);
-      toast({ title: "Đã sao chép!", description: "Thông tin chuyển khoản đã được sao chép" });
-    } catch {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        toast({ title: "Đã sao chép!", description: "Thông tin chuyển khoản đã được sao chép" });
+      } else {
+        // Fallback robust cho HTTP / Mobile
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.width = "2em";
+        textArea.style.height = "2em";
+        textArea.style.padding = "0";
+        textArea.style.border = "none";
+        textArea.style.outline = "none";
+        textArea.style.boxShadow = "none";
+        textArea.style.background = "transparent";
+        
+        document.body.appendChild(textArea);
+        
+        if (navigator.userAgent.match(/ipad|iphone/i)) {
+          const range = document.createRange();
+          range.selectNodeContents(textArea);
+          const selection = window.getSelection();
+          if (selection) {
+            selection.removeAllRanges();
+            selection.addRange(range);
+          }
+          textArea.setSelectionRange(0, 999999);
+        } else {
+          textArea.select();
+        }
+
+        try {
+          const successful = document.execCommand('copy');
+          if (successful) {
+            toast({ title: "Đã sao chép!", description: "Thông tin chuyển khoản đã được sao chép" });
+          } else {
+            throw new Error("execCommand returned false");
+          }
+        } catch (error) {
+          console.error("Fallback copy failed", error);
+          window.prompt("Trình duyệt chặn copy tự động. Vui lòng copy thông tin dưới đây:", text);
+        } finally {
+          document.body.removeChild(textArea);
+        }
+      }
+    } catch (error) {
+      console.error(error);
       toast({ title: "Không thể sao chép", description: "Vui lòng sao chép thủ công", variant: "destructive" });
     }
   };
@@ -367,13 +413,13 @@ const Index = () => {
                   <p className="font-elegant text-white text-xl md:text-4xl leading-tight tracking-wide drop-shadow-md">{invitationLine}</p>
                 </ScrollReveal>
                 <ScrollReveal direction="left" delay={0.2}>
-                  <h1 className="font-script text-6xl md:text-8xl leading-none text-white drop-shadow-lg mt-8">Minh Đăng</h1>
+                  <h1 className="font-script text-6xl md:text-8xl leading-none text-white drop-shadow-lg mt-8">Đỗ Quân</h1>
                 </ScrollReveal>
                 <ScrollReveal direction="up" delay={0.3}>
                   <p className="text-4xl md:text-5xl font-script text-wedding-gold my-3 md:my-4 drop-shadow-md">&</p>
                 </ScrollReveal>
                 <ScrollReveal direction="right" delay={0.2}>
-                  <h1 className="font-script text-6xl md:text-8xl leading-none text-white drop-shadow-lg">Đỗ Dương</h1>
+                  <h1 className="font-script text-6xl md:text-8xl leading-none text-white drop-shadow-lg">Mai Linh</h1>
                 </ScrollReveal>
                 <ScrollReveal direction="up" delay={0.5}>
                   <p className="text-xl text-gray-200 mt-8 italic drop-shadow-md">"Yêu là khi ta muốn cùng nhau đi hết cuộc đời"</p>
@@ -409,3 +455,4 @@ const Index = () => {
 };
 
 export default Index;
+

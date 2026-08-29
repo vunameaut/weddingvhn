@@ -38,6 +38,59 @@ const ThemeSwitcher = () => {
   const NL = String.fromCharCode(10);
   const cssOut = Object.entries(cols).map(([k,v])=>'  --wedding-'+k+': '+v+';').join(NL);
 
+  const handleCopyCSS = () => {
+    const text = ':root {' + NL + cssOut + NL + '}';
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Đã copy CSS thành công!");
+      }).catch(err => {
+        console.error("Clipboard copy failed", err);
+      });
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.top = "0";
+      textArea.style.left = "0";
+      textArea.style.width = "2em";
+      textArea.style.height = "2em";
+      textArea.style.padding = "0";
+      textArea.style.border = "none";
+      textArea.style.outline = "none";
+      textArea.style.boxShadow = "none";
+      textArea.style.background = "transparent";
+      
+      document.body.appendChild(textArea);
+      
+      if (navigator.userAgent.match(/ipad|iphone/i)) {
+        const range = document.createRange();
+        range.selectNodeContents(textArea);
+        const selection = window.getSelection();
+        if (selection) {
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+        textArea.setSelectionRange(0, 999999);
+      } else {
+        textArea.select();
+      }
+
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          alert("Đã copy CSS thành công!");
+        } else {
+          throw new Error("execCommand returned false");
+        }
+      } catch (error) {
+        console.error("Fallback copy failed", error);
+        window.prompt("Trình duyệt của bạn chặn copy tự động trên kết nối HTTP. Vui lòng copy đoạn mã dưới đây:", text);
+      } finally {
+        document.body.removeChild(textArea);
+      }
+    }
+  };
+
   const cls = (base,cond,extra) => base + (cond ? ' ' + extra : '');
 
   return (
@@ -46,13 +99,13 @@ const ThemeSwitcher = () => {
         {open ? <X className="w-6 h-6" /> : <Palette className="w-6 h-6" />}
       </button>
       <div className={cls('fixed bottom-24 right-6 z-[9999] transition-all duration-300', open, 'opacity-100 translate-y-0 pointer-events-auto') + (!open ? ' opacity-0 translate-y-4 pointer-events-none' : '')}>
-        <div className="rounded-2xl shadow-2xl overflow-hidden" style={{width:'320px',maxHeight:'80vh',background:'hsl(var(--wedding-cream))',border:'2px solid hsl(var(--wedding-gold))'}}>
-          <div className="p-3 text-center" style={{borderBottom:'1px solid hsl(var(--wedding-gold-light))'}}><p className="text-sm font-semibold" style={{color:'hsl(var(--wedding-pink-dark))'}}>🎨 Chon giao dien</p></div>
-          <div className="flex" style={{borderBottom:'1px solid hsl(var(--wedding-gold-light))'}}>
+        <div className="rounded-2xl shadow-2xl flex flex-col overflow-hidden" style={{width:'320px',maxHeight:'80vh',background:'hsl(var(--wedding-cream))',border:'2px solid hsl(var(--wedding-gold))'}}>
+          <div className="p-3 text-center shrink-0" style={{borderBottom:'1px solid hsl(var(--wedding-gold-light))'}}><p className="text-sm font-semibold" style={{color:'hsl(var(--wedding-pink-dark))'}}>🎨 Chon giao dien</p></div>
+          <div className="flex shrink-0" style={{borderBottom:'1px solid hsl(var(--wedding-gold-light))'}}>
             <button onClick={()=>setTab('presets')} className="flex-1 py-2 text-xs font-medium flex items-center justify-center gap-1" style={{color:tab==='presets'?'hsl(var(--wedding-pink))':'hsl(var(--wedding-pink-dark)/0.5)',borderBottom:tab==='presets'?'2px solid hsl(var(--wedding-pink))':'2px solid transparent'}}><SwatchBook className="w-3.5 h-3.5" /> Mau co san</button>
             <button onClick={()=>setTab('custom')} className="flex-1 py-2 text-xs font-medium flex items-center justify-center gap-1" style={{color:tab==='custom'?'hsl(var(--wedding-pink))':'hsl(var(--wedding-pink-dark)/0.5)',borderBottom:tab==='custom'?'2px solid hsl(var(--wedding-pink))':'2px solid transparent'}}><Sliders className="w-3.5 h-3.5" /> Tuy chinh</button>
           </div>
-          <div className="overflow-y-auto" style={{maxHeight:'calc(80vh - 100px)'}}>
+          <div className="overflow-y-auto flex-1 min-h-[100px]">
             {tab==='presets' ? (
               <div className="p-3 flex flex-col gap-2">
                 {presets.map(p=>(
@@ -74,10 +127,10 @@ const ThemeSwitcher = () => {
             )}
           </div>
           {showExp && (
-            <div className="p-3" style={{borderTop:'1px solid hsl(var(--wedding-gold-light))'}}>
+            <div className="p-3 shrink-0" style={{borderTop:'1px solid hsl(var(--wedding-gold-light))'}}>
               <div className="flex items-center justify-between mb-2"><p className="text-xs font-semibold" style={{color:'hsl(var(--wedding-pink-dark))'}}>CSS Variables</p><button onClick={()=>setShowExp(false)} className="text-xs" style={{color:'hsl(var(--wedding-pink))'}}>Dong</button></div>
-              <pre className="text-[10px] p-2 rounded-lg overflow-x-auto" style={{background:'hsl(var(--wedding-pink-dark)/0.05)',color:'hsl(var(--wedding-pink-dark))'}}>{':root {'+NL+cssOut+NL+'}'}</pre>
-              <button onClick={()=>navigator.clipboard.writeText(':root {'+NL+cssOut+NL+'}')} className="w-full mt-2 py-1.5 rounded-lg text-xs font-medium text-white" style={{background:'hsl(var(--wedding-gold))'}}>📋 Sao chep</button>
+              <pre className="text-[10px] p-2 rounded-lg overflow-y-auto max-h-[120px]" style={{background:'hsl(var(--wedding-pink-dark)/0.05)',color:'hsl(var(--wedding-pink-dark))'}}>{':root {'+NL+cssOut+NL+'}'}</pre>
+              <button onClick={handleCopyCSS} className="w-full mt-2 py-2 rounded-lg text-xs font-bold text-white shadow-md active:scale-95 transition-transform" style={{background:'hsl(var(--wedding-gold))'}}>📋 Sao chep code CSS</button>
             </div>
           )}
         </div>
@@ -86,3 +139,4 @@ const ThemeSwitcher = () => {
   );
 };
 export default ThemeSwitcher;
+

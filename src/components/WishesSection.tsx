@@ -89,7 +89,7 @@ const WishesSection = () => {
       `Ngân hàng: ${account.bank}`,
       `Chủ tài khoản: ${account.name}`,
       `Số tài khoản: ${account.accountNumber}`,
-      'Nội dung: Mừng cưới Minh Đăng - Đỗ Dương',
+      'Nội dung: Mừng cưới Đỗ Quân - Mai Linh',
     ].join('\n');
 
     await copyToClipboard(transferInfo);
@@ -135,7 +135,7 @@ const WishesSection = () => {
 
     const handleOpenBankApp = (account: BankAccount, appCode: string) => {
 
-      const transferNote = encodeURIComponent('Mừng cưới Minh Đăng - Đỗ Dương');
+      const transferNote = encodeURIComponent('Mừng cưới Đỗ Quân - Mai Linh');
 
       const accountName = encodeURIComponent(account.name);
 
@@ -255,3 +255,4 @@ const WishesSection = () => {
 };
 
 export default WishesSection;
+

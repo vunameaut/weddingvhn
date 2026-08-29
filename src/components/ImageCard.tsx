@@ -36,3 +36,4 @@ const ImageCard = ({ src, alt, className = '', delay = 0 }: ImageCardProps) => {
 };
 
 export default ImageCard;
+

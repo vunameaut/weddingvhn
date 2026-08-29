@@ -13,3 +13,4 @@ export type WishItem = {
   name: string;
   message: string;
 };
+

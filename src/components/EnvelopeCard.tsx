@@ -86,3 +86,4 @@ const EnvelopeCard = ({ onOpen }: EnvelopeCardProps) => {
 };
 
 export default EnvelopeCard;
+

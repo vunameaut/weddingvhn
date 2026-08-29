@@ -229,3 +229,4 @@ const RSVPForm = ({ onSubmitSuccess }: RSVPFormProps) => {
 };
 
 export default RSVPForm;
+

@@ -28,3 +28,4 @@ const TypewriterText = ({ text, speed = 50, className = '' }: TypewriterTextProp
 };
 
 export default TypewriterText;
+

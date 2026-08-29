@@ -1,14 +1,23 @@
 import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import { Heart, Play } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+
+// Import video file
+import videoFile from '@/assets/damcuoi.mp4';
+import heroBg from '@/assets/album1.jpg'; // Dùng ảnh thumbnail từ ảnh cưới
 
 const VideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef<HTMLIFrameElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Sample wedding video (replace with actual video URL)
-  const videoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1";
-  const thumbnailUrl = "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&h=675&fit=crop";
+  const thumbnailUrl = heroBg;
+
+  // Auto-play when state changes
+  useEffect(() => {
+    if (isPlaying && videoRef.current) {
+      videoRef.current.play().catch(e => console.error("Playback failed", e));
+    }
+  }, [isPlaying]);
 
   return (
     <section className="py-20 md:py-28 px-4 bg-gradient-soft relative overflow-hidden">
@@ -29,17 +38,17 @@ const VideoSection = () => {
 
         {/* Video Container */}
         <ScrollReveal direction="scale" delay={0.2} className="relative">
-          <div className="relative aspect-video rounded-2xl overflow-hidden shadow-elevated group">
+          <div className="relative aspect-video rounded-2xl overflow-hidden shadow-elevated group bg-black">
             {!isPlaying ? (
               <>
                 {/* Thumbnail */}
                 <img
                   src={thumbnailUrl}
                   alt="Video thumbnail"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80"
                 />
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-foreground/30 flex items-center justify-center">
+                <div className="absolute inset-0 flex items-center justify-center">
                   {/* Play button */}
                   <button
                     onClick={() => setIsPlaying(true)}
@@ -49,16 +58,16 @@ const VideoSection = () => {
                   </button>
                 </div>
                 {/* Decorative border */}
-                <div className="absolute inset-4 rounded-xl border border-wedding-gold/40" />
+                <div className="absolute inset-4 rounded-xl border border-wedding-gold/40 pointer-events-none" />
               </>
             ) : (
-              <iframe
+              <video
                 ref={videoRef}
-                src={videoUrl}
-                title="Wedding Video"
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
+                src={videoFile}
+                controls
+                playsInline
+                onPlay={() => window.dispatchEvent(new CustomEvent('pause-music'))}
+                className="w-full h-full object-contain"
               />
             )}
           </div>
@@ -74,3 +83,4 @@ const VideoSection = () => {
 };
 
 export default VideoSection;
+
