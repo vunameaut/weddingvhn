@@ -38,8 +38,12 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
   };
 
   const getPhotoStyles = () => {
-    const baseW = isMobile ? '280px' : '360px';
-    const baseH = isMobile ? '220px' : '260px';
+    // Envelope is 480x320 on desktop, 340x230 on mobile
+    // Label adds 70px on desktop, 60px on mobile. Because it is appended to the bottom, the photo is NOT vertically centered in its total bounds.
+    // We offset translateY by -35px on desktop, -30px on mobile to compensate for the label and keep it inside the envelope.
+    const baseW = isMobile ? '240px' : '320px';
+    const baseH = isMobile ? '160px' : '220px';
+    const offset = isMobile ? 'calc(-50% - 30px)' : 'calc(-50% - 35px)';
 
     if (step === 'hiding') {
       return {
@@ -52,20 +56,20 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
       return {
         width: baseW,
         height: baseH,
-        transform: 'translate(-50%, calc(-50% - 150px)) scale(1.6) rotate(-2deg)',
+        transform: 'translate(-50%, calc(-50% - 150px)) scale(1) rotate(-2deg)',
       };
     }
     if (step === 'opening') {
       return {
         width: baseW,
         height: baseH,
-        transform: 'translate(-50%, -50%) scale(0.95) rotate(0deg)',
+        transform: `translate(-50%, ${offset}) scale(0.95) rotate(0deg)`,
       };
     }
     return {
       width: baseW,
       height: baseH,
-      transform: 'translate(-50%, -50%) scale(0.9) rotate(0deg)',
+      transform: `translate(-50%, ${offset}) scale(0.9) rotate(0deg)`,
     };
   };
 
@@ -159,8 +163,8 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
 
         {/* THE PHOTO GROUP */}
         <div 
-          className={`fixed top-1/2 left-1/2 z-[60] transition-all ease-[cubic-bezier(0.4,0,0.2,1)] ${
-            step === 'hiding' ? 'duration-[1200ms]' : 'duration-[800ms]'
+          className={`fixed top-1/2 left-1/2 transition-all ease-[cubic-bezier(0.4,0,0.2,1)] ${
+            step === 'hiding' ? 'z-[50] duration-[1200ms]' : 'z-[10] duration-[800ms]'
           }`}
           style={{
             ...getPhotoStyles(),
@@ -193,9 +197,9 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
           ></div>
         </div>
 
-        {/* ENVELOPE FRONT FLAPS */}
+        {/* ENVELOPE BOTTOM & SIDE FLAPS */}
         <div 
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[230px] md:w-[480px] md:h-[320px] pointer-events-none z-[10] transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)]"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[230px] md:w-[480px] md:h-[320px] pointer-events-none z-[20] transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)]"
           style={{ 
             opacity: step === 'hiding' ? 0 : 1, 
             transform: step === 'hiding' ? 'translate(-50%, -50%) scale(1.1) translateY(80px)' : 'translate(-50%, -50%) scale(1)' 
@@ -204,7 +208,6 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
           {/* Side flaps */}
           <div className="absolute left-0 top-0 bottom-0 w-[55%] bg-[#5E1720] shadow-[5px_0_25px_rgba(0,0,0,0.4)]" style={{ clipPath: 'polygon(0 0, 100% 50%, 0 100%)' }}>
             <div className="absolute inset-0 luxury-texture mix-blend-color-burn"></div>
-            {/* Subtle edge light */}
             <div className="absolute inset-0" style={{ clipPath: 'polygon(0 0, 100% 50%, 0 100%)', borderRight: '1px solid rgba(255, 255, 255, 0.1)' }}></div>
           </div>
           <div className="absolute right-0 top-0 bottom-0 w-[55%] bg-[#5A151D] shadow-[-5px_0_25px_rgba(0,0,0,0.4)]" style={{ clipPath: 'polygon(100% 0, 0 50%, 100% 100%)' }}>
@@ -217,7 +220,16 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
             <div className="absolute inset-0 luxury-texture mix-blend-color-burn"></div>
             <div className="absolute inset-0" style={{ clipPath: 'polygon(0 100%, 50% 0, 100% 100%)', borderTop: '1px solid rgba(255, 255, 255, 0.15)' }}></div>
           </div>
-          
+        </div>
+
+        {/* ENVELOPE TOP FLAP & SEAL */}
+        <div 
+          className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[230px] md:w-[480px] md:h-[320px] pointer-events-none transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] ${step === 'idle' ? 'z-[30]' : 'z-[5]'}`}
+          style={{ 
+            opacity: step === 'hiding' ? 0 : 1, 
+            transform: step === 'hiding' ? 'translate(-50%, -50%) scale(1.1) translateY(80px)' : 'translate(-50%, -50%) scale(1)' 
+          }}
+        >
           {/* Top flap (animates open) */}
           <div 
             className="absolute top-0 left-0 right-0 h-[65%] bg-[#701A25] origin-top transition-transform duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] z-[20] drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)]" 
@@ -228,7 +240,6 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
             }}
           >
             <div className="absolute inset-0 luxury-texture mix-blend-color-burn"></div>
-            {/* Elegant thick gold foil border on the flap edge */}
             <div className="absolute inset-0" style={{ clipPath: 'polygon(0 0, 50% 100%, 100% 0)', background: 'linear-gradient(to bottom, transparent 94%, #F2D780 94%, #D4AF37 97%, #AA7B22 100%)' }}></div>
           </div>
           
@@ -242,7 +253,6 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
             }}
           >
             <div className="absolute inset-0 luxury-texture mix-blend-color-burn"></div>
-            {/* Extremely rich gold foil full inner lining */}
             <div className="absolute inset-0 opacity-80" style={{ clipPath: 'polygon(0 0, 50% 100%, 100% 0)', backgroundImage: 'linear-gradient(135deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C)' }}></div>
           </div>
 
