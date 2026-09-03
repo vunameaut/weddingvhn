@@ -6,11 +6,11 @@ const hslToHex = (h,s,l) => { s/=100; l/=100; const a=s*Math.min(l,1-l); const f
 const hexToHSL = (hex) => { const r=parseInt(hex.slice(1,3),16)/255,g=parseInt(hex.slice(3,5),16)/255,b=parseInt(hex.slice(5,7),16)/255; const max=Math.max(r,g,b),min=Math.min(r,g,b); let h=0,s=0,l=(max+min)/2; if(max!==min){const d=max-min;s=l>0.5?d/(2-max-min):d/(max+min);if(max===r)h=((g-b)/d+(g<b?6:0))*60;else if(max===g)h=((b-r)/d+2)*60;else h=((r-g)/d+4)*60;}return [Math.round(h),Math.round(s*100),Math.round(l*100)]; };
 
 const presets = [
-  {id:'pink-gold',name:'Hong Vang',colors:{pink:'210 65% 55%','pink-light':'210 60% 95%','pink-dark':'210 60% 35%',rose:'210 50% 60%',gold:'210 40% 45%','gold-light':'210 45% 70%','cream':'210 25% 97%','cream-dark':'210 15% 92%'}},
+  {id:'pink-gold',name:'Hồng Pastel & Champagne',colors:{pink:'348 65% 68%','pink-light':'348 60% 96%','pink-dark':'348 45% 42%',rose:'345 50% 60%',gold:'38 58% 52%','gold-light':'40 60% 75%','cream':'32 40% 97%','cream-dark':'30 25% 92%'}},
   {id:'mint',name:'Xanh Mint',colors:{pink:'160 50% 45%','pink-light':'160 40% 94%','pink-dark':'160 45% 30%',rose:'170 40% 50%',gold:'38 55% 50%','gold-light':'38 50% 72%','cream':'160 15% 97%','cream-dark':'160 10% 93%'}},
   {id:'burgundy',name:'Burgundy',colors:{pink:'345 55% 42%','pink-light':'345 40% 94%','pink-dark':'345 50% 28%',rose:'350 45% 48%',gold:'43 70% 50%','gold-light':'43 60% 72%','cream':'30 20% 97%','cream-dark':'30 15% 93%'}},
   {id:'lavender',name:'Lavender',colors:{pink:'270 40% 60%','pink-light':'270 30% 95%','pink-dark':'270 35% 42%',rose:'280 30% 65%',gold:'0 0% 65%','gold-light':'0 0% 80%','cream':'270 10% 97%','cream-dark':'270 8% 93%'}},
-  {id:'terra',name:'Ho Tra',colors:{pink:'15 60% 55%','pink-light':'15 50% 94%','pink-dark':'15 55% 38%',rose:'20 50% 58%',gold:'30 50% 50%','gold-light':'30 45% 70%','cream':'25 25% 96%','cream-dark':'25 18% 92%'}},
+  {id:'terra',name:'Hổ Phách',colors:{pink:'15 60% 55%','pink-light':'15 50% 94%','pink-dark':'15 55% 38%',rose:'20 50% 58%',gold:'30 50% 50%','gold-light':'30 45% 70%','cream':'25 25% 96%','cream-dark':'25 18% 92%'}},
   {id:'navy',name:'Navy',colors:{pink:'215 60% 45%','pink-light':'215 40% 94%','pink-dark':'215 55% 30%',rose:'220 50% 50%',gold:'45 65% 55%','gold-light':'45 55% 75%','cream':'215 15% 97%','cream-dark':'215 10% 93%'}},
 ];
 

@@ -6,58 +6,58 @@
 
 @layer base {
   :root {
-    /* Blue & White wedding palette */
-    --background: 210 40% 98%;
-    --foreground: 210 20% 20%;
+    /* Pastel Rose, Warm Champagne & Gold palette */
+    --background: 30 33% 98%;           /* #FAF7F5 kem sáng ấm áp */
+    --foreground: 345 20% 25%;          /* Màu chữ nâu trầm thanh nhã */
 
     --card: 0 0% 100%;
-    --card-foreground: 210 20% 20%;
+    --card-foreground: 345 20% 25%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 20% 20%;
+    --popover-foreground: 345 20% 25%;
 
-    --primary: 210 70% 50%;
+    --primary: 348 60% 65%;             /* Hồng pastel hoa hồng mềm mại */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 30% 96%;
-    --secondary-foreground: 210 20% 25%;
+    --secondary: 28 35% 95%;            /* Champagne nhạt */
+    --secondary-foreground: 345 20% 25%;
 
-    --muted: 210 20% 94%;
-    --muted-foreground: 210 15% 45%;
+    --muted: 30 25% 94%;
+    --muted-foreground: 345 10% 50%;
 
-    --accent: 210 50% 65%;
+    --accent: 38 65% 60%;               /* Vàng champagne ánh kim */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 210 20% 88%;
-    --input: 210 20% 88%;
-    --ring: 210 70% 50%;
+    --border: 30 20% 90%;
+    --input: 30 20% 90%;
+    --ring: 348 60% 65%;
 
     --radius: 0.75rem;
 
-    /* Wedding blue colors */
-    --wedding-pink: 210 65% 55%;
-    --wedding-pink-light: 210 60% 95%;
-    --wedding-pink-dark: 210 60% 35%;
-    --wedding-rose: 210 50% 60%;
-    --wedding-gold: 210 40% 45%;
-    --wedding-gold-light: 210 45% 70%;
-    --wedding-cream: 210 25% 97%;
-    --wedding-cream-dark: 210 15% 92%;
-    --wedding-sage: 200 30% 75%;
-    --wedding-lavender: 220 35% 80%;
+    /* Wedding Pastel Rose & Champagne colors */
+    --wedding-pink: 348 65% 68%;        /* Hồng pastel cánh hoa */
+    --wedding-pink-light: 348 60% 96%;  /* Hồng phấn rất nhẹ làm nền section */
+    --wedding-pink-dark: 348 45% 42%;   /* Hồng vỏ đỗ sang trọng cho tiêu đề */
+    --wedding-rose: 345 50% 60%;        /* Hoa hồng khô */
+    --wedding-gold: 38 58% 52%;         /* Vàng champagne gold */
+    --wedding-gold-light: 40 60% 75%;   /* Vàng nhạt */
+    --wedding-cream: 32 40% 97%;        /* Kem ngà */
+    --wedding-cream-dark: 30 25% 92%;   /* Kem đậm hơn một chút */
+    --wedding-sage: 140 20% 75%;
+    --wedding-lavender: 330 30% 85%;
 
     /* Gradients */
-    --gradient-romantic: linear-gradient(180deg, hsl(210, 50%, 97%) 0%, hsl(210, 30%, 98%) 50%, hsl(210, 45%, 96%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(210, 60%, 50%) 0%, hsl(210, 50%, 65%) 50%, hsl(210, 60%, 50%) 100%);
-    --gradient-soft: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(210, 25%, 97%) 100%);
+    --gradient-romantic: linear-gradient(180deg, #FDF8F6 0%, #FAF2EF 50%, #F8EBE6 100%);
+    --gradient-gold: linear-gradient(135deg, #E6C587 0%, #F5E5C9 50%, #D4AF37 100%);
+    --gradient-soft: linear-gradient(180deg, #FFFFFF 0%, #FDF7F5 100%);
 
     /* Shadows */
-    --shadow-soft: 0 4px 20px hsla(210, 50%, 50%, 0.12);
-    --shadow-card: 0 10px 40px hsla(210, 20%, 25%, 0.06);
-    --shadow-elevated: 0 20px 60px hsla(210, 20%, 25%, 0.1);
+    --shadow-soft: 0 4px 25px rgba(220, 160, 160, 0.15);
+    --shadow-card: 0 10px 40px rgba(180, 130, 130, 0.08);
+    --shadow-elevated: 0 20px 60px rgba(180, 130, 130, 0.12);
   }
 
   .dark {
