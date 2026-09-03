@@ -398,38 +398,104 @@ const Index = () => {
         <FloatingParticles />
         <MusicPlayer />
 
-        <section className="min-h-screen flex items-center justify-center relative px-4">
-          <div className="absolute inset-0">
-            <img src={heroBg} alt="Couple" className="w-full h-full object-cover" />
+        <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#242426]">
+          {/* Mobile Background: Ảnh nền full màn hình với căn chỉnh tỷ lệ chuẩn dọc */}
+          <div className="md:hidden absolute inset-0">
+            <img 
+              src={heroBg} 
+              alt="Couple" 
+              className="w-full h-full object-cover object-[center_20%]" 
+            />
+            {/* Lớp phủ chuyển màu giúp đọc chữ rõ trên mobile */}
+            <div 
+              className="absolute inset-0 pointer-events-none" 
+              style={{ 
+                background: 'linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.85) 100%)' 
+              }} 
+            />
           </div>
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.6) 100%)' }} />
+
+          {/* Desktop Background: Hiệu ứng ánh sáng studio & nền mờ nhẹ nghệ thuật */}
+          <div className="hidden md:block absolute inset-0">
+            <img 
+              src={heroBg} 
+              alt="Backdrop" 
+              className="w-full h-full object-cover scale-110 filter blur-3xl opacity-20"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/80 pointer-events-none" />
+          </div>
           
-          <div className="text-center relative z-10 pt-20">
+          <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
             {isInvitationOpen && (
-              <>
-                <ScrollReveal direction="up">
-                  <p className="font-elegant text-white text-xl md:text-4xl leading-tight tracking-wide drop-shadow-md">{invitationLine}</p>
-                </ScrollReveal>
-                <ScrollReveal direction="left" delay={0.2}>
-                  <h1 className="font-flourish text-7xl md:text-9xl leading-none text-white drop-shadow-lg mt-8 tracking-wide">Đỗ Quân</h1>
-                </ScrollReveal>
-                <ScrollReveal direction="up" delay={0.3}>
-                  <p className="text-4xl md:text-5xl font-script text-wedding-gold my-3 md:my-4 drop-shadow-md">&</p>
-                </ScrollReveal>
-                <ScrollReveal direction="right" delay={0.2}>
-                  <h1 className="font-flourish text-7xl md:text-9xl leading-none text-white drop-shadow-lg tracking-wide">Mai Linh</h1>
-                </ScrollReveal>
-                <ScrollReveal direction="up" delay={0.5}>
-                  <p className="text-lg md:text-xl text-gray-200 mt-8 italic drop-shadow-md max-w-xl mx-auto px-4">
-                    "Tình yêu không phải là nhìn nhau, mà là cùng nhìn về một hướng"
-                  </p>
-                  <p className="text-2xl font-serif text-white mt-4 drop-shadow-md">08 . 11 . 2026</p>
-                </ScrollReveal>
-                <ScrollReveal direction="up" delay={0.7} className="mt-12 animate-bounce">
-                  <ChevronDown className="w-8 h-8 text-white mx-auto drop-shadow-md" />
-                  <p className="text-sm text-white drop-shadow-md">Cuộn xuống</p>
-                </ScrollReveal>
-              </>
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center min-h-[80vh]">
+                
+                {/* Cột thông tin thiệp mời: Trên mobile căn giữa, trên Desktop nằm bên trái trang trọng */}
+                <div className="md:col-span-6 lg:col-span-7 flex flex-col items-center md:items-start text-center md:text-left justify-center">
+                  <ScrollReveal direction="up">
+                    <div className="inline-block border-b border-wedding-gold/60 pb-1 mb-3 md:mb-5">
+                      <p className="font-elegant text-wedding-gold text-base sm:text-lg md:text-2xl tracking-[0.25em] uppercase">
+                        {invitationLine}
+                      </p>
+                    </div>
+                  </ScrollReveal>
+
+                  <ScrollReveal direction="left" delay={0.2} className="w-full">
+                    <h1 className="font-flourish text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)] my-1">
+                      Đỗ Quân
+                    </h1>
+                  </ScrollReveal>
+
+                  <ScrollReveal direction="up" delay={0.3}>
+                    <p className="text-3xl sm:text-4xl md:text-5xl font-script text-wedding-gold my-1 md:my-2 md:pl-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                      &
+                    </p>
+                  </ScrollReveal>
+
+                  <ScrollReveal direction="right" delay={0.2} className="w-full">
+                    <h1 className="font-flourish text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)] my-1">
+                      Mai Linh
+                    </h1>
+                  </ScrollReveal>
+
+                  <ScrollReveal direction="up" delay={0.4} className="mt-4 md:mt-6 max-w-lg">
+                    <p className="text-sm sm:text-base md:text-lg text-gray-200 italic font-light leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]">
+                      "Tình yêu không phải là nhìn nhau, mà là cùng nhìn về một hướng"
+                    </p>
+                    <div className="mt-4 flex items-center justify-center md:justify-start gap-4">
+                      <div className="h-[1px] w-8 bg-wedding-gold/60"></div>
+                      <p className="text-xl sm:text-2xl font-serif text-white tracking-[0.2em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                        08 . 11 . 2026
+                      </p>
+                      <div className="h-[1px] w-8 bg-wedding-gold/60"></div>
+                    </div>
+                  </ScrollReveal>
+
+                  <ScrollReveal direction="up" delay={0.6} className="mt-8 md:mt-10 animate-bounce flex flex-col items-center md:items-start">
+                    <ChevronDown className="w-6 h-6 md:w-7 md:h-7 text-wedding-gold drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]" />
+                    <p className="text-xs md:text-sm text-gray-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] mt-1 tracking-wider uppercase">Cuộn xuống</p>
+                  </ScrollReveal>
+                </div>
+
+                {/* Cột khung ảnh cưới trên Desktop: Ảnh bán thân chuẩn tỷ lệ vàng 3:4 / 2:3 với khung viền vàng cao cấp */}
+                <div className="hidden md:flex md:col-span-6 lg:col-span-5 justify-center items-center">
+                  <ScrollReveal direction="left" delay={0.3} className="relative w-full max-w-md">
+                    {/* Viền đôi phong cách thiệp cưới cao cấp */}
+                    <div className="absolute -inset-2 rounded-2xl border border-wedding-gold/40 rotate-1 pointer-events-none"></div>
+                    <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/80 border-2 border-wedding-gold/70 bg-[#1a1a1c]">
+                      <img 
+                        src={heroBg} 
+                        alt="Đỗ Quân & Mai Linh" 
+                        className="w-full h-[540px] lg:h-[600px] object-cover object-[center_12%] hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
+                        <p className="font-flourish text-2xl text-wedding-gold/90 drop-shadow">Quân & Linh</p>
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                </div>
+
+              </div>
             )}
           </div>
         </section>
