@@ -6,8 +6,9 @@ interface OpeningScreenProps {
 }
 
 const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
-  const [step, setStep] = useState<'idle' | 'opening' | 'flying' | 'hiding'>('idle');
+  const [step, setStep] = useState<'idle' | 'opening' | 'flying' | 'zooming' | 'shrinking'>('idle');
   const [isMobile, setIsMobile] = useState(false);
+  const [targetRect, setTargetRect] = useState<{ top: number; left: number; width: number; height: number } | null>(null);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -18,57 +19,107 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
 
   const handleOpenClick = () => {
     if (step !== 'idle') return;
+
+    // Đo tọa độ chính xác của khung ảnh cưới trên Desktop nếu có
+    const targetEl = document.getElementById('hero-couple-photo');
+    if (targetEl) {
+      const rect = targetEl.getBoundingClientRect();
+      setTargetRect({
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+      });
+    }
     
+    // Bước 1: Nắp phong bì mở ra
     setStep('opening');
     
-    // Đợi nắp phong bì mở
+    // Bước 2: Ảnh bay nhấc bổng lơ lửng ra khỏi phong bì
     setTimeout(() => {
       setStep('flying');
-    }, 800);
+    }, 650);
 
-    // Thời gian bay ra
+    // Bước 3: Phóng to giữa màn hình xoay về thẳng thắn kiêu hãnh
     setTimeout(() => {
-      setStep('hiding');
-    }, 1600);
+      setStep('zooming');
+    }, 1350);
 
-    // Thời gian phóng to -> Mở trang
+    // Bước 4: Bắt đầu thu nhỏ và bay lượn êm ái, kéo dài tự nhiên về khung ảnh cưới bên phải
+    setTimeout(() => {
+      setStep('shrinking');
+    }, 2250);
+
+    // Bước 5: Khi ảnh hạ cánh êm ái vào vị trí (sau 1000ms), kích hoạt hiển thị chữ bên trái
     setTimeout(() => {
       onOpen();
-    }, 2800);
+    }, 3250);
   };
 
   const getPhotoStyles = () => {
-    // Envelope is 480x320 on desktop, 340x230 on mobile
-    // Label adds 70px on desktop, 60px on mobile. Because it is appended to the bottom, the photo is NOT vertically centered in its total bounds.
-    // We offset translateY by -35px on desktop, -30px on mobile to compensate for the label and keep it inside the envelope.
     const baseW = isMobile ? '240px' : '320px';
     const baseH = isMobile ? '160px' : '220px';
     const offset = isMobile ? 'calc(-50% - 30px)' : 'calc(-50% - 35px)';
 
-    if (step === 'hiding') {
+    if (step === 'shrinking') {
+      if (!isMobile && targetRect) {
+        return {
+          width: `${targetRect.width}px`,
+          height: `${targetRect.height}px`,
+          top: `${targetRect.top}px`,
+          left: `${targetRect.left}px`,
+          transform: 'translate(0, 0) scale(1) rotate(0deg)',
+          borderRadius: '1rem',
+          boxShadow: '0 25px 50px -12px rgba(168, 110, 122, 0.25)',
+        };
+      }
       return {
         width: '100vw',
         height: '100vh',
+        top: '50%',
+        left: '50%',
         transform: 'translate(-50%, -50%) scale(1) rotate(0deg)',
       };
     }
+
+    if (step === 'zooming') {
+      return {
+        width: isMobile ? '90vw' : '580px',
+        height: isMobile ? '65vh' : '480px',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%) scale(1.04) rotate(0deg)',
+        borderRadius: '1rem',
+        boxShadow: '0 30px 70px rgba(0, 0, 0, 0.5), 0 0 40px rgba(212, 175, 55, 0.3)',
+      };
+    }
+
     if (step === 'flying') {
       return {
         width: baseW,
         height: baseH,
-        transform: 'translate(-50%, calc(-50% - 150px)) scale(1) rotate(-2deg)',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, calc(-50% - 130px)) scale(1.05) rotate(-2.5deg)',
+        boxShadow: '0 25px 40px rgba(0, 0, 0, 0.45)',
       };
     }
+
     if (step === 'opening') {
       return {
         width: baseW,
         height: baseH,
-        transform: `translate(-50%, ${offset}) scale(0.95) rotate(0deg)`,
+        top: '50%',
+        left: '50%',
+        transform: `translate(-50%, ${offset}) scale(0.96) rotate(0.8deg)`,
       };
     }
+
     return {
       width: baseW,
       height: baseH,
+      top: '50%',
+      left: '50%',
       transform: `translate(-50%, ${offset}) scale(0.9) rotate(0deg)`,
     };
   };
@@ -113,7 +164,7 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
       {/* Cinematic Background - Tone ấm Champagne Rose & Dark Velvet */}
       <div 
         className="absolute inset-0 pointer-events-none transition-opacity duration-1000 ease-in-out" 
-        style={{ opacity: step === 'hiding' ? 0 : 1 }}
+        style={{ opacity: step === 'shrinking' ? 0 : 1 }}
       >
         {/* Ánh sáng dịu nhẹ pastel champagne */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,110,122,0.35)_0%,rgba(38,28,32,1)_100%)]"></div>
@@ -144,8 +195,8 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
         <div 
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[230px] md:w-[480px] md:h-[320px] bg-[#6E424B] rounded-sm shadow-[0_40px_80px_rgba(0,0,0,0.8)] transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)]"
           style={{ 
-            opacity: step === 'hiding' ? 0 : 1, 
-            transform: step === 'hiding' ? 'translate(-50%, -50%) scale(1.1) translateY(80px)' : 'translate(-50%, -50%) scale(1)' 
+            opacity: (step === 'zooming' || step === 'shrinking') ? 0 : 1, 
+            transform: (step === 'zooming' || step === 'shrinking') ? 'translate(-50%, -50%) scale(0.9) translateY(100px)' : 'translate(-50%, -50%) scale(1)' 
           }}
         >
           <div className="absolute inset-0 luxury-texture mix-blend-color-burn"></div>
@@ -154,20 +205,24 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
 
         {/* THE PHOTO GROUP */}
         <div 
-          className={`fixed top-1/2 left-1/2 transition-all ease-[cubic-bezier(0.4,0,0.2,1)] ${
-            step === 'hiding' ? 'z-[50] duration-[1200ms]' : 'z-[10] duration-[800ms]'
+          className={`fixed transition-all ${
+            step === 'shrinking' 
+              ? 'z-[60] duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)]' 
+              : step === 'zooming' 
+                ? 'z-[50] duration-[800ms] ease-[cubic-bezier(0.34,1.2,0.64,1)]' 
+                : 'z-[10] duration-[650ms] ease-[cubic-bezier(0.34,1.15,0.64,1)]'
           }`}
           style={{
             ...getPhotoStyles(),
             opacity: step === 'idle' ? 0 : 1,
           }}
         >
-          <img src={album1} className="absolute inset-0 w-full h-full object-cover shadow-[0_20px_50px_rgba(0,0,0,0.7)] rounded-[2px]" alt="Couple" />
+          <img src={album1} className="absolute inset-0 w-full h-full object-cover object-[center_12%] shadow-[0_20px_50px_rgba(0,0,0,0.7)] rounded-[2px]" alt="Couple" />
 
           {/* Luxury Frame */}
           <div 
             className="absolute inset-0 border-[10px] md:border-[14px] border-[#FCFBF8] bg-transparent transition-opacity duration-700 rounded-[2px]"
-            style={{ opacity: step === 'hiding' ? 0 : 1 }}
+            style={{ opacity: (step === 'shrinking') ? 0 : 1 }}
           >
             <div className="absolute inset-1 border border-[#D4AF37] pointer-events-none opacity-60"></div>
             
@@ -176,24 +231,14 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
               <span className="font-serif text-[#D4AF37] text-[9px] md:text-[10px] tracking-[0.4em] uppercase mt-1 font-medium">Our Wedding Day</span>
             </div>
           </div>
-          
-          <div 
-            className={`absolute inset-0 pointer-events-none transition-opacity ${
-              step === 'hiding' ? 'duration-[1200ms]' : 'duration-[800ms]'
-            }`}
-            style={{ 
-              opacity: step === 'hiding' ? 1 : 0,
-              background: 'linear-gradient(to bottom, rgba(40,20,25,0.2) 0%, rgba(40,20,25,0.4) 50%, rgba(40,20,25,0.85) 100%)'
-            }}
-          ></div>
         </div>
 
         {/* ENVELOPE BOTTOM & SIDE FLAPS - Gam màu Hồng vỏ đỗ Pastel Velvet */}
         <div 
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[230px] md:w-[480px] md:h-[320px] pointer-events-none z-[20] transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)]"
           style={{ 
-            opacity: step === 'hiding' ? 0 : 1, 
-            transform: step === 'hiding' ? 'translate(-50%, -50%) scale(1.1) translateY(80px)' : 'translate(-50%, -50%) scale(1)' 
+            opacity: (step === 'zooming' || step === 'shrinking') ? 0 : 1, 
+            transform: (step === 'zooming' || step === 'shrinking') ? 'translate(-50%, -50%) scale(0.9) translateY(100px)' : 'translate(-50%, -50%) scale(1)' 
           }}
         >
           {/* Side flaps */}
