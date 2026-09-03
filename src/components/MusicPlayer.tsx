@@ -7,7 +7,7 @@ const MusicPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Wedding music URL
-  const musicUrl = "https://res.cloudinary.com/dawsgzrgq/video/upload/v1766567554/SaveTik.io_7275228988103036161_pywbaz.mp3";
+  const musicUrl = "https://res.cloudinary.com/dazo6ypwt/video/upload/v1788450987/50_N%C4%82M_V%E1%BB%80_SAU_-_TU%E1%BA%A4N_KI%E1%BB%86T_x_%C4%90%E1%BA%B6NG_THANH_TUY%E1%BB%80N_ANIMATION_MV_Nguy%E1%BB%87n_c%E1%BA%A7u_%C4%91%E1%BA%BFn_50_n%C4%83m_v%E1%BB%81_sau..._emxcyh.mp3";
 
   useEffect(() => {
     const handleInteraction = () => {

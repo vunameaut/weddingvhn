@@ -13,7 +13,6 @@ import RSVPForm from '@/components/RSVPForm';
 import LoveStory from '@/components/LoveStory';
 import VideoSection from '@/components/VideoSection';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
-import DressCode from '@/components/DressCode';
 
 import Footer from '@/components/Footer';
 import { isSupabaseConfigured, supabase, type WishItem } from '@/lib/supabase';
@@ -56,12 +55,12 @@ type BankApp = {
 
 const bankAccounts: BankAccount[] = [
   {
-    name: 'DO THI DUONG',
-    bank: 'MB Bank',
-    bankCode: '970422',
-    accountNumber: '0399159618',
-    label: 'Cô dâu',
-    transferNote: 'Mừng cưới Đỗ Quân - Mai Linh',
+    name: 'DO DINH QUAN',
+    bank: 'Techcombank',
+    bankCode: '970407',
+    accountNumber: '1010220033',
+    label: 'Chú rể',
+    transferNote: 'Mung cuoi Do Quan Mai Linh',
   },
 ];
 
@@ -88,7 +87,7 @@ interface WishesSectionProps {
 
 const WishesSection = ({ wishes }: WishesSectionProps) => {
   const { toast } = useToast();
-  const [selectedBankApp, setSelectedBankApp] = useState<string>('mb');
+  const [selectedBankApp, setSelectedBankApp] = useState<string>('tcb');
   const [showQR, setShowQR] = useState<Record<string, boolean>>({});
   const marqueeWishes = [...wishes, ...wishes];
 
@@ -409,21 +408,22 @@ const Index = () => {
             {isInvitationOpen && (
               <>
                 <ScrollReveal direction="up">
-                  <p className="text-wedding-pink font-script text-xl md:text-2xl mb-4 drop-shadow-md">Trân trọng thông báo</p>
                   <p className="font-elegant text-white text-xl md:text-4xl leading-tight tracking-wide drop-shadow-md">{invitationLine}</p>
                 </ScrollReveal>
                 <ScrollReveal direction="left" delay={0.2}>
-                  <h1 className="font-script text-6xl md:text-8xl leading-none text-white drop-shadow-lg mt-8">Đỗ Quân</h1>
+                  <h1 className="font-flourish text-7xl md:text-9xl leading-none text-white drop-shadow-lg mt-8 tracking-wide">Đỗ Quân</h1>
                 </ScrollReveal>
                 <ScrollReveal direction="up" delay={0.3}>
                   <p className="text-4xl md:text-5xl font-script text-wedding-gold my-3 md:my-4 drop-shadow-md">&</p>
                 </ScrollReveal>
                 <ScrollReveal direction="right" delay={0.2}>
-                  <h1 className="font-script text-6xl md:text-8xl leading-none text-white drop-shadow-lg">Mai Linh</h1>
+                  <h1 className="font-flourish text-7xl md:text-9xl leading-none text-white drop-shadow-lg tracking-wide">Mai Linh</h1>
                 </ScrollReveal>
                 <ScrollReveal direction="up" delay={0.5}>
-                  <p className="text-xl text-gray-200 mt-8 italic drop-shadow-md">"Yêu là khi ta muốn cùng nhau đi hết cuộc đời"</p>
-                  <p className="text-2xl font-serif text-white mt-4 drop-shadow-md">29 . 03 . 2026</p>
+                  <p className="text-lg md:text-xl text-gray-200 mt-8 italic drop-shadow-md max-w-xl mx-auto px-4">
+                    "Tình yêu không phải là nhìn nhau, mà là cùng nhìn về một hướng"
+                  </p>
+                  <p className="text-2xl font-serif text-white mt-4 drop-shadow-md">08 . 11 . 2026</p>
                 </ScrollReveal>
                 <ScrollReveal direction="up" delay={0.7} className="mt-12 animate-bounce">
                   <ChevronDown className="w-8 h-8 text-white mx-auto drop-shadow-md" />
@@ -439,7 +439,6 @@ const Index = () => {
         <PhotoAlbum />
         <LoveStory />
         <VideoSection />
-        <DressCode />
         <WishesSection wishes={wishes} />
         <RSVPForm onSubmitSuccess={handleNewWish} />
         <Footer />

@@ -10,10 +10,10 @@ const Footer = () => {
       <ScrollReveal direction="up" className="max-w-4xl mx-auto relative z-10">
         {/* Names */}
         <div className="mb-4 md:mb-6">
-          <p className="font-script text-3xl md:text-5xl text-wedding-pink-dark mb-1 md:mb-2">
+          <p className="font-flourish text-4xl md:text-6xl text-wedding-pink-dark mb-1 md:mb-2 tracking-wide">
             Đỗ Quân & Mai Linh
           </p>
-          <p className="text-muted-foreground text-sm md:text-base">29.03.2026</p>
+          <p className="text-muted-foreground text-sm md:text-base">08.11.2026</p>
         </div>
 
         {/* Divider */}

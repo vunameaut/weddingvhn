@@ -5,15 +5,15 @@ import StickyCountdown from './StickyCountdown';
 const EventDetails = () => {
   const googleMapsUrl = "https://maps.app.goo.gl/gwrBkaQsfHD9yqEv9?g_st=ac";
   
-  const weddingDate = new Date(2026, 2, 29, 16, 0); // March 29, 2026, 16:00
+  const weddingDate = new Date(2026, 10, 8, 16, 0); // November 8, 2026, 16:00
   
   // Generate calendar grid for November 2026
   const generateCalendar = () => {
     const year = 2026;
-    const month = 2; // March (0-indexed)
+    const month = 10; // November (0-indexed)
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const weddingDay = 29;
+    const weddingDay = 8;
     
     const days = [];
     
@@ -40,8 +40,8 @@ const EventDetails = () => {
     const details = encodeURIComponent('Trân trọng kính mời quý khách đến dự tiệc cưới của chúng tôi');
     
     // Format: YYYYMMDDTHHmmss
-    const startDate = '20260329T160000';
-    const endDate = '20260329T200000';
+    const startDate = '20261108T160000';
+    const endDate = '20261108T200000';
     
     // Try Google Calendar first (works on most devices)
     const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}`;
@@ -116,7 +116,7 @@ const EventDetails = () => {
               {/* Mini Calendar */}
               <div className="flex-1">
                 <div className="bg-wedding-cream/50 rounded-lg md:rounded-xl p-2 md:p-4">
-                  <p className="font-semibold text-xs md:text-lg mb-1 md:mb-3 text-wedding-gold">Tháng 3, 2026</p>
+                  <p className="font-semibold text-xs md:text-lg mb-1 md:mb-3 text-wedding-gold">Tháng 11, 2026</p>
                   
                   {/* Week days header */}
                   <div className="grid grid-cols-7 gap-0.5 md:gap-1 mb-1 md:mb-2">
@@ -157,7 +157,7 @@ const EventDetails = () => {
                   Chủ nhật • 16:00
                 </p>
                 <p className="text-muted-foreground text-[9px] md:text-xs italic">
-                  (Âm lịch: 11/02/2026)
+                  (Âm lịch: 30/09/2026)
                 </p>
               </div>
 

@@ -42,7 +42,12 @@ const CoupleSection = () => {
               <div className="hidden md:block absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-wedding-gold rounded-bl-lg opacity-60" />
               <div className="hidden md:block absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-wedding-gold rounded-br-lg opacity-60" />
             </div>
-            <h3 className="font-script text-xl sm:text-2xl md:text-5xl text-wedding-pink-dark mb-0.5 md:mb-2">Đỗ Quân</h3>
+            <h3 className="font-flourish text-3xl sm:text-4xl md:text-6xl text-wedding-pink-dark mb-1 tracking-wide">Đỗ Quân</h3>
+            <div className="mt-2 text-xs sm:text-sm text-muted-foreground space-y-0.5">
+              <p className="font-serif font-semibold text-foreground/80">Nhà Trai</p>
+              <p className="italic">Ông: (Đang cập nhật)</p>
+              <p className="italic">Bà: (Đang cập nhật)</p>
+            </div>
           </ScrollReveal>
 
           {/* Heart connector */}
@@ -71,7 +76,12 @@ const CoupleSection = () => {
               <div className="hidden md:block absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-wedding-gold rounded-bl-lg opacity-60" />
               <div className="hidden md:block absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-wedding-gold rounded-br-lg opacity-60" />
             </div>
-            <h3 className="font-script text-xl sm:text-2xl md:text-5xl text-wedding-pink-dark mb-0.5 md:mb-2">Mai Linh</h3>
+            <h3 className="font-flourish text-3xl sm:text-4xl md:text-6xl text-wedding-pink-dark mb-1 tracking-wide">Mai Linh</h3>
+            <div className="mt-2 text-xs sm:text-sm text-muted-foreground space-y-0.5">
+              <p className="font-serif font-semibold text-foreground/80">Nhà Gái</p>
+              <p className="italic">Ông: (Đang cập nhật)</p>
+              <p className="italic">Bà: (Đang cập nhật)</p>
+            </div>
           </ScrollReveal>
         </div>
 

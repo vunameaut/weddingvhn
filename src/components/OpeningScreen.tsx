@@ -181,7 +181,7 @@ const OpeningScreen = ({ onOpen }: OpeningScreenProps) => {
             <div className="absolute inset-1 border border-[#D4AF37] pointer-events-none opacity-60"></div>
             
             <div className="absolute left-[-10px] right-[-10px] bottom-[-60px] md:bottom-[-70px] h-[60px] md:h-[70px] bg-[#FCFBF8] flex flex-col items-center justify-center rounded-b-[2px] shadow-[0_15px_30px_rgba(0,0,0,0.2)]">
-              <span className="font-script text-[#4A3B32] text-2xl md:text-3xl tracking-wide">Đỗ Quân & Mai Linh</span>
+              <span className="font-flourish text-[#4A3B32] text-3xl md:text-4xl tracking-wide">Đỗ Quân & Mai Linh</span>
               <span className="font-serif text-[#D4AF37] text-[9px] md:text-[10px] tracking-[0.4em] uppercase mt-1 font-medium">Our Wedding Day</span>
             </div>
           </div>
