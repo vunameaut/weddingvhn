@@ -45,8 +45,8 @@ const CoupleSection = () => {
             <h3 className="font-flourish text-3xl sm:text-4xl md:text-6xl text-wedding-pink-dark mb-1 tracking-wide">Đỗ Quân</h3>
             <div className="mt-2 text-xs sm:text-sm text-muted-foreground space-y-0.5">
               <p className="font-serif font-semibold text-foreground/80">Nhà Trai</p>
-              <p className="italic">Ông: (Đang cập nhật)</p>
-              <p className="italic">Bà: (Đang cập nhật)</p>
+              <p>Ông: Đỗ Đình Đoàn</p>
+              <p>Bà: Nguyễn Thị Hạnh</p>
             </div>
           </ScrollReveal>
 
@@ -79,8 +79,7 @@ const CoupleSection = () => {
             <h3 className="font-flourish text-3xl sm:text-4xl md:text-6xl text-wedding-pink-dark mb-1 tracking-wide">Mai Linh</h3>
             <div className="mt-2 text-xs sm:text-sm text-muted-foreground space-y-0.5">
               <p className="font-serif font-semibold text-foreground/80">Nhà Gái</p>
-              <p className="italic">Ông: (Đang cập nhật)</p>
-              <p className="italic">Bà: (Đang cập nhật)</p>
+              <p>Bà: Nguyễn Thị Tuyết</p>
             </div>
           </ScrollReveal>
         </div>
