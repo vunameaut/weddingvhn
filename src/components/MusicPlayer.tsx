@@ -7,7 +7,7 @@ const MusicPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Wedding music URL
-  const musicUrl = "https://res.cloudinary.com/dazo6ypwt/video/upload/v1788942336/ShortKit-audio_gnbfcb.mp3";
+  const musicUrl = "https://res.cloudinary.com/dazo6ypwt/video/upload/v1788942827/50nam_r6kqip.mp3";
 
   useEffect(() => {
     const handleInteraction = () => {
