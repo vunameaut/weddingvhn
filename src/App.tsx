@@ -16,9 +16,13 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Index role="groom" />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/:recipientCode" element={<Index />} />
+          <Route path="/chu-re" element={<Index role="groom" />} />
+          <Route path="/chu-re/:recipientCode" element={<Index role="groom" />} />
+          <Route path="/co-dau" element={<Index role="bride" />} />
+          <Route path="/co-dau/:recipientCode" element={<Index role="bride" />} />
+          <Route path="/:recipientCode" element={<Index role="groom" />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

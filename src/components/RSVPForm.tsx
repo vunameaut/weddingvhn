@@ -5,15 +5,16 @@ import { isSupabaseConfigured, supabase, type WishItem } from '@/lib/supabase';
 
 interface RSVPFormProps {
   onSubmitSuccess?: (wish: WishItem) => void;
+  role?: 'groom' | 'bride';
 }
 
-const RSVPForm = ({ onSubmitSuccess }: RSVPFormProps) => {
+const RSVPForm = ({ onSubmitSuccess, role = 'groom' }: RSVPFormProps) => {
   const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    guestOf: '',
+    guestOf: role === 'bride' ? 'bride' : 'groom',
     numberOfGuests: '1',
     wishes: '',
   });
@@ -161,8 +162,17 @@ const RSVPForm = ({ onSubmitSuccess }: RSVPFormProps) => {
                 className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-wedding-gold focus:border-transparent transition-all font-body text-sm md:text-base"
               >
                 <option value="">-- Chọn --</option>
-                <option value="groom">Chú Rể</option>
-                <option value="bride">Cô Dâu</option>
+                {role === 'bride' ? (
+                  <>
+                    <option value="bride">Khách Cô Dâu</option>
+                    <option value="groom">Khách Chú Rể</option>
+                  </>
+                ) : (
+                  <>
+                    <option value="groom">Khách Chú Rể</option>
+                    <option value="bride">Khách Cô Dâu</option>
+                  </>
+                )}
                 <option value="family">Gia đình</option>
               </select>
             </div>

@@ -2,8 +2,16 @@ import { Calendar, MapPin, Navigation, CalendarPlus, Heart } from 'lucide-react'
 import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import StickyCountdown from './StickyCountdown';
 
-const EventDetails = () => {
-  const googleMapsUrl = "https://maps.app.goo.gl/gwrBkaQsfHD9yqEv9?g_st=ac";
+interface EventDetailsProps {
+  role?: 'groom' | 'bride';
+}
+
+const EventDetails = ({ role = 'groom' }: EventDetailsProps) => {
+  const isBride = role === 'bride';
+
+  const googleMapsUrl = isBride
+    ? "https://maps.app.goo.gl/H6WSppqjgH49kEmF8"
+    : "https://maps.app.goo.gl/gwrBkaQsfHD9yqEv9?g_st=ac";
   
   const weddingDate = new Date(2026, 10, 8, 16, 0); // November 8, 2026, 16:00
   
@@ -35,8 +43,13 @@ const EventDetails = () => {
 
   // Add to Calendar function - works for both iOS and Android
   const handleAddToCalendar = () => {
-    const title = encodeURIComponent('Tiệc Cưới - Đỗ Quân & Mai Linh');
-    const location = encodeURIComponent('Địa điểm tổ chức');
+    const coupleTitle = role === 'bride' ? 'Mai Linh & Đỗ Quân' : 'Đỗ Quân & Mai Linh';
+    const title = encodeURIComponent(`Tiệc Cưới - ${coupleTitle}`);
+    const location = encodeURIComponent(
+      isBride 
+        ? 'Xóm Phố Giá, Xã Phú Lương, Tỉnh Thái Nguyên' 
+        : 'Tư Gia - Đại Đình, Phú Thọ'
+    );
     const details = encodeURIComponent('Trân trọng kính mời quý khách đến dự tiệc cưới của chúng tôi');
     
     // Format: YYYYMMDDTHHmmss
@@ -51,7 +64,7 @@ const EventDetails = () => {
 
   return (
     <section className="py-12 md:py-28 px-3 md:px-4 bg-wedding-pink-light relative overflow-hidden">
-      <StickyCountdown />
+      <StickyCountdown role={role} />
       
       {/* Background pattern */}
       <div className="absolute inset-0 bg-pattern-floral opacity-30" />
@@ -86,9 +99,19 @@ const EventDetails = () => {
               
               <div className="flex-1 text-foreground">
                 <div className="p-2 md:p-4 bg-wedding-cream/50 rounded-lg md:rounded-xl">
-                  <p className="font-semibold text-sm md:text-lg mb-0.5 md:mb-1">Tư Gia</p>
-                  <p className="text-muted-foreground text-[10px] md:text-sm hidden sm:block">Đại Đình</p>
-                  <p className="text-muted-foreground text-[10px] md:text-sm mt-1 md:mt-2 line-clamp-2">Phú Thọ</p>
+                  {isBride ? (
+                    <>
+                      <p className="font-semibold text-sm md:text-lg mb-0.5 md:mb-1">Tư Gia Nhà Gái</p>
+                      <p className="text-muted-foreground text-[10px] md:text-sm">Xóm Phố Giá - Xã Phú Lương</p>
+                      <p className="text-muted-foreground text-[10px] md:text-sm mt-1 md:mt-1.5 font-medium text-wedding-pink-dark">Tỉnh Thái Nguyên</p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="font-semibold text-sm md:text-lg mb-0.5 md:mb-1">Tư Gia Nhà Trai</p>
+                      <p className="text-muted-foreground text-[10px] md:text-sm hidden sm:block">Đại Đình</p>
+                      <p className="text-muted-foreground text-[10px] md:text-sm mt-1 md:mt-2 line-clamp-2">Phú Thọ</p>
+                    </>
+                  )}
                 </div>
               </div>
 

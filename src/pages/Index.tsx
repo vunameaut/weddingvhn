@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import { Heart, MessageCircleHeart, Copy, QrCode, ExternalLink, Download, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import OpeningScreen from '@/components/OpeningScreen';
 import FloatingParticles from '@/components/FloatingParticles';
 import MusicPlayer from '@/components/MusicPlayer';
@@ -10,8 +10,6 @@ import CoupleSection from '@/components/CoupleSection';
 import EventDetails from '@/components/EventDetails';
 import PhotoAlbum from '@/components/PhotoAlbum';
 import RSVPForm from '@/components/RSVPForm';
-import LoveStory from '@/components/LoveStory';
-import VideoSection from '@/components/VideoSection';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 
 import Footer from '@/components/Footer';
@@ -19,6 +17,7 @@ import { isSupabaseConfigured, supabase, type WishItem } from '@/lib/supabase';
 import { decodeRecipientName } from '@/lib/invite';
 
 import heroBg from '@/assets/album1.jpg'; // Dùng album1 làm nền trang đầu
+import qrBrideImg from '@/assets/qr-bride.png';
 
 const initialWishes: WishItem[] = [
   {
@@ -46,6 +45,7 @@ type BankAccount = {
   accountNumber: string;
   label: string;
   transferNote: string;
+  customQrImg?: string;
 };
 
 type BankApp = {
@@ -53,7 +53,7 @@ type BankApp = {
   appCode: string;
 };
 
-const bankAccounts: BankAccount[] = [
+const groomBankAccounts: BankAccount[] = [
   {
     name: 'DO DINH QUAN',
     bank: 'Techcombank',
@@ -64,7 +64,20 @@ const bankAccounts: BankAccount[] = [
   },
 ];
 
+const brideBankAccounts: BankAccount[] = [
+  {
+    name: 'NGUYEN MAI LINH',
+    bank: 'Viettel Money',
+    bankCode: '971005',
+    accountNumber: '0366742481',
+    label: 'Cô dâu',
+    transferNote: 'Mung cuoi Mai Linh Do Quan',
+    customQrImg: qrBrideImg,
+  },
+];
+
 const bankApps: BankApp[] = [
+  { label: 'Viettel Money', appCode: 'viettelmoney' },
   { label: 'MB Bank', appCode: 'mb' },
   { label: 'Vietcombank', appCode: 'vcb' },
   { label: 'Techcombank', appCode: 'tcb' },
@@ -76,6 +89,9 @@ const bankApps: BankApp[] = [
 ];
 
 const getVietQRUrl = (account: BankAccount) => {
+  if (account.customQrImg) {
+    return account.customQrImg;
+  }
   const note = encodeURIComponent(account.transferNote);
   const name = encodeURIComponent(account.name);
   return `https://img.vietqr.io/image/${account.bankCode}-${account.accountNumber}-compact2.jpg?addInfo=${note}&accountName=${name}`;
@@ -83,11 +99,13 @@ const getVietQRUrl = (account: BankAccount) => {
 
 interface WishesSectionProps {
   wishes: WishItem[];
+  role?: 'groom' | 'bride';
 }
 
-const WishesSection = ({ wishes }: WishesSectionProps) => {
+const WishesSection = ({ wishes, role = 'groom' }: WishesSectionProps) => {
   const { toast } = useToast();
-  const [selectedBankApp, setSelectedBankApp] = useState<string>('tcb');
+  const bankAccounts = role === 'bride' ? brideBankAccounts : groomBankAccounts;
+  const [selectedBankApp, setSelectedBankApp] = useState<string>(role === 'bride' ? 'viettelmoney' : 'tcb');
   const [showQR, setShowQR] = useState<Record<string, boolean>>({});
   const marqueeWishes = [...wishes, ...wishes];
 
@@ -277,13 +295,17 @@ const WishesSection = ({ wishes }: WishesSectionProps) => {
                     {isQRVisible && (
                       <div className="flex flex-col items-center gap-2 pt-1">
                         <img
-                          src={getVietQRUrl(account)}
+                          src={account.customQrImg || getVietQRUrl(account)}
                           alt={`QR chuyển khoản ${account.name}`}
-                          className="w-52 h-52 md:w-64 md:h-64 rounded-xl border border-border object-cover"
+                          className={`rounded-2xl border border-border shadow-md ${
+                            account.customQrImg
+                              ? 'w-60 md:w-72 max-h-[480px] object-contain bg-white p-1'
+                              : 'w-52 h-52 md:w-64 md:h-64 object-cover'
+                          }`}
                           loading="lazy"
                         />
                         <p className="text-[10px] text-muted-foreground">
-                          Mở app → Chuyển khoản → Quét QR này
+                          Mở app ngân hàng hoặc ví → Quét QR này
                         </p>
                       </div>
                     )}
@@ -325,12 +347,28 @@ const WishesSection = ({ wishes }: WishesSectionProps) => {
   );
 };
 
-const Index = () => {
+interface IndexProps {
+  role?: 'groom' | 'bride';
+}
+
+const Index = ({ role = 'groom' }: IndexProps) => {
   const { recipientCode } = useParams();
+  const [searchParams] = useSearchParams();
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const [wishes, setWishes] = useState<WishItem[]>(initialWishes);
   const recipientName = decodeRecipientName(recipientCode ?? '');
   const invitationLine = recipientName ? `Kính mời ${recipientName}` : 'Trân trọng kính mời';
+
+  const isBride = role === 'bride' || searchParams.get('role') === 'bride' || searchParams.get('side') === 'co-dau';
+  const effectiveRole: 'groom' | 'bride' = isBride ? 'bride' : 'groom';
+  const heroFirstName = isBride ? 'Mai Linh' : 'Đỗ Quân';
+  const heroSecondName = isBride ? 'Đỗ Quân' : 'Mai Linh';
+  const heroShortName = isBride ? 'Linh & Quân' : 'Quân & Linh';
+  const coupleFullName = isBride ? 'Mai Linh & Đỗ Quân' : 'Đỗ Quân & Mai Linh';
+
+  useEffect(() => {
+    document.title = `${coupleFullName} - Thiệp Cưới Online`;
+  }, [coupleFullName]);
 
   useEffect(() => {
     // Ngăn trình duyệt tự động khôi phục vị trí cuộn cũ khi reload
@@ -443,7 +481,7 @@ const Index = () => {
 
                 <ScrollReveal direction="left" delay={0.2} className="w-full">
                   <h1 className="font-flourish text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none text-white md:text-wedding-pink-dark drop-shadow-[0_4px_16px_rgba(0,0,0,0.7)] md:drop-shadow-[0_4px_12px_rgba(180,120,130,0.25)] my-1">
-                    Đỗ Quân
+                    {heroFirstName}
                   </h1>
                 </ScrollReveal>
 
@@ -455,7 +493,7 @@ const Index = () => {
 
                 <ScrollReveal direction="right" delay={0.2} className="w-full">
                   <h1 className="font-flourish text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none text-white md:text-wedding-pink-dark drop-shadow-[0_4px_16px_rgba(0,0,0,0.7)] md:drop-shadow-[0_4px_12px_rgba(180,120,130,0.25)] my-1">
-                    Mai Linh
+                    {heroSecondName}
                   </h1>
                 </ScrollReveal>
 
@@ -497,7 +535,7 @@ const Index = () => {
 
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute bottom-4 left-0 right-0 text-center pointer-events-none transition-transform duration-500 group-hover:-translate-y-1">
-                      <p className="font-flourish text-3xl md:text-4xl text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">Quân & Linh</p>
+                      <p className="font-flourish text-3xl md:text-4xl text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">{heroShortName}</p>
                       <p className="text-[10px] tracking-[0.3em] uppercase text-wedding-gold/90 font-serif mt-0.5">Forever & Always</p>
                     </div>
                   </div>
@@ -508,20 +546,46 @@ const Index = () => {
           </div>
         </section>
 
-        <CoupleSection />
-        <EventDetails />
+        <CoupleSection role={effectiveRole} />
+        <EventDetails role={effectiveRole} />
         <PhotoAlbum />
-        <LoveStory />
-        <VideoSection />
-        <WishesSection wishes={wishes} />
-        <RSVPForm onSubmitSuccess={handleNewWish} />
-        <Footer />
+        <WishesSection wishes={wishes} role={effectiveRole} />
+        <RSVPForm onSubmitSuccess={handleNewWish} role={effectiveRole} />
+        <Footer role={effectiveRole} />
         
+        {/* Switcher giữa bản Chú Rể & Cô Dâu */}
+        <div className="fixed top-3 right-3 sm:top-4 sm:right-4 z-40 flex items-center gap-1 bg-white/90 dark:bg-black/70 backdrop-blur-md border border-wedding-gold/40 p-1 rounded-full shadow-lg text-[11px] sm:text-xs">
+          <Link
+            to={recipientCode ? `/chu-re/${recipientCode}` : '/'}
+            className={`px-2.5 py-1 rounded-full transition-all flex items-center gap-1 ${
+              effectiveRole === 'groom'
+                ? 'bg-wedding-pink text-white font-medium shadow-sm'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+            title="Xem thiệp cưới bản Chú Rể (Nhà Trai)"
+          >
+            <span>🤵</span>
+            <span>Chú Rể</span>
+          </Link>
+          <Link
+            to={recipientCode ? `/co-dau/${recipientCode}` : '/co-dau'}
+            className={`px-2.5 py-1 rounded-full transition-all flex items-center gap-1 ${
+              effectiveRole === 'bride'
+                ? 'bg-wedding-pink text-white font-medium shadow-sm'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+            title="Xem thiệp cưới bản Cô Dâu (Nhà Gái)"
+          >
+            <span>👰</span>
+            <span>Cô Dâu</span>
+          </Link>
+        </div>
+
         <ThemeSwitcher />
       </main>
 
       {!isInvitationOpen && (
-        <OpeningScreen onOpen={() => setIsInvitationOpen(true)} />
+        <OpeningScreen onOpen={() => setIsInvitationOpen(true)} role={effectiveRole} />
       )}
     </>
   );

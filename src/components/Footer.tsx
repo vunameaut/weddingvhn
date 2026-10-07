@@ -1,7 +1,13 @@
 import { Heart } from 'lucide-react';
 import { ScrollReveal } from '@/hooks/useScrollAnimation';
 
-const Footer = () => {
+interface FooterProps {
+  role?: 'groom' | 'bride';
+}
+
+const Footer = ({ role = 'groom' }: FooterProps) => {
+  const coupleName = role === 'bride' ? 'Mai Linh & Đỗ Quân' : 'Đỗ Quân & Mai Linh';
+
   return (
     <footer className="py-10 md:py-16 px-3 md:px-4 bg-gradient-romantic text-center relative overflow-hidden">
       {/* Background pattern */}
@@ -11,7 +17,7 @@ const Footer = () => {
         {/* Names */}
         <div className="mb-4 md:mb-6">
           <p className="font-flourish text-4xl md:text-6xl text-wedding-pink-dark mb-1 md:mb-2 tracking-wide">
-            Đỗ Quân & Mai Linh
+            {coupleName}
           </p>
           <p className="text-muted-foreground text-sm md:text-base">08.11.2026</p>
         </div>

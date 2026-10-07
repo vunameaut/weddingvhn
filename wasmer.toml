@@ -17,4 +17,4 @@ module = "wasmer/static-web-server:webserver"
 runner = "https://webc.org/runner/wasi"
 
 [command.annotations.wasi]
-env = ["SERVER_ROOT=/public"]
+env = ["SERVER_ROOT=/public", "SERVER_PAGE_FALLBACK=/public/index.html"]

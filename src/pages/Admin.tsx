@@ -17,6 +17,7 @@ type RsvpRow = {
 const Admin = () => {
   const { toast } = useToast();
   const [namesInput, setNamesInput] = useState('');
+  const [inviteSide, setInviteSide] = useState<'groom' | 'bride'>('groom');
 
   const { data: rows = [], isLoading } = useQuery({
     queryKey: ['admin-rsvp-stats'],
@@ -58,12 +59,18 @@ const Admin = () => {
 
     const origin = window.location.origin;
 
-    return uniqueNames.map((name) => ({
-      name,
-      code: encodeRecipientName(name),
-      url: `${origin}/${encodeRecipientName(name)}`,
-    }));
-  }, [namesInput]);
+    return uniqueNames.map((name) => {
+      const code = encodeRecipientName(name);
+      const url = inviteSide === 'bride' 
+        ? `${origin}/co-dau/${code}` 
+        : `${origin}/${code}`;
+      return {
+        name,
+        code,
+        url,
+      };
+    });
+  }, [namesInput, inviteSide]);
 
   const copyText = async (text: string, successMessage: string) => {
     try {
@@ -165,6 +172,32 @@ const Admin = () => {
             <p className="text-sm text-muted-foreground">
               Nhập mỗi tên trên một dòng. Hệ thống sẽ tạo link dạng domain/tên-đã-mã-hóa để gửi riêng cho từng người.
             </p>
+
+            <div className="flex items-center gap-2 pt-1">
+              <span className="text-xs font-medium text-foreground">Bản thiệp:</span>
+              <button
+                type="button"
+                onClick={() => setInviteSide('groom')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                  inviteSide === 'groom'
+                    ? 'bg-wedding-pink text-white shadow-sm'
+                    : 'bg-muted text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                🤵 Nhà Trai (Chú rể)
+              </button>
+              <button
+                type="button"
+                onClick={() => setInviteSide('bride')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                  inviteSide === 'bride'
+                    ? 'bg-wedding-pink text-white shadow-sm'
+                    : 'bg-muted text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                👰 Nhà Gái (Cô dâu)
+              </button>
+            </div>
 
             <textarea
               value={namesInput}

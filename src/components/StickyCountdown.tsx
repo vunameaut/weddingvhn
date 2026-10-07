@@ -8,7 +8,11 @@ interface TimeLeft {
   seconds: number;
 }
 
-const StickyCountdown = () => {
+interface StickyCountdownProps {
+  role?: 'groom' | 'bride';
+}
+
+const StickyCountdown = ({ role = 'groom' }: StickyCountdownProps) => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isVisible, setIsVisible] = useState(false);
 
@@ -42,6 +46,9 @@ const StickyCountdown = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const firstName = role === 'bride' ? 'Mai Linh' : 'Đỗ Quân';
+  const secondName = role === 'bride' ? 'Đỗ Quân' : 'Mai Linh';
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -54,9 +61,9 @@ const StickyCountdown = () => {
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           {/* Names */}
           <div className="hidden sm:flex items-center gap-2">
-            <span className="font-flourish text-2xl md:text-3xl text-wedding-pink-dark">Đỗ Quân</span>
+            <span className="font-flourish text-2xl md:text-3xl text-wedding-pink-dark">{firstName}</span>
             <Heart className="w-4 h-4 text-wedding-pink fill-wedding-pink animate-heart-beat" />
-            <span className="font-flourish text-2xl md:text-3xl text-wedding-pink-dark">Mai Linh</span>
+            <span className="font-flourish text-2xl md:text-3xl text-wedding-pink-dark">{secondName}</span>
           </div>
 
           {/* Countdown */}
