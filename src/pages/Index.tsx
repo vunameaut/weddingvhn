@@ -361,7 +361,7 @@ const Index = ({ role = 'groom' }: IndexProps) => {
   const decodedFromCode = decodeRecipientName(rawCode);
   const directName = searchParams.get('to') || searchParams.get('ten') || '';
   const recipientName = decodedFromCode || directName;
-  const invitationLine = recipientName ? `Kính mời ${recipientName}` : 'Trân trọng kính mời';
+  const invitationLine = recipientName ? `Kính mời ${recipientName}` : 'Thiệp mời';
 
   const isBride = role === 'bride' || searchParams.get('role') === 'bride' || searchParams.get('side') === 'co-dau';
   const effectiveRole: 'groom' | 'bride' = isBride ? 'bride' : 'groom';
