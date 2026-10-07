@@ -113,15 +113,15 @@ const LoveStory = () => {
               </p>
             </div>
 
-            {/* Lưới ảnh phong cách Polaroid kỷ niệm nghệ thuật */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
+            {/* Lưới ảnh phong cách Polaroid kỷ niệm cân đối & căn giữa */}
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 max-w-4xl mx-auto">
               {storyImages.map((imgSrc, idx) => {
                 const rot = rotations[idx % rotations.length];
                 return (
                   <div
                     key={idx}
                     onClick={() => setSelectedPhotoIndex(idx)}
-                    className={`cursor-pointer group relative bg-white p-3 sm:p-3.5 pb-5 sm:pb-6 rounded-xl shadow-lg border border-wedding-gold/30 hover:shadow-2xl hover:scale-105 hover:rotate-0 transition-all duration-300 ${rot}`}
+                    className={`w-[calc(50%-10px)] sm:w-[calc(33.333%-18px)] md:w-[calc(25%-20px)] min-w-[150px] max-w-[215px] cursor-pointer group relative bg-white p-3 sm:p-3.5 pb-5 sm:pb-6 rounded-xl shadow-lg border border-wedding-gold/30 hover:shadow-2xl hover:scale-105 hover:rotate-0 transition-all duration-300 ${rot}`}
                   >
                     {/* Băng keo dán giấy washi tape giả lập */}
                     <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-16 h-5 bg-wedding-gold/25 backdrop-blur-sm -rotate-2 rounded-sm shadow-sm pointer-events-none" />
@@ -142,7 +142,8 @@ const LoveStory = () => {
                     </div>
 
                     {/* Dòng chú thích nhỏ góc ảnh */}
-                    <div className="mt-2.5 text-center">
+                    <div className="mt-2.5 text-center flex items-center justify-center gap-1">
+                      <Heart className="w-2.5 h-2.5 text-wedding-pink fill-wedding-pink" />
                       <p className="font-serif text-[11px] sm:text-xs text-foreground/75 italic">
                         Kỷ niệm #{idx + 1}
                       </p>
