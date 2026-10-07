@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { ScrollReveal } from '@/hooks/useScrollAnimation';
-import { Heart, Sparkles, Quote, X, ZoomIn } from 'lucide-react';
+import { Heart, Sparkles, Quote, X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Chỉ lấy ảnh duy nhất trong thư mục src/cauchuyentinhyeu
 const storyImagesGlob = import.meta.glob<{ default: string }>(
-  '/src/cauchuyentinhyeu/*.{png,jpg,jpeg,webp,PNG,JPG,JPEG,WEBP}',
+  '../cauchuyentinhyeu/*.{png,jpg,jpeg,webp,PNG,JPG,JPEG,WEBP,jfif,JFIF}',
   { eager: true }
 );
 
 const storyImages: string[] = Object.values(storyImagesGlob).map((mod) => mod.default);
 
 const LoveStory = () => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
 
   const paragraphs = [
     'Chúng mình gặp nhau khi cùng làm việc ở hai quán cơm đối diện nhau. Em làm Cơm Niêu, anh làm Cơm Tấm. Một lần em sang đổi tiền, rồi từ những tin nhắn đầu tiên, chúng mình dần bước vào cuộc đời nhau.',
@@ -20,6 +20,23 @@ const LoveStory = () => {
     'Và thật may mắn, sau tất cả, chúng mình đã đi đến ngày hôm nay.',
     'Từ một lần sang đổi tiền, từ hai quán cơm đối diện nhau, chúng mình đã trở thành vợ – chồng và cùng nhau bước vào một hành trình mới — về chung một mái nhà. 🤍',
   ];
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (selectedPhotoIndex !== null) {
+      setSelectedPhotoIndex((selectedPhotoIndex - 1 + storyImages.length) % storyImages.length);
+    }
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (selectedPhotoIndex !== null) {
+      setSelectedPhotoIndex((selectedPhotoIndex + 1) % storyImages.length);
+    }
+  };
+
+  // Các góc nghiêng nhẹ cho hiệu ứng ảnh kỷ niệm Polaroid
+  const rotations = ['rotate-1', '-rotate-2', 'rotate-2', '-rotate-1', 'rotate-1', '-rotate-2', 'rotate-2'];
 
   return (
     <section id="love-story" className="py-16 md:py-24 px-4 bg-gradient-soft relative overflow-hidden">
@@ -85,58 +102,110 @@ const LoveStory = () => {
 
         {/* Hiển thị ảnh kỷ niệm lấy từ thư mục src/cauchuyentinhyeu */}
         {storyImages.length > 0 && (
-          <ScrollReveal direction="up" className="mt-12 md:mt-16">
-            <div className="text-center mb-6">
-              <p className="font-serif italic text-sm md:text-base text-muted-foreground">
-                Những khoảnh khắc kỷ niệm của chúng mình 🤍
+          <ScrollReveal direction="up" className="mt-14 md:mt-20">
+            <div className="text-center mb-8">
+              <p className="font-script text-wedding-pink text-2xl md:text-3xl">Góc Kỷ Niệm</p>
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-foreground mt-1">
+                Những Khoảnh Khắc Của Chúng Mình 🤍
+              </h3>
+              <p className="font-serif italic text-xs sm:text-sm text-muted-foreground mt-1">
+                Từng ngày đi qua, từng kỷ niệm lưu giữ
               </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
-              {storyImages.map((imgSrc, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => setSelectedImage(imgSrc)}
-                  className="cursor-pointer group relative bg-white p-2 sm:p-2.5 rounded-xl shadow-md border border-wedding-gold/25 hover:shadow-xl hover:scale-105 transition-all duration-300"
-                >
-                  <div className="aspect-[4/3] rounded-lg overflow-hidden bg-muted">
-                    <img
-                      src={imgSrc}
-                      alt={`Kỷ niệm ${idx + 1}`}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      loading="lazy"
-                    />
+            {/* Lưới ảnh phong cách Polaroid kỷ niệm nghệ thuật */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
+              {storyImages.map((imgSrc, idx) => {
+                const rot = rotations[idx % rotations.length];
+                return (
+                  <div
+                    key={idx}
+                    onClick={() => setSelectedPhotoIndex(idx)}
+                    className={`cursor-pointer group relative bg-white p-3 sm:p-3.5 pb-5 sm:pb-6 rounded-xl shadow-lg border border-wedding-gold/30 hover:shadow-2xl hover:scale-105 hover:rotate-0 transition-all duration-300 ${rot}`}
+                  >
+                    {/* Băng keo dán giấy washi tape giả lập */}
+                    <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-16 h-5 bg-wedding-gold/25 backdrop-blur-sm -rotate-2 rounded-sm shadow-sm pointer-events-none" />
+
+                    <div className="aspect-[4/5] rounded-lg overflow-hidden bg-muted">
+                      <img
+                        src={imgSrc}
+                        alt={`Kỷ niệm ${idx + 1}`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        loading="lazy"
+                      />
+                    </div>
+
+                    <div className="absolute inset-3 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/25 rounded-lg pointer-events-none">
+                      <span className="p-2 rounded-full bg-white/95 shadow text-xs">
+                        <ZoomIn className="w-4 h-4 text-wedding-gold-dark" />
+                      </span>
+                    </div>
+
+                    {/* Dòng chú thích nhỏ góc ảnh */}
+                    <div className="mt-2.5 text-center">
+                      <p className="font-serif text-[11px] sm:text-xs text-foreground/75 italic">
+                        Kỷ niệm #{idx + 1}
+                      </p>
+                    </div>
                   </div>
-                  <div className="absolute inset-2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg pointer-events-none">
-                    <span className="p-1.5 rounded-full bg-white/90 shadow text-xs">
-                      <ZoomIn className="w-4 h-4 text-wedding-gold-dark" />
-                    </span>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </ScrollReveal>
         )}
       </div>
 
-      {/* Lightbox xem ảnh to */}
-      {selectedImage && (
+      {/* Lightbox xem ảnh to với phím chuyển ảnh */}
+      {selectedPhotoIndex !== null && (
         <div
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
-          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
+          onClick={() => setSelectedPhotoIndex(null)}
         >
+          {/* Nút đóng */}
           <button
-            onClick={() => setSelectedImage(null)}
-            className="absolute top-4 right-4 p-2 rounded-full bg-white/20 hover:bg-white/40 text-white transition-colors"
+            onClick={() => setSelectedPhotoIndex(null)}
+            className="absolute top-4 right-4 z-50 p-2.5 rounded-full bg-white/20 hover:bg-white/40 text-white transition-colors"
+            title="Đóng"
           >
             <X className="w-6 h-6" />
           </button>
-          <img
-            src={selectedImage}
-            alt="Ảnh kỷ niệm"
-            className="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl"
+
+          {/* Nút lùi */}
+          {storyImages.length > 1 && (
+            <button
+              onClick={handlePrev}
+              className="absolute left-3 md:left-6 z-50 p-3 rounded-full bg-white/20 hover:bg-white/40 text-white transition-colors"
+              title="Ảnh trước"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+          )}
+
+          {/* Nút tiến */}
+          {storyImages.length > 1 && (
+            <button
+              onClick={handleNext}
+              className="absolute right-3 md:right-6 z-50 p-3 rounded-full bg-white/20 hover:bg-white/40 text-white transition-colors"
+              title="Ảnh sau"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          )}
+
+          {/* Khung ảnh to */}
+          <div
+            className="relative max-w-4xl max-h-[85vh] flex flex-col items-center"
             onClick={(e) => e.stopPropagation()}
-          />
+          >
+            <img
+              src={storyImages[selectedPhotoIndex]}
+              alt={`Ảnh kỷ niệm ${selectedPhotoIndex + 1}`}
+              className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl border-2 border-white/20"
+            />
+            <p className="text-white/80 font-serif text-sm mt-3">
+              {selectedPhotoIndex + 1} / {storyImages.length}
+            </p>
+          </div>
         </div>
       )}
     </section>

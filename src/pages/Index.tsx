@@ -551,9 +551,9 @@ const Index = ({ role = 'groom' }: IndexProps) => {
         </section>
 
         <CoupleSection role={effectiveRole} />
-        <LoveStory />
         <EventDetails role={effectiveRole} />
         <PhotoAlbum />
+        <LoveStory />
         <WishesSection wishes={wishes} role={effectiveRole} />
         <RSVPForm onSubmitSuccess={handleNewWish} role={effectiveRole} />
         <Footer role={effectiveRole} />
