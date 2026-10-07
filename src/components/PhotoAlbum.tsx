@@ -2,7 +2,7 @@ import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import { Heart, X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-// Full HD images for Lightbox
+// Sử dụng trực tiếp ảnh album gốc độ nét cao 2048px sắc nét từng chi tiết
 import album1 from '@/assets/album1.jpg';
 import album2 from '@/assets/album2.jpg';
 import album3 from '@/assets/album3.jpg';
@@ -13,33 +13,21 @@ import album7 from '@/assets/album7.jpg';
 import album8 from '@/assets/album8.jpg';
 import album9 from '@/assets/album9.jpg';
 
-// Lightweight thumbnails (18KB - 40KB) for instantaneous grid rendering
-import album1_thumb from '@/assets/album1_thumb.jpg';
-import album2_thumb from '@/assets/album2_thumb.jpg';
-import album3_thumb from '@/assets/album3_thumb.jpg';
-import album4_thumb from '@/assets/album4_thumb.jpg';
-import album5_thumb from '@/assets/album5_thumb.jpg';
-import album6_thumb from '@/assets/album6_thumb.jpg';
-import album7_thumb from '@/assets/album7_thumb.jpg';
-import album8_thumb from '@/assets/album8_thumb.jpg';
-import album9_thumb from '@/assets/album9_thumb.jpg';
-
 interface PhotoItem {
   src: string;
-  thumb: string;
   alt: string;
 }
 
 const originalPhotos: PhotoItem[] = [
-  { src: album1, thumb: album1_thumb, alt: "Ảnh cưới 1" },
-  { src: album2, thumb: album2_thumb, alt: "Ảnh cưới 2" },
-  { src: album3, thumb: album3_thumb, alt: "Ảnh cưới 3" },
-  { src: album4, thumb: album4_thumb, alt: "Ảnh cưới 4" },
-  { src: album5, thumb: album5_thumb, alt: "Ảnh cưới 5" },
-  { src: album6, thumb: album6_thumb, alt: "Ảnh cưới 6" },
-  { src: album7, thumb: album7_thumb, alt: "Ảnh cưới 7" },
-  { src: album8, thumb: album8_thumb, alt: "Ảnh cưới 8" },
-  { src: album9, thumb: album9_thumb, alt: "Ảnh cưới 9" },
+  { src: album1, alt: "Ảnh cưới 1" },
+  { src: album2, alt: "Ảnh cưới 2" },
+  { src: album3, alt: "Ảnh cưới 3" },
+  { src: album4, alt: "Ảnh cưới 4" },
+  { src: album5, alt: "Ảnh cưới 5" },
+  { src: album6, alt: "Ảnh cưới 6" },
+  { src: album7, alt: "Ảnh cưới 7" },
+  { src: album8, alt: "Ảnh cưới 8" },
+  { src: album9, alt: "Ảnh cưới 9" },
 ];
 
 const PhotoAlbum = () => {
@@ -47,14 +35,14 @@ const PhotoAlbum = () => {
   const [randomizedPhotos, setRandomizedPhotos] = useState<PhotoItem[]>([]);
 
   useEffect(() => {
-    // Randomize order on mount
+    // Xáo trộn ngẫu nhiên thứ tự ảnh khi tải trang
     const shuffled = [...originalPhotos].sort(() => Math.random() - 0.5);
     setRandomizedPhotos(shuffled);
   }, []);
 
   if (randomizedPhotos.length === 0) return null;
 
-  // Split photos into 3 columns
+  // Chia ảnh thành 3 cột chạy song song
   const col1 = randomizedPhotos.slice(0, 3);
   const col2 = randomizedPhotos.slice(3, 6);
   const col3 = randomizedPhotos.slice(6, 9);
@@ -244,9 +232,9 @@ const PhotoCard = ({ photo, onClick }: PhotoCardProps) => (
     onClick={onClick}
   >
     <img
-      src={photo.thumb}
+      src={photo.src}
       alt={photo.alt}
-      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 contrast-[1.02] brightness-[1.01]"
       loading="lazy"
       decoding="async"
     />
