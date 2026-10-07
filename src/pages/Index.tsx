@@ -356,7 +356,10 @@ const Index = ({ role = 'groom' }: IndexProps) => {
   const [searchParams] = useSearchParams();
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const [wishes, setWishes] = useState<WishItem[]>(initialWishes);
-  const recipientName = decodeRecipientName(recipientCode ?? '');
+  const rawCode = recipientCode || searchParams.get('c') || searchParams.get('k') || '';
+  const decodedFromCode = decodeRecipientName(rawCode);
+  const directName = searchParams.get('to') || searchParams.get('ten') || '';
+  const recipientName = decodedFromCode || directName;
   const invitationLine = recipientName ? `Kính mời ${recipientName}` : 'Trân trọng kính mời';
 
   const isBride = role === 'bride' || searchParams.get('role') === 'bride' || searchParams.get('side') === 'co-dau';
