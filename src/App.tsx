@@ -18,10 +18,24 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index role="groom" />} />
           <Route path="/admin" element={<Admin />} />
+
+          {/* Bản Chú Rể: /DoQuan */}
+          <Route path="/DoQuan" element={<Index role="groom" />} />
+          <Route path="/DoQuan/:recipientCode" element={<Index role="groom" />} />
+          <Route path="/doquan" element={<Index role="groom" />} />
+          <Route path="/doquan/:recipientCode" element={<Index role="groom" />} />
           <Route path="/chu-re" element={<Index role="groom" />} />
           <Route path="/chu-re/:recipientCode" element={<Index role="groom" />} />
+
+          {/* Bản Cô Dâu: /MaiLinh */}
+          <Route path="/MaiLinh" element={<Index role="bride" />} />
+          <Route path="/MaiLinh/:recipientCode" element={<Index role="bride" />} />
+          <Route path="/mailinh" element={<Index role="bride" />} />
+          <Route path="/mailinh/:recipientCode" element={<Index role="bride" />} />
           <Route path="/co-dau" element={<Index role="bride" />} />
           <Route path="/co-dau/:recipientCode" element={<Index role="bride" />} />
+
+          {/* Custom recipient code */}
           <Route path="/:recipientCode" element={<Index role="groom" />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

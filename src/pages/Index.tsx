@@ -556,7 +556,7 @@ const Index = ({ role = 'groom' }: IndexProps) => {
         {/* Switcher giữa bản Chú Rể & Cô Dâu */}
         <div className="fixed top-3 right-3 sm:top-4 sm:right-4 z-40 flex items-center gap-1 bg-white/90 dark:bg-black/70 backdrop-blur-md border border-wedding-gold/40 p-1 rounded-full shadow-lg text-[11px] sm:text-xs">
           <Link
-            to={recipientCode ? `/chu-re/${recipientCode}` : '/'}
+            to={recipientCode ? `/DoQuan/${recipientCode}` : '/DoQuan'}
             className={`px-2.5 py-1 rounded-full transition-all flex items-center gap-1 ${
               effectiveRole === 'groom'
                 ? 'bg-wedding-pink text-white font-medium shadow-sm'
@@ -568,7 +568,7 @@ const Index = ({ role = 'groom' }: IndexProps) => {
             <span>Chú Rể</span>
           </Link>
           <Link
-            to={recipientCode ? `/co-dau/${recipientCode}` : '/co-dau'}
+            to={recipientCode ? `/MaiLinh/${recipientCode}` : '/MaiLinh'}
             className={`px-2.5 py-1 rounded-full transition-all flex items-center gap-1 ${
               effectiveRole === 'bride'
                 ? 'bg-wedding-pink text-white font-medium shadow-sm'

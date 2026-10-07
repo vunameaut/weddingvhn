@@ -62,8 +62,8 @@ const Admin = () => {
     return uniqueNames.map((name) => {
       const code = encodeRecipientName(name);
       const url = inviteSide === 'bride' 
-        ? `${origin}/co-dau/${code}` 
-        : `${origin}/${code}`;
+        ? `${origin}/MaiLinh/${code}` 
+        : `${origin}/DoQuan/${code}`;
       return {
         name,
         code,
