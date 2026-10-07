@@ -1,4 +1,5 @@
-import { Heart } from 'lucide-react';
+import { useState } from 'react';
+import { Heart, ZoomIn, X } from 'lucide-react';
 import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import groomImg from '@/assets/groom.png';
 import brideImg from '@/assets/bride.jpg';
@@ -9,17 +10,28 @@ interface CoupleSectionProps {
 
 const CoupleSection = ({ role = 'groom' }: CoupleSectionProps) => {
   const isBride = role === 'bride';
+  const [previewPhoto, setPreviewPhoto] = useState<{ src: string; title: string } | null>(null);
 
   const groomCard = (direction: 'left' | 'right') => (
     <ScrollReveal direction={direction} delay={0.1} className="text-center flex-1">
-      <div className="relative mb-2 md:mb-6 group">
-        <div className="w-28 h-36 sm:w-36 sm:h-44 md:w-60 md:h-80 mx-auto rounded-lg md:rounded-2xl overflow-hidden border-2 border-wedding-gold shadow-elevated transition-all duration-500 group-hover:shadow-2xl group-hover:border-wedding-gold-light group-hover:scale-[1.02]">
+      <div 
+        className="relative mb-2 md:mb-6 group cursor-pointer"
+        onClick={() => setPreviewPhoto({ src: groomImg, title: 'Chú rể - Đỗ Quân' })}
+      >
+        <div className="w-32 h-44 sm:w-40 sm:h-52 md:w-60 md:h-80 mx-auto rounded-xl md:rounded-2xl overflow-hidden border-2 border-wedding-gold shadow-elevated transition-all duration-300 group-hover:shadow-2xl group-hover:border-wedding-gold-light group-hover:scale-[1.02]">
           <img
             src={groomImg}
             alt="Chú rể"
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className="w-full h-full object-cover object-[center_18%] contrast-[1.02] brightness-[1.01]"
+            loading="eager"
+            decoding="async"
           />
-          <div className="absolute inset-0 rounded-lg md:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ boxShadow: 'inset 0 0 30px hsla(43, 50%, 65%, 0.3)' }} />
+          {/* Nút phóng to khi hover */}
+          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+            <span className="p-2 rounded-full bg-white/90 shadow text-xs">
+              <ZoomIn className="w-4 h-4 text-wedding-gold-dark" />
+            </span>
+          </div>
         </div>
         <div className="hidden md:block absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-wedding-gold rounded-tl-lg opacity-60" />
         <div className="hidden md:block absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-wedding-gold rounded-tr-lg opacity-60" />
@@ -37,14 +49,24 @@ const CoupleSection = ({ role = 'groom' }: CoupleSectionProps) => {
 
   const brideCard = (direction: 'left' | 'right') => (
     <ScrollReveal direction={direction} delay={0.1} className="text-center flex-1">
-      <div className="relative mb-2 md:mb-6 group">
-        <div className="w-28 h-36 sm:w-36 sm:h-44 md:w-60 md:h-80 mx-auto rounded-lg md:rounded-2xl overflow-hidden border-2 border-wedding-gold shadow-elevated transition-all duration-500 group-hover:shadow-2xl group-hover:border-wedding-gold-light group-hover:scale-[1.02]">
+      <div 
+        className="relative mb-2 md:mb-6 group cursor-pointer"
+        onClick={() => setPreviewPhoto({ src: brideImg, title: 'Cô dâu - Mai Linh' })}
+      >
+        <div className="w-32 h-44 sm:w-40 sm:h-52 md:w-60 md:h-80 mx-auto rounded-xl md:rounded-2xl overflow-hidden border-2 border-wedding-gold shadow-elevated transition-all duration-300 group-hover:shadow-2xl group-hover:border-wedding-gold-light group-hover:scale-[1.02]">
           <img
             src={brideImg}
             alt="Cô dâu"
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className="w-full h-full object-cover object-[center_20%] contrast-[1.02] brightness-[1.01]"
+            loading="eager"
+            decoding="async"
           />
-          <div className="absolute inset-0 rounded-lg md:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ boxShadow: 'inset 0 0 30px hsla(43, 50%, 65%, 0.3)' }} />
+          {/* Nút phóng to khi hover */}
+          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+            <span className="p-2 rounded-full bg-white/90 shadow text-xs">
+              <ZoomIn className="w-4 h-4 text-wedding-gold-dark" />
+            </span>
+          </div>
         </div>
         <div className="hidden md:block absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-wedding-gold rounded-tl-lg opacity-60" />
         <div className="hidden md:block absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-wedding-gold rounded-tr-lg opacity-60" />
@@ -79,7 +101,7 @@ const CoupleSection = ({ role = 'groom' }: CoupleSectionProps) => {
         </ScrollReveal>
 
         {/* Couple */}
-        <div className="flex flex-row items-center justify-center gap-2 sm:gap-4 md:gap-16">
+        <div className="flex flex-row items-center justify-center gap-3 sm:gap-6 md:gap-16">
           {/* First person */}
           {isBride ? brideCard('left') : groomCard('left')}
 
@@ -103,9 +125,31 @@ const CoupleSection = ({ role = 'groom' }: CoupleSectionProps) => {
           </blockquote>
         </ScrollReveal>
       </div>
+
+      {/* Modal phóng to ảnh cô dâu / chú rể */}
+      {previewPhoto && (
+        <div
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
+          onClick={() => setPreviewPhoto(null)}
+        >
+          <button
+            onClick={() => setPreviewPhoto(null)}
+            className="absolute top-4 right-4 z-50 p-2.5 rounded-full bg-white/20 hover:bg-white/40 text-white transition-colors"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <div className="relative max-w-xl max-h-[85vh] flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={previewPhoto.src}
+              alt={previewPhoto.title}
+              className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl border-2 border-white/20"
+            />
+            <p className="text-white/90 font-serif text-base mt-3">{previewPhoto.title}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
 
 export default CoupleSection;
-
