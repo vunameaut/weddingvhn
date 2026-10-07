@@ -580,8 +580,7 @@ const Index = ({ role = 'groom' }: IndexProps) => {
             <span>Cô Dâu</span>
           </Link>
         </div>
-
-        <ThemeSwitcher />
+        {/* ThemeSwitcher đã ẩn theo yêu cầu */}
       </main>
 
       {!isInvitationOpen && (
