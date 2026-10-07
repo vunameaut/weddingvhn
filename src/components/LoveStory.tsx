@@ -126,12 +126,13 @@ const LoveStory = () => {
                     {/* Băng keo dán giấy washi tape giả lập */}
                     <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-16 h-5 bg-wedding-gold/25 backdrop-blur-sm -rotate-2 rounded-sm shadow-sm pointer-events-none" />
 
-                    <div className="aspect-[4/5] rounded-lg overflow-hidden bg-muted">
+                    <div className="aspect-[4/5] rounded-lg overflow-hidden bg-wedding-cream/30 flex items-center justify-center">
                       <img
                         src={imgSrc}
                         alt={`Ảnh kỷ niệm ${idx + 1}`}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full object-cover contrast-[1.03] brightness-[1.01]"
                         loading="lazy"
+                        decoding="async"
                       />
                     </div>
 
@@ -187,13 +188,13 @@ const LoveStory = () => {
 
           {/* Khung ảnh to */}
           <div
-            className="relative max-w-4xl max-h-[85vh] flex flex-col items-center"
+            className="relative max-w-xl md:max-w-2xl max-h-[82vh] flex flex-col items-center"
             onClick={(e) => e.stopPropagation()}
           >
             <img
               src={storyImages[selectedPhotoIndex]}
               alt={`Ảnh kỷ niệm ${selectedPhotoIndex + 1}`}
-              className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl border-2 border-white/20"
+              className="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl border-2 border-white/20 bg-black/40 backdrop-blur-sm contrast-[1.02]"
             />
             <p className="text-white/80 font-serif text-sm mt-3">
               {selectedPhotoIndex + 1} / {storyImages.length}
