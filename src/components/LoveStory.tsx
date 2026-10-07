@@ -121,7 +121,7 @@ const LoveStory = () => {
                   <div
                     key={idx}
                     onClick={() => setSelectedPhotoIndex(idx)}
-                    className={`w-[calc(50%-10px)] sm:w-[calc(33.333%-18px)] md:w-[calc(25%-20px)] min-w-[150px] max-w-[215px] cursor-pointer group relative bg-white p-3 sm:p-3.5 pb-5 sm:pb-6 rounded-xl shadow-lg border border-wedding-gold/30 hover:shadow-2xl hover:scale-105 hover:rotate-0 transition-all duration-300 ${rot}`}
+                    className={`w-[calc(50%-10px)] sm:w-[calc(33.333%-18px)] md:w-[calc(25%-20px)] min-w-[150px] max-w-[215px] cursor-pointer group relative bg-white p-2.5 sm:p-3 rounded-xl shadow-lg border border-wedding-gold/30 hover:shadow-2xl hover:scale-105 hover:rotate-0 transition-all duration-300 ${rot}`}
                   >
                     {/* Băng keo dán giấy washi tape giả lập */}
                     <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-16 h-5 bg-wedding-gold/25 backdrop-blur-sm -rotate-2 rounded-sm shadow-sm pointer-events-none" />
@@ -129,24 +129,16 @@ const LoveStory = () => {
                     <div className="aspect-[4/5] rounded-lg overflow-hidden bg-muted">
                       <img
                         src={imgSrc}
-                        alt={`Kỷ niệm ${idx + 1}`}
+                        alt={`Ảnh kỷ niệm ${idx + 1}`}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         loading="lazy"
                       />
                     </div>
 
-                    <div className="absolute inset-3 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/25 rounded-lg pointer-events-none">
+                    <div className="absolute inset-2.5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/25 rounded-lg pointer-events-none">
                       <span className="p-2 rounded-full bg-white/95 shadow text-xs">
                         <ZoomIn className="w-4 h-4 text-wedding-gold-dark" />
                       </span>
-                    </div>
-
-                    {/* Dòng chú thích nhỏ góc ảnh */}
-                    <div className="mt-2.5 text-center flex items-center justify-center gap-1">
-                      <Heart className="w-2.5 h-2.5 text-wedding-pink fill-wedding-pink" />
-                      <p className="font-serif text-[11px] sm:text-xs text-foreground/75 italic">
-                        Kỷ niệm #{idx + 1}
-                      </p>
                     </div>
                   </div>
                 );
