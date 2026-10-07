@@ -7,6 +7,7 @@ import OpeningScreen from '@/components/OpeningScreen';
 import FloatingParticles from '@/components/FloatingParticles';
 import MusicPlayer from '@/components/MusicPlayer';
 import CoupleSection from '@/components/CoupleSection';
+import LoveStory from '@/components/LoveStory';
 import EventDetails from '@/components/EventDetails';
 import PhotoAlbum from '@/components/PhotoAlbum';
 import RSVPForm from '@/components/RSVPForm';
@@ -550,6 +551,7 @@ const Index = ({ role = 'groom' }: IndexProps) => {
         </section>
 
         <CoupleSection role={effectiveRole} />
+        <LoveStory />
         <EventDetails role={effectiveRole} />
         <PhotoAlbum />
         <WishesSection wishes={wishes} role={effectiveRole} />
