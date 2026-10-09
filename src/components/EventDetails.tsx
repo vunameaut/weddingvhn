@@ -11,7 +11,7 @@ const EventDetails = ({ role = 'groom' }: EventDetailsProps) => {
 
   const googleMapsUrl = isBride
     ? "https://maps.app.goo.gl/H6WSppqjgH49kEmF8"
-    : "https://maps.app.goo.gl/gwrBkaQsfHD9yqEv9?g_st=ac";
+    : "https://maps.app.goo.gl/CeXaMgXNS2f3VAoRA?g_st=ic";
   
   const weddingDate = new Date(2026, 10, 8, 16, 0); // November 8, 2026, 16:00
   
