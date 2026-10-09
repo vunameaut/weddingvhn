@@ -132,56 +132,61 @@ const RSVPForm = ({ onSubmitSuccess, role = 'groom' }: RSVPFormProps) => {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="card-wedding space-y-4 md:space-y-6 p-4 md:p-8">
-          {/* Name and Guest of - side by side on mobile */}
-          <div className="grid grid-cols-2 gap-3 md:gap-4">
-            <div>
-              <label htmlFor="name" className="block text-xs md:text-sm font-medium text-foreground mb-1 md:mb-2 font-body">
-                Họ và Tên <span className="text-wedding-red">*</span>
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Tên của bạn"
-                className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-wedding-gold focus:border-transparent transition-all font-body text-sm md:text-base"
-                required
-              />
-            </div>
+          {/* Name input */}
+          <div>
+            <label htmlFor="name" className="block text-xs md:text-sm font-medium text-foreground mb-1 md:mb-2 font-body">
+              Họ và Tên của bạn <span className="text-wedding-red">*</span>
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Nhập họ và tên..."
+              className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-wedding-gold focus:border-transparent transition-all font-body text-sm md:text-base"
+              required
+            />
+          </div>
 
-            <div>
-              <label htmlFor="guestOf" className="block text-xs md:text-sm font-medium text-foreground mb-1 md:mb-2 font-body">
-                Bạn của ai?
-              </label>
-              <select
-                id="guestOf"
-                name="guestOf"
-                value={formData.guestOf}
-                onChange={handleChange}
-                className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-wedding-gold focus:border-transparent transition-all font-body text-sm md:text-base"
+          {/* Guest of selection */}
+          <div>
+            <label className="block text-xs md:text-sm font-medium text-foreground mb-1.5 md:mb-2 font-body">
+              Bạn là khách mời của ai? <span className="text-wedding-red">*</span>
+            </label>
+            <div className="grid grid-cols-2 gap-2 md:gap-3">
+              <button
+                type="button"
+                onClick={() => setFormData(prev => ({ ...prev, guestOf: 'groom' }))}
+                className={`py-2.5 px-3 rounded-xl border text-xs md:text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${
+                  formData.guestOf === 'groom'
+                    ? 'border-blue-500 bg-blue-50 text-blue-700 font-semibold shadow-sm ring-2 ring-blue-500/20 dark:bg-blue-950/40 dark:text-blue-300'
+                    : 'border-border bg-background text-muted-foreground hover:bg-muted'
+                }`}
               >
-                <option value="">-- Chọn --</option>
-                {role === 'bride' ? (
-                  <>
-                    <option value="bride">Khách Cô Dâu</option>
-                    <option value="groom">Khách Chú Rể</option>
-                  </>
-                ) : (
-                  <>
-                    <option value="groom">Khách Chú Rể</option>
-                    <option value="bride">Khách Cô Dâu</option>
-                  </>
-                )}
-                <option value="family">Gia đình</option>
-              </select>
+                <span>🤵</span>
+                <span>Khách Chú Rể</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setFormData(prev => ({ ...prev, guestOf: 'bride' }))}
+                className={`py-2.5 px-3 rounded-xl border text-xs md:text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${
+                  formData.guestOf === 'bride'
+                    ? 'border-rose-500 bg-rose-50 text-rose-700 font-semibold shadow-sm ring-2 ring-rose-500/20 dark:bg-rose-950/40 dark:text-rose-300'
+                    : 'border-border bg-background text-muted-foreground hover:bg-muted'
+                }`}
+              >
+                <span>👰</span>
+                <span>Khách Cô Dâu</span>
+              </button>
             </div>
           </div>
 
-          {/* Number of guests */}
+          {/* Number of guests / Attendance */}
           <div>
             <label htmlFor="numberOfGuests" className="block text-xs md:text-sm font-medium text-foreground mb-1 md:mb-2 font-body">
-              Số người đi cùng
+              Bạn có đến tham dự chung vui không?
             </label>
             <select
               id="numberOfGuests"
@@ -190,11 +195,12 @@ const RSVPForm = ({ onSubmitSuccess, role = 'groom' }: RSVPFormProps) => {
               onChange={handleChange}
               className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-wedding-gold focus:border-transparent transition-all font-body text-sm md:text-base"
             >
-              <option value="1">1 người</option>
-              <option value="2">2 người</option>
-              <option value="3">3 người</option>
-              <option value="4">4 người</option>
-              <option value="5">5+ người</option>
+              <option value="1">✨ Chắc chắn sẽ đến (Đi 1 mình)</option>
+              <option value="2">✨ Chắc chắn sẽ đến (Đi 2 người)</option>
+              <option value="3">✨ Chắc chắn sẽ đến (Đi 3 người)</option>
+              <option value="4">✨ Chắc chắn sẽ đến (Đi 4 người)</option>
+              <option value="5">✨ Chắc chắn sẽ đến (Đi 5+ người)</option>
+              <option value="0">💌 Rất tiếc, mình không thể đến (Gửi lời chúc mừng)</option>
             </select>
           </div>
 
