@@ -43,6 +43,7 @@ const CoupleSection = ({ role = 'groom' }: CoupleSectionProps) => {
         <p className="font-serif font-semibold text-foreground/80">Nhà Trai</p>
         <p>Ông: Đỗ Đình Đoàn</p>
         <p>Bà: Nguyễn Thị Hạnh</p>
+        <p className="text-[11px] sm:text-xs text-muted-foreground/80 pt-1 italic">Đại Đình, Phú Thọ</p>
       </div>
     </ScrollReveal>
   );
@@ -77,6 +78,7 @@ const CoupleSection = ({ role = 'groom' }: CoupleSectionProps) => {
       <div className="mt-2 text-xs sm:text-sm text-muted-foreground space-y-0.5">
         <p className="font-serif font-semibold text-foreground/80">Nhà Gái</p>
         <p>Bà: Nguyễn Thị Tuyết</p>
+        <p className="text-[11px] sm:text-xs text-muted-foreground/80 pt-1 italic">Xóm Phố Giá, Xã Phú Lương, Tỉnh Thái Nguyên</p>
       </div>
     </ScrollReveal>
   );

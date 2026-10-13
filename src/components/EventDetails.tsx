@@ -1,4 +1,4 @@
-import { Calendar, MapPin, Navigation, CalendarPlus, Heart } from 'lucide-react';
+import { Calendar, MapPin, Navigation, Heart } from 'lucide-react';
 import { ScrollReveal } from '@/hooks/useScrollAnimation';
 import StickyCountdown from './StickyCountdown';
 
@@ -12,8 +12,6 @@ const EventDetails = ({ role = 'groom' }: EventDetailsProps) => {
   const googleMapsUrl = isBride
     ? "https://maps.app.goo.gl/H6WSppqjgH49kEmF8"
     : "https://maps.app.goo.gl/CeXaMgXNS2f3VAoRA?g_st=ic";
-  
-  const weddingDate = new Date(2026, 10, 8, 16, 0); // November 8, 2026, 16:00
   
   // Generate calendar grid for November 2026
   const generateCalendar = () => {
@@ -41,27 +39,6 @@ const EventDetails = ({ role = 'groom' }: EventDetailsProps) => {
   const { days, weddingDay } = generateCalendar();
   const weekDays = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
 
-  // Add to Calendar function - works for both iOS and Android
-  const handleAddToCalendar = () => {
-    const coupleTitle = role === 'bride' ? 'Mai Linh & Đỗ Quân' : 'Đỗ Quân & Mai Linh';
-    const title = encodeURIComponent(`Tiệc Cưới - ${coupleTitle}`);
-    const location = encodeURIComponent(
-      isBride 
-        ? 'Xóm Phố Giá, Xã Phú Lương, Tỉnh Thái Nguyên' 
-        : 'Tư Gia - Đại Đình, Phú Thọ'
-    );
-    const details = encodeURIComponent('Trân trọng kính mời quý khách đến dự tiệc cưới của chúng tôi');
-    
-    // Format: YYYYMMDDTHHmmss
-    const startDate = '20261108T160000';
-    const endDate = '20261108T200000';
-    
-    // Try Google Calendar first (works on most devices)
-    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}`;
-    
-    window.open(googleCalendarUrl, '_blank');
-  };
-
   return (
     <section className="py-12 md:py-28 px-3 md:px-4 bg-wedding-pink-light relative overflow-hidden">
       <StickyCountdown role={role} />
@@ -87,117 +64,96 @@ const EventDetails = ({ role = 'groom' }: EventDetailsProps) => {
           </div>
         </ScrollReveal>
 
-        {/* Event cards - horizontal on mobile */}
-        <div className="flex flex-row gap-2 md:gap-6">
-          {/* Location Card */}
-          <ScrollReveal direction="left" delay={0.1} className="flex-1">
-            <div className="card-wedding text-center h-full flex flex-col p-3 md:p-6">
-              <div className="w-10 h-10 md:w-14 md:h-14 mx-auto mb-2 md:mb-4 rounded-full bg-wedding-pink flex items-center justify-center">
+        {/* Khung Thông Tin Lễ Cưới: Phần Lịch to ra & Nút Xem Bản Đồ */}
+        <ScrollReveal direction="up" delay={0.1}>
+          <div className="card-wedding max-w-xl mx-auto p-4 sm:p-6 md:p-8 text-center shadow-xl">
+            {/* Địa Điểm */}
+            <div className="mb-4 md:mb-6">
+              <div className="w-11 h-11 md:w-14 md:h-14 mx-auto mb-2 md:mb-3 rounded-full bg-wedding-pink flex items-center justify-center shadow-soft">
                 <MapPin className="w-5 h-5 md:w-7 md:h-7 text-white" />
               </div>
-              <h3 className="text-base md:text-2xl font-serif text-foreground font-semibold mb-2 md:mb-4">Địa Điểm</h3>
+              <h3 className="text-xs md:text-sm font-serif text-wedding-gold-dark font-semibold tracking-wider uppercase">
+                Địa Điểm Tổ Chức
+              </h3>
+              <p className="font-serif font-bold text-lg sm:text-xl md:text-2xl text-foreground mt-1">
+                {isBride ? 'Tư Gia Nhà Gái' : 'Tư Gia Nhà Trai'}
+              </p>
+              <p className="text-muted-foreground text-xs sm:text-sm md:text-base mt-1">
+                {isBride ? 'Xóm Phố Giá - Xã Phú Lương, Tỉnh Thái Nguyên' : 'Đại Đình, Phú Thọ'}
+              </p>
+            </div>
+
+            {/* Phần Lịch to ra */}
+            <div className="bg-wedding-cream/60 rounded-xl md:rounded-2xl p-3 sm:p-5 md:p-6 border border-wedding-gold/25 shadow-inner">
+              <div className="flex items-center justify-center gap-2 mb-2 md:mb-4">
+                <Calendar className="w-4 h-4 md:w-5 md:h-5 text-wedding-gold" />
+                <span className="font-serif font-bold text-base sm:text-lg md:text-xl text-wedding-gold">
+                  Tháng 11, 2026
+                </span>
+              </div>
               
-              <div className="flex-1 text-foreground">
-                <div className="p-2 md:p-4 bg-wedding-cream/50 rounded-lg md:rounded-xl">
-                  {isBride ? (
-                    <>
-                      <p className="font-semibold text-sm md:text-lg mb-0.5 md:mb-1">Tư Gia Nhà Gái</p>
-                      <p className="text-muted-foreground text-[10px] md:text-sm">Xóm Phố Giá - Xã Phú Lương</p>
-                      <p className="text-muted-foreground text-[10px] md:text-sm mt-1 md:mt-1.5 font-medium text-wedding-pink-dark">Tỉnh Thái Nguyên</p>
-                    </>
-                  ) : (
-                    <>
-                      <p className="font-semibold text-sm md:text-lg mb-0.5 md:mb-1">Tư Gia Nhà Trai</p>
-                      <p className="text-muted-foreground text-[10px] md:text-sm hidden sm:block">Đại Đình</p>
-                      <p className="text-muted-foreground text-[10px] md:text-sm mt-1 md:mt-2 line-clamp-2">Phú Thọ</p>
-                    </>
-                  )}
-                </div>
+              {/* Week days header */}
+              <div className="grid grid-cols-7 gap-1 md:gap-2 mb-1.5 md:mb-2">
+                {weekDays.map((day) => (
+                  <div key={day} className="text-[11px] sm:text-xs md:text-sm font-semibold text-muted-foreground py-1">
+                    {day}
+                  </div>
+                ))}
+              </div>
+              
+              {/* Calendar days */}
+              <div className="grid grid-cols-7 gap-1 md:gap-2">
+                {days.map((day, index) => (
+                  <div
+                    key={index}
+                    className={`
+                      aspect-square flex items-center justify-center text-xs sm:text-sm md:text-base relative rounded-lg
+                      ${day === null ? '' : 'text-foreground font-medium'}
+                      ${day === weddingDay ? 'font-bold' : ''}
+                    `}
+                  >
+                    {day === weddingDay ? (
+                      <div className="relative flex items-center justify-center w-full h-full">
+                        <Heart className="w-7 h-7 sm:w-9 sm:h-9 md:w-11 md:h-11 text-wedding-pink fill-wedding-pink animate-pulse drop-shadow-sm" />
+                        <span className="absolute inset-0 flex items-center justify-center text-white text-[10px] sm:text-xs md:text-sm font-bold">
+                          {day}
+                        </span>
+                      </div>
+                    ) : (
+                      day
+                    )}
+                  </div>
+                ))}
               </div>
 
+              {/* Time & Lunar Date */}
+              <div className="mt-4 pt-3 border-t border-wedding-gold/25">
+                <p className="font-serif font-semibold text-foreground text-sm sm:text-base md:text-lg">
+                  Chủ nhật • 16:00
+                </p>
+                <p className="text-muted-foreground text-xs sm:text-sm italic mt-0.5">
+                  (Âm lịch: 30/09/2026)
+                </p>
+              </div>
+            </div>
+
+            {/* Bên dưới để mỗi nút Xem Bản Đồ */}
+            <div className="mt-5 md:mt-7 flex justify-center">
               <a
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-wedding inline-flex items-center justify-center gap-1 md:gap-3 mt-3 md:mt-6 w-full text-xs md:text-base py-2 md:py-3 px-2 md:px-4"
+                className="btn-wedding inline-flex items-center justify-center gap-2 w-full sm:w-auto min-w-[220px] py-3 md:py-3.5 px-6 md:px-8 text-sm md:text-base font-serif shadow-md hover:shadow-lg transition-all"
               >
-                <Navigation className="w-3 h-3 md:w-5 md:h-5" />
-                <span className="hidden sm:inline">Xem Chỉ Đường</span>
-                <span className="sm:hidden">Chỉ Đường</span>
+                <Navigation className="w-4 h-4 md:w-5 md:h-5" />
+                <span>Xem Bản Đồ</span>
               </a>
             </div>
-          </ScrollReveal>
-
-          {/* Date Card with Calendar */}
-          <ScrollReveal direction="right" delay={0.1} className="flex-1">
-            <div className="card-wedding text-center h-full flex flex-col p-3 md:p-6">
-              <div className="w-10 h-10 md:w-14 md:h-14 mx-auto mb-2 md:mb-4 rounded-full bg-wedding-gold-light flex items-center justify-center">
-                <Calendar className="w-5 h-5 md:w-7 md:h-7 text-wedding-gold" />
-              </div>
-              <h3 className="text-base md:text-2xl font-serif text-foreground font-semibold mb-2 md:mb-4">Ngày Tổ Chức</h3>
-              
-              {/* Mini Calendar */}
-              <div className="flex-1">
-                <div className="bg-wedding-cream/50 rounded-lg md:rounded-xl p-2 md:p-4">
-                  <p className="font-semibold text-xs md:text-lg mb-1 md:mb-3 text-wedding-gold">Tháng 11, 2026</p>
-                  
-                  {/* Week days header */}
-                  <div className="grid grid-cols-7 gap-0.5 md:gap-1 mb-1 md:mb-2">
-                    {weekDays.map((day) => (
-                      <div key={day} className="text-[8px] md:text-xs font-medium text-muted-foreground py-0.5 md:py-1">
-                        {day}
-                      </div>
-                    ))}
-                  </div>
-                  
-                  {/* Calendar days */}
-                  <div className="grid grid-cols-7 gap-0.5 md:gap-1">
-                    {days.map((day, index) => (
-                      <div
-                        key={index}
-                        className={`
-                          aspect-square flex items-center justify-center text-[8px] md:text-sm relative
-                          ${day === null ? '' : 'text-foreground'}
-                          ${day === weddingDay ? 'font-bold' : ''}
-                        `}
-                      >
-                        {day === weddingDay ? (
-                          <div className="relative">
-                            <Heart className="w-4 h-4 md:w-8 md:h-8 text-wedding-pink fill-wedding-pink animate-pulse" />
-                            <span className="absolute inset-0 flex items-center justify-center text-white text-[6px] md:text-xs font-bold">
-                              {day}
-                            </span>
-                          </div>
-                        ) : (
-                          day
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <p className="text-muted-foreground mt-1 md:mt-3 text-[10px] md:text-sm">
-                  Chủ nhật • 16:00
-                </p>
-                <p className="text-muted-foreground text-[9px] md:text-xs italic">
-                  (Âm lịch: 30/09/2026)
-                </p>
-              </div>
-
-              <button
-                onClick={handleAddToCalendar}
-                className="btn-wedding inline-flex items-center justify-center gap-1 md:gap-3 mt-3 md:mt-6 w-full text-xs md:text-base py-2 md:py-3 px-2 md:px-4"
-              >
-                <CalendarPlus className="w-3 h-3 md:w-5 md:h-5" />
-                <span className="hidden sm:inline">Thêm Vào Lịch</span>
-                <span className="sm:hidden">Lưu Lịch</span>
-              </button>
-            </div>
-          </ScrollReveal>
-        </div>
+          </div>
+        </ScrollReveal>
 
         {/* Note */}
-        <ScrollReveal direction="up" delay={0.4} className="mt-6 md:mt-10 text-center">
+        <ScrollReveal direction="up" delay={0.3} className="mt-6 md:mt-10 text-center">
           <p className="text-foreground/80 text-sm md:text-lg italic">
             Sự hiện diện của quý khách là niềm vinh hạnh cho gia đình chúng tôi
           </p>

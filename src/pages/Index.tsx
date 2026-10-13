@@ -475,14 +475,7 @@ const Index = ({ role = 'groom' }: IndexProps) => {
               
               {/* Cột thông tin thiệp mời: Trên mobile chữ trắng có bóng đổ, trên Desktop chữ tông hồng vỏ đỗ & vàng gold sang trọng */}
               <div className={`md:col-span-6 lg:col-span-7 flex flex-col items-center md:items-start text-center md:text-left justify-center transition-all duration-600 ${isInvitationOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
-                <ScrollReveal direction="up">
-                  <div className="inline-block border-b border-wedding-gold/60 pb-1 mb-3 md:mb-5">
-                    <p className="font-elegant text-white md:text-wedding-pink-dark text-base sm:text-lg md:text-2xl tracking-[0.25em] uppercase font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)] md:drop-shadow-none">
-                      {invitationLine}
-                    </p>
-                  </div>
-                </ScrollReveal>
-
+                {/* 1. Đỗ Quân & Mai Linh */}
                 <ScrollReveal direction="left" delay={0.2} className="w-full">
                   <h1 className="font-flourish text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none text-white md:text-wedding-pink-dark drop-shadow-[0_4px_16px_rgba(0,0,0,0.7)] md:drop-shadow-[0_4px_12px_rgba(180,120,130,0.25)] my-1">
                     {heroFirstName}
@@ -501,7 +494,23 @@ const Index = ({ role = 'groom' }: IndexProps) => {
                   </h1>
                 </ScrollReveal>
 
-                <ScrollReveal direction="up" delay={0.4} className="mt-4 md:mt-6 max-w-lg">
+                {/* 2. Trân trọng kính mời */}
+                <ScrollReveal direction="up" delay={0.35} className="mt-4 md:mt-6">
+                  <p className="font-serif text-white/90 md:text-wedding-pink-dark text-xs sm:text-sm md:text-base tracking-[0.25em] uppercase font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)] md:drop-shadow-none">
+                    Trân trọng kính mời
+                  </p>
+                </ScrollReveal>
+
+                {/* 3. Bạn và ❤️ */}
+                <ScrollReveal direction="up" delay={0.4} className="mt-1 md:mt-2">
+                  <div className="inline-block border-b-2 border-wedding-gold/70 pb-1">
+                    <p className="font-elegant text-white md:text-wedding-pink-dark text-lg sm:text-xl md:text-2xl tracking-[0.15em] font-bold drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)] md:drop-shadow-none">
+                      {recipientName || 'Bạn và ❤️'}
+                    </p>
+                  </div>
+                </ScrollReveal>
+
+                <ScrollReveal direction="up" delay={0.45} className="mt-4 md:mt-6 max-w-lg">
                   <p className="text-sm sm:text-base md:text-lg text-gray-100 md:text-foreground/80 italic font-light leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)] md:drop-shadow-none">
                     "Tình yêu không phải là nhìn nhau, mà là cùng nhìn về một hướng"
                   </p>
